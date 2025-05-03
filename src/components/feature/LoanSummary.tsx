@@ -27,13 +27,12 @@ export const LoanSummary: FC<LoanSummaryProps> = ({ loanResult }) => {
     totalInterestPayable,
     totalAmountPayable,
     totalPrepayment,
-    remainingMonths,
   } = loanResult.summary;
 
   return (
     <div>
       <h2 className="text-lg font-bold">Loan Summary</h2>
-      <div className="grid grid-cols-3 gap-2 mt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-2">
         <SummaryCard
           value={formateCurrency(emi)}
           title="EMI"
@@ -74,12 +73,6 @@ export const LoanSummary: FC<LoanSummaryProps> = ({ loanResult }) => {
           helpText="Date of the last payment"
           color="purple"
           icon={<IoMdCalendar size={28} />}
-        />
-        <SummaryCard
-          value={remainingMonths}
-          title="Remaining Months"
-          helpText="Number of months remaining"
-          color="indigo"
         />
       </div>
     </div>

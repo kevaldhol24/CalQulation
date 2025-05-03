@@ -10,6 +10,7 @@ import { formateDate } from "@/lib/utils";
 import { LoanSummary } from "./LoanSummary";
 import { Button } from "../ui/button";
 import { AdvanceLoanInputs } from "./AdvanceLoanInputs";
+import { EmiSchedule } from "./EmiScehdule";
 
 const today = new Date();
 
@@ -74,6 +75,7 @@ export const LoanCalculator = () => {
 
       <div className="bg-background rounded-lg p-6 shadow-lg mt-6">
         <LoanSummary loanResult={loanResults} />
+        <EmiSchedule emiSchedule={loanResults?.schedule || []} />
       </div>
     </div>
   );
