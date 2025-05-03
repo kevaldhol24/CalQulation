@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { Slider } from "../../common/Slider";
 import { TextField } from "../../common/TextField";
 
@@ -35,14 +35,23 @@ export const AmountInput: FC<AmountInputProps> = ({
       typeof newValue === "string"
         ? parseFloat(newValue.replace(/,/g, ""))
         : newValue;
-    if (isNaN(numericValue)) {
-      numericValue = defaultValue || null;
-    } else {
-      numericValue = Math.max(MIN_VALUE, Math.min(MAX_VALUE, numericValue));
+        
+        if (isNaN(numericValue)) {
+          numericValue = localValue || defaultValue || null;
     }
     setLocalValue(numericValue);
     onChange?.(numericValue);
   };
+
+  const handleBlur = useCallback(() => {
+    let numericValue: number | null = null;
+    if(localValue){
+       numericValue = Math.max(MIN_VALUE, Math.min(MAX_VALUE, localValue))
+      setLocalValue(numericValue);
+    }
+    setLocalValue(numericValue);  
+    onBlur?.(numericValue);
+  }, [localValue, onBlur]);
 
   return (
     <div>
@@ -56,9 +65,9 @@ export const AmountInput: FC<AmountInputProps> = ({
         endAdornment={"₹"}
         placeholder="Enter amount"
         className="w-full pr-11"
-        value={localValue?.toLocaleString()}
+        value={localValue?.toLocaleString() || ""}
         onChange={({ target: { value } }) => handleChange(value)}
-        onBlur={() => onBlur?.(localValue)}
+        onBlur={handleBlur}
       />
       <div className="mt-1">
         <Slider

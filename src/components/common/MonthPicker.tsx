@@ -63,7 +63,6 @@ export const MonthPicker: FC<MonthPickerProps> = ({
   }, [localValue]);
 
   const years = useMemo(() => {
-    console.log("yearsPage", yearsPage);
     return YEARS.slice(yearsPage * 12, (yearsPage + 1) * 12).map(({ value }) =>
       value.toString()
     );

@@ -43,19 +43,26 @@ export const TenureInput: FC<TenureInputProps> = ({
           ? parseFloat(newValue.replace(/,/g, ""))
           : newValue;
       if (isNaN(numericValue)) {
-        numericValue = defaultValue || null;
+        numericValue = localValue || defaultValue || null;
       }
       if (numericValue && tenureUnit === "Yr") {
         numericValue = numericValue * 12;
       }
-      if (numericValue) {
-        numericValue = Math.max(MIN_VALUE, Math.min(MAX_VALUE, numericValue));
-      }
       setLocalValue(numericValue);
       onChange?.(numericValue);
     },
-    [defaultValue, onChange, tenureUnit]
+    [defaultValue, localValue, onChange, tenureUnit]
   );
+
+  const handleBlur = useCallback(() => {
+    let numericValue: number | null = null;
+    if (localValue) {
+      numericValue = Math.max(MIN_VALUE, Math.min(MAX_VALUE, localValue));
+      setLocalValue(numericValue);
+    }
+    setLocalValue(numericValue);
+    onBlur?.(numericValue);
+  }, [localValue, onBlur]);
 
   const handleSliderChange = (newValue: number) => {
     setLocalValue(newValue);
@@ -104,7 +111,7 @@ export const TenureInput: FC<TenureInputProps> = ({
             : localValue?.toLocaleString() || ""
         }
         onChange={({ target: { value } }) => handleChange(value)}
-        onBlur={() => onBlur?.(localValue)}
+        onBlur={handleBlur}
       />
       <div className="mt-1">
         <Slider

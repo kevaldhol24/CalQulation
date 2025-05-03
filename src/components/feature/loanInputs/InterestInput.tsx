@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { TextField } from "../../common/TextField";
 import { Slider } from "@/components/common/Slider";
 
@@ -22,27 +22,36 @@ export const InterestInput: FC<InterestInputProps> = ({
   defaultValue,
   ...props
 }) => {
-  const [localValue, setLocalValue] = useState<number | null>(
-    value || defaultValue || null
+  const [localValue, setLocalValue] = useState<string | null>(
+    value?.toString() || defaultValue?.toString() || null
   );
 
   useEffect(() => {
-    setLocalValue(value || defaultValue || null);
+    setLocalValue(value?.toString() || defaultValue?.toString() || null);
   }, [value, defaultValue]);
 
-  const handleChange = (newValue: string | number) => {
-    let numericValue: number | null =
-      typeof newValue === "string"
-        ? parseFloat(newValue.replace(/,/g, ""))
-        : newValue;
-    if (isNaN(numericValue)) {
-      numericValue = defaultValue || null;
+  const handleChange = (newValue: string) => {
+
+    let numericValue: string | null = newValue.endsWith(".") ? newValue.slice(0, -1) : newValue;
+
+    if (isNaN(Number(numericValue))) {
+      numericValue = localValue?.toString() || defaultValue?.toString() || null;
     }else{
-      numericValue = Math.max(MIN_VALUE, Math.min(MAX_VALUE, numericValue));
+      numericValue = newValue;
     }
     setLocalValue(numericValue);
-    onChange?.(numericValue);
+    onChange?.(numericValue ? parseFloat(numericValue) : null);
   };
+
+  const handleBlur = useCallback(() => {
+    let numericValue: number | null = null;
+    if (localValue) {
+      numericValue = Math.max(MIN_VALUE, Math.min(MAX_VALUE, parseFloat(localValue)));
+      setLocalValue(numericValue.toString());
+    }
+    setLocalValue(numericValue?.toString() || null);
+    onBlur?.(numericValue);
+  }, [localValue, onBlur]);
 
   return (
     <div>
@@ -56,17 +65,17 @@ export const InterestInput: FC<InterestInputProps> = ({
         endAdornment={"%"}
         placeholder="Enter interest rate"
         className="w-full pr-11"
-        value={localValue?.toLocaleString()}
+        value={localValue?.toLocaleString() || ""}
         onChange={({ target: { value } }) => handleChange(value)}
-        onBlur={() => onBlur?.(localValue)}
+        onBlur={handleBlur}
       />
       <div className="mt-1">
         <Slider
           min={3}
           max={30}
           step={0.5}
-          value={localValue || undefined}
-          onChange={handleChange}
+          value={(localValue ? parseFloat(localValue) : undefined) || undefined}
+          onChange={(value)=>handleChange(value.toString())}
           marks={[
             { value: 7, label: "7%" },
             { value: 10, label: "10%" },

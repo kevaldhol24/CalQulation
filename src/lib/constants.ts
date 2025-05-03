@@ -22,3 +22,16 @@ export const YEARS = Array.from({ length: YEARS_LENGTH }, (_, i) => {
     value: year,
   };
 });
+
+export const DATE_ISO = "YYYY-MM-DD";
+
+
+export const CURRENCY_ICON = "₹";
+export const CURRENCY = "INR";
+export const CURRENCY_ISO = "en-IN";
+export const CURRENCY_FORMAT_DECIMAL = {
+  style: "currency",
+  currency: CURRENCY,
+  currencyDisplay: "symbol",
+  maximumFractionDigits: 2,
+};
