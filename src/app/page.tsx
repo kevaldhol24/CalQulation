@@ -1,4 +1,4 @@
-import { LoanCalculator } from "@/components/feature/LoanCalculator";
+import { LoanCalculator } from "@/components/feature/EmiCalculator/LoanCalculator";
 
 export default function Home() {
   return (

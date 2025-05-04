@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { MonthPicker } from "../common/MonthPicker";
+import { MonthPicker } from "../../common/MonthPicker";
 import { AmountInput } from "./loanInputs/AmountInput";
 import { InterestInput } from "./loanInputs/InterestInput";
 import { TenureInput } from "./loanInputs/TenureInput";
@@ -8,8 +8,8 @@ import { LoanCalculationInputs, LoanCalculationOutput } from "loanwise";
 import { calculateLoan } from "@/services/LoanService";
 import { formateDate } from "@/lib/utils";
 import { LoanSummary } from "./LoanSummary";
-import { Button } from "../ui/button";
-import { AdvanceLoanInputs } from "./AdvanceLoanInputs";
+import { Button } from "../../ui/button";
+import { AdvanceLoanInputs } from "./AdvanceOprions/AdvanceLoanInputs";
 import { EmiSchedule } from "./EmiScehdule";
 
 const today = new Date();
@@ -22,7 +22,6 @@ export const LoanCalculator = () => {
     loanAmount: 100000,
   });
   const [loanResults, setLoanResults] = useState<LoanCalculationOutput>();
-  const [showAdvanceOptions, setShowAdvanceOptions] = useState(false);
 
   const handleChange = (value: number, key: string) => {
     setLoanDetails((prev) => ({ ...prev, [key]: value }));

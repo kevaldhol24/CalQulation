@@ -1,8 +1,8 @@
 "use client";
 
 import { FC, useCallback, useEffect, useState } from "react";
-import { Slider } from "../../common/Slider";
-import { TextField } from "../../common/TextField";
+import { Slider } from "../../../common/Slider";
+import { TextField } from "../../../common/TextField";
 
 interface AmountInputProps
   extends Omit<React.ComponentProps<"input">, "value" | "onChange" | "onBlur"> {

@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useCallback, useEffect, useState } from "react";
-import { TextField } from "../../common/TextField";
+import { TextField } from "../../../common/TextField";
 import { Slider } from "@/components/common/Slider";
 
 interface InterestInputProps
