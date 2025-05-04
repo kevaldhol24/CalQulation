@@ -1,22 +1,20 @@
 "use client";
 
+import { useLoan } from "@/contexts/LoanContext";
 import { formateCurrency } from "@/lib/utils";
-import { LoanCalculationOutput } from "loanwise";
-import { FC } from "react";
+import moment from "moment";
 import { FaMoneyBills } from "react-icons/fa6";
 import { GiMoneyStack } from "react-icons/gi";
 import { GrMoney } from "react-icons/gr";
 import { IoMdCalendar } from "react-icons/io";
 import { TbMoneybag } from "react-icons/tb";
 import { SummaryCard } from "./SummaryCard";
-import moment from "moment";
 
-interface LoanSummaryProps {
-  loanResult?: LoanCalculationOutput;
-}
+export const LoanSummary = () => {
+  // Get loanResults from context
+  const { loanResults } = useLoan();
 
-export const LoanSummary: FC<LoanSummaryProps> = ({ loanResult }) => {
-  if (!loanResult) {
+  if (!loanResults) {
     return <></>;
   }
 
@@ -27,7 +25,7 @@ export const LoanSummary: FC<LoanSummaryProps> = ({ loanResult }) => {
     totalInterestPayable,
     totalAmountPayable,
     totalPrepayment,
-  } = loanResult.summary;
+  } = loanResults.summary;
 
   return (
     <div>
@@ -45,7 +43,7 @@ export const LoanSummary: FC<LoanSummaryProps> = ({ loanResult }) => {
           title="Loan Amount"
           helpText="Total loan amount"
           color="gray"
-          icon={<GiMoneyStack  size={32} />}
+          icon={<GiMoneyStack size={32} />}
         />
         <SummaryCard
           value={formateCurrency(totalInterestPayable)}

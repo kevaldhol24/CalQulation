@@ -1,4 +1,5 @@
 import { LoanCalculator } from "@/components/feature/EmiCalculator/LoanCalculator";
+import { LoanProvider } from "@/contexts/LoanContext";
 
 export default function Home() {
   return (
@@ -16,7 +17,9 @@ export default function Home() {
             </p>
           </div>
           <div className="mt-8 relative z-10">
-            <LoanCalculator />
+            <LoanProvider>
+              <LoanCalculator />
+            </LoanProvider>
           </div>
         </div>
       </div>

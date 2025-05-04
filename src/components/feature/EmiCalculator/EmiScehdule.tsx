@@ -20,10 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../ui/tooltip";
-
-interface EmiScheduleProps {
-  emiSchedule: EMIScheduleItem[];
-}
+import { useLoan } from "@/contexts/LoanContext";
 
 interface YearSummary {
   year: string;
@@ -37,23 +34,24 @@ interface YearSummary {
   endingBalance: number;
 }
 
-export const EmiSchedule = ({ emiSchedule }: EmiScheduleProps) => {
+export const EmiSchedule = () => {
   const [expandedYears, setExpandedYears] = useState<string[]>([]);
+
+  const { loanResults } = useLoan();
 
   const yearGroupedData = useMemo(() => {
     // Group EMI items by year
-    const groupedByYear: Record<string, EMIScheduleItem[]> = emiSchedule.reduce(
-      (acc, item) => {
-        // Extract year from the date
-        const year = item.year;
-        if (!acc[year]) {
-          acc[year] = [];
-        }
-        acc[year].push(item);
-        return acc;
-      },
-      {} as Record<string, EMIScheduleItem[]>
-    );
+    const groupedByYear: Record<string, EMIScheduleItem[]> = (
+      loanResults?.schedule || []
+    ).reduce((acc, item) => {
+      // Extract year from the date
+      const year = item.year;
+      if (!acc[year]) {
+        acc[year] = [];
+      }
+      acc[year].push(item);
+      return acc;
+    }, {} as Record<string, EMIScheduleItem[]>);
 
     // Create year summary for each year
     return Object.keys(groupedByYear)
@@ -91,7 +89,7 @@ export const EmiSchedule = ({ emiSchedule }: EmiScheduleProps) => {
         return yearSummary;
       })
       .sort((a, b) => parseInt(a.year) - parseInt(b.year));
-  }, [emiSchedule]);
+  }, [loanResults?.schedule]);
 
   const toggleYearExpansion = (year: string) => {
     setExpandedYears((prevExpanded) =>
