@@ -8,8 +8,7 @@ import { LoanCalculationInputs, LoanCalculationOutput } from "loanwise";
 import { calculateLoan } from "@/services/LoanService";
 import { formateDate } from "@/lib/utils";
 import { LoanSummary } from "./LoanSummary";
-import { Button } from "../../ui/button";
-import { AdvanceLoanInputs } from "./AdvanceOprions/AdvanceLoanInputs";
+import { AdvanceLoanInputs } from "./AdvanceOptions/AdvanceLoanInputs";
 import { EmiSchedule } from "./EmiScehdule";
 
 const today = new Date();
