@@ -158,7 +158,7 @@ export const MonthPicker: FC<MonthPickerProps> = ({
         }
       } else {
         if (minDate) {
-          isValid = new Date(selectedYear, MONTHS.indexOf(item)) >= minDate;
+          isValid = new Date(selectedYear, MONTHS.indexOf(item) + 1) >= minDate;
         }
 
         if (maxDate) {

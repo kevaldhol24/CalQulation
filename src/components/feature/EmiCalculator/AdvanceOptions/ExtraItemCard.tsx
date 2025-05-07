@@ -114,7 +114,7 @@ export const ExtraItemCard = ({
               <TooltipProvider delayDuration={300}>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className={`${badgeTheme.badgeBg} ${badgeTheme.badgeText} rounded-full px-3 py-1 text-xs flex items-center gap-1.5 font-normal`}>
+                    <div className={`${badgeTheme.badgeBg} ${badgeTheme.badgeText} capitalize rounded-full px-3 py-1 text-xs flex items-center gap-1.5 font-normal`}>
                       <BadgeIcon size={14} />
                       {badgeText}
                     </div>

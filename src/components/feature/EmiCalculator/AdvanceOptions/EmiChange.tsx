@@ -10,14 +10,53 @@ import { motion } from "framer-motion";
 import {
   ArrowDown,
   ArrowUp,
-  CreditCard,
-  Plus
+  CreditCard
 } from "lucide-react";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import { Button } from "../../../ui/button";
 import { ExtraItemCard } from "./ExtraItemCard";
+import { EMIChange } from "loanwise";
+import { useCallback } from "react";
+import { useLoan } from "@/contexts/LoanContext";
+import moment from "moment";
+import { EMIChangeDialog } from "./EMIChangeDialog";
 
 export const EmiChange = () => {
+  const {
+    loanDetails: { emiChanges },
+    loanResults,
+    setLoanDetails,
+  } = useLoan();
+
+  const getEmiChangeText = (emiChange: EMIChange) => {
+    const DATE_FORMAT = "MMMM YYYY";
+    const effectiveDateFormatted = moment(emiChange.startDate).format(DATE_FORMAT);
+    return `Effective from ${effectiveDateFormatted}`;
+  };
+
+  const deleteEmiChange = useCallback(
+    (id: string) => {
+      const updatedEmiChanges = emiChanges!.filter(
+        (emiChange) => emiChange.id !== id
+      );
+
+      setLoanDetails((prevDetails) => ({
+        ...prevDetails,
+        emiChanges: updatedEmiChanges,
+      }));
+    },
+    [emiChanges, setLoanDetails]
+  );
+
+  const getComparisonIcon = (emiAmount: number) => {
+    const currentEmi = loanResults?.summary?.emi || 0;
+    return emiAmount > currentEmi ? ArrowUp : ArrowDown;
+  };
+
+  const getComparisonColor = (emiAmount: number) => {
+    const currentEmi = loanResults?.summary?.emi || 0;
+    return emiAmount > currentEmi ? "emerald" : "amber";
+  };
+
   return (
     <motion.div
       variants={{
@@ -42,47 +81,30 @@ export const EmiChange = () => {
           </TooltipProvider>
         </span>
 
-        <Button
-          variant="outline"
-          className="border-dashed bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-100/50 dark:hover:bg-blue-800/20 transition-all group"
-        >
-          <Plus className="size-4 group-hover:rotate-90 transition-transform duration-300" />
-          Add
-        </Button>
+        <EMIChangeDialog />
       </h4>
 
-      {/* <div className="text-sm text-center text-muted-foreground italic">
-        No EMI adjustments scheduled
-      </div> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
-        <ExtraItemCard
-          icon={ArrowUp}
-          color="emerald"
-          amount={8.5}
-          dateRange="Effective from 1st Jan 2024"
-          onDelete={() => console.log("Deleted")}
-          showBadge={false}
-          displayType="currency"
-        />
-        <ExtraItemCard
-          icon={ArrowUp}
-          color="emerald"
-          amount={10}
-          dateRange="Effective from 1st Jan 2025"
-          onDelete={() => console.log("Deleted")}
-          showBadge={false}
-          displayType="currency"
-        />
-        <ExtraItemCard
-          icon={ArrowDown}
-          color="amber"
-          amount={12}
-          dateRange="Effective from 1st Jan 2026"
-          onDelete={() => console.log("Deleted")}
-          showBadge={false}
-          displayType="currency"
-        />
-      </div>
+      {emiChanges && emiChanges.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
+          {emiChanges.map((emiChange) => (
+            <ExtraItemCard
+              key={emiChange.id}
+              icon={getComparisonIcon(emiChange.emi)}
+              color={getComparisonColor(emiChange.emi)}
+              amount={emiChange.emi}
+              dateRange={getEmiChangeText(emiChange)}
+              onDelete={() => deleteEmiChange(emiChange.id)}
+              showBadge={false}
+              displayType="currency"
+              tooltipText={`EMI will ${emiChange.emi > (loanResults?.summary?.emi || 0) ? 'increase' : 'decrease'} from this date`}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="text-sm text-center text-muted-foreground italic">
+          No EMI adjustments scheduled
+        </div>
+      )}
     </motion.div>
   );
 };

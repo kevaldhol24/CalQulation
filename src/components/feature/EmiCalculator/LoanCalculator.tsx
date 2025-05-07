@@ -17,18 +17,19 @@ export const LoanCalculator = () => {
     updateLoanDetails(key, value);
   };
 
+
   return (
     <div>
       <div className="bg-background rounded-lg p-6 shadow-lg">
         <h2 className="text-lg font-bold col-span-2">Loan details</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-2">
           <AmountInput
-            defaultValue={loanDetails.loanAmount}
-            onBlur={(value) => handleChange(Number(value), "loanAmount")}
+            value={loanDetails.loanAmount}
+            onChange={(value) => handleChange(Number(value), "loanAmount")}
           />
           <InterestInput
-            defaultValue={loanDetails.initialInterestRate}
-            onBlur={(value) =>
+            value={loanDetails.initialInterestRate}
+            onChange={(value) =>
               handleChange(Number(value), "initialInterestRate")
             }
           />

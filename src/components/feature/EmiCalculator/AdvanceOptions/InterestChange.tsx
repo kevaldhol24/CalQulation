@@ -1,9 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CalendarRange, Coins, Percent, Plus, TrendingDown, TrendingUp } from "lucide-react";
+import { CalendarRange, Coins, Percent, TrendingDown, TrendingUp } from "lucide-react";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import { Button } from "../../../ui/button";
 import {
   Tooltip,
   TooltipContent,
@@ -11,8 +10,38 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ExtraItemCard } from "./ExtraItemCard";
+import { ImpactType, InterestRateChange } from "loanwise";
+import { useCallback } from "react";
+import { useLoan } from "@/contexts/LoanContext";
+import moment from "moment";
+import { InterestRateChangeDialog } from "./InterestRateChangeDialog";
 
 export const InterestChange = () => {
+  const {
+    loanDetails: { interestRateChanges },
+    setLoanDetails,
+  } = useLoan();
+
+  const getRateChangeText = (rateChange: InterestRateChange) => {
+    const DATE_FORMAT = "MMMM YYYY";
+    const effectiveDateFormatted = moment(rateChange.effectiveDate).format(DATE_FORMAT);
+    return `Effective from ${effectiveDateFormatted}`;
+  };
+
+  const deleteRateChange = useCallback(
+    (id: string) => {
+      const updatedRateChanges = interestRateChanges!.filter(
+        (rateChange) => rateChange.id !== id
+      );
+
+      setLoanDetails((prevDetails) => ({
+        ...prevDetails,
+        interestRateChanges: updatedRateChanges,
+      }));
+    },
+    [interestRateChanges, setLoanDetails]
+  );
+
   return (
     <motion.div
       variants={{
@@ -36,53 +65,32 @@ export const InterestChange = () => {
             </Tooltip>
           </TooltipProvider>
         </span>
-        <Button
-          variant="outline"
-          className="border-dashed bg-amber-50/50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800 text-amber-600 dark:text-amber-400 hover:bg-amber-100/50 dark:hover:bg-amber-800/20 transition-all group"
-        >
-          <Plus className="size-4 group-hover:rotate-90 transition-transform duration-300" />
-          Add
-        </Button>
+        <InterestRateChangeDialog />
       </h4>
 
-      {/* <div className="text-sm text-center text-muted-foreground italic">
-        No interest rate change scheduled
-      </div> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
-        <ExtraItemCard
-          icon={TrendingUp}
-          color="destructive"
-          amount={8.5}
-          dateRange="Effective from 1st Jan 2024"
-          onDelete={() => console.log("Deleted")}
-          badgeColor="amber"
-          badgeIcon={CalendarRange}
-          displayType="percentage"
-          tooltipText="Interest rate will increase"
-        />
-        <ExtraItemCard
-          icon={TrendingDown}
-          color="emerald"
-          amount={10}
-          dateRange="Effective from 1st Jan 2025"
-          onDelete={() => console.log("Deleted")}
-          badgeColor="amber"
-          badgeIcon={Coins}
-          badgeText="EMI"
-          displayType="percentage"
-          tooltipText="Will affect your EMI"
-        />
-        <ExtraItemCard
-          icon={TrendingUp}
-          color="destructive"
-          amount={12}
-          dateRange="Effective from 1st Jan 2026"
-          onDelete={() => console.log("Deleted")}
-          showBadge={false}
-          displayType="percentage"
-          tooltipText="Interest rate will increase"
-        />
-      </div>
+      {interestRateChanges && interestRateChanges.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
+          {interestRateChanges.map((rateChange) => (
+            <ExtraItemCard
+              key={rateChange.id}
+              icon={rateChange.rate > 0 ? TrendingUp : TrendingDown}
+              color={rateChange.rate > 0 ? "destructive" : "emerald"}
+              amount={rateChange.rate}
+              dateRange={getRateChangeText(rateChange)}
+              onDelete={() => deleteRateChange(rateChange.id)}
+              badgeColor="amber"
+              badgeIcon={rateChange.impact === ImpactType.EMI ? Coins : CalendarRange}
+              badgeText={rateChange.impact}
+              displayType="percentage"
+              tooltipText={`Will ${rateChange.impact === ImpactType.EMI ? 'affect your EMI' : 'change your loan tenure'}`}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="text-sm text-center text-muted-foreground italic">
+          No interest rate changes scheduled
+        </div>
+      )}
     </motion.div>
   );
 };

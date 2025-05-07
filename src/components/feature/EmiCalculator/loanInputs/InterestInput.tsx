@@ -1,57 +1,65 @@
 "use client";
 
-import { FC, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 import { TextField } from "../../../common/TextField";
 import { Slider } from "@/components/common/Slider";
 
 interface InterestInputProps
   extends Omit<React.ComponentProps<"input">, "value" | "onChange" | "onBlur"> {
   value?: number;
-  defaultValue?: number;
+  hideSlider?: boolean;
+  minValue?: number;
+  maxValue?: number;
   onChange?: (value: number | null) => void;
-  onBlur?: (value: number | null) => void;
 }
-
-const MAX_VALUE = 30;
-const MIN_VALUE = 3;
 
 export const InterestInput: FC<InterestInputProps> = ({
   value,
+  hideSlider,
+  minValue = 1,
+  maxValue = 30,
   onChange,
-  onBlur,
-  defaultValue,
   ...props
 }) => {
   const [localValue, setLocalValue] = useState<string | null>(
-    value?.toString() || defaultValue?.toString() || null
+    value?.toString() || null
   );
 
   useEffect(() => {
-    setLocalValue(value?.toString() || defaultValue?.toString() || null);
-  }, [value, defaultValue]);
+    setLocalValue(value?.toString() || null);
+  }, [value]);
 
-  const handleChange = (newValue: string) => {
-
-    let numericValue: string | null = newValue.endsWith(".") ? newValue.slice(0, -1) : newValue;
-
-    if (isNaN(Number(numericValue))) {
-      numericValue = localValue?.toString() || defaultValue?.toString() || null;
-    }else{
-      numericValue = newValue;
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === "") {
+      setLocalValue(null);
+      return;
     }
-    setLocalValue(numericValue);
-    onChange?.(numericValue ? parseFloat(numericValue) : null);
+    const newValue = event.target.value;
+    const parsedValue: string | null = newValue.endsWith(".")
+      ? newValue.slice(0, -1)
+      : newValue;
+    if (isNaN(Number(parsedValue))) return;
+    setLocalValue(newValue);
+  };
+
+  const handleSliderChange = (value: number | null) => {
+    setLocalValue(value?.toString() || null);
+    if (onChange) {
+      onChange(value);
+    }
   };
 
   const handleBlur = useCallback(() => {
-    let numericValue: number | null = null;
-    if (localValue) {
-      numericValue = Math.max(MIN_VALUE, Math.min(MAX_VALUE, parseFloat(localValue)));
-      setLocalValue(numericValue.toString());
+    let value = localValue;
+    if (!value || parseFloat(value) < (minValue || 0))
+      value = minValue?.toString() || null;
+    if (!value || parseFloat(value) > (maxValue || Infinity))
+      value = maxValue?.toString() || null;
+    if (onChange) {
+      setLocalValue(value);
+      onChange(value ? parseFloat(value) : null);
     }
-    setLocalValue(numericValue?.toString() || null);
-    onBlur?.(numericValue);
-  }, [localValue, onBlur]);
+  }, [localValue, onChange, minValue, maxValue]);
 
   return (
     <div>
@@ -66,25 +74,29 @@ export const InterestInput: FC<InterestInputProps> = ({
         placeholder="Enter interest rate"
         className="w-full pr-11"
         value={localValue?.toLocaleString() || ""}
-        onChange={({ target: { value } }) => handleChange(value)}
+        onChange={handleInputChange}
         onBlur={handleBlur}
       />
-      <div className="mt-1">
-        <Slider
-          min={3}
-          max={30}
-          step={0.5}
-          value={(localValue ? parseFloat(localValue) : undefined) || undefined}
-          onChange={(value)=>handleChange(value.toString())}
-          marks={[
-            { value: 7, label: "7%" },
-            { value: 10, label: "10%" },
-            { value: 15, label: "15%" },
-            { value: 20, label: "20%" },
-            { value: 25, label: "25%" },
-          ]}
-        />
-      </div>
+      {!hideSlider && (
+        <div className="mt-1">
+          <Slider
+            min={3}
+            max={30}
+            step={0.5}
+            value={
+              (localValue ? parseFloat(localValue) : undefined) || undefined
+            }
+            onChange={handleSliderChange}
+            marks={[
+              { value: 7, label: "7%" },
+              { value: 10, label: "10%" },
+              { value: 15, label: "15%" },
+              { value: 20, label: "20%" },
+              { value: 25, label: "25%" },
+            ]}
+          />
+        </div>
+      )}
     </div>
   );
 };

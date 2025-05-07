@@ -1,18 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { formateDate } from "@/lib/utils";
 import { calculateLoan } from "@/services/LoanService";
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import {
-  LoanCalculationInputs,
-  LoanCalculationOutput,
-} from "loanwise";
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+import { LoanCalculationInputs, LoanCalculationOutput } from "loanwise";
 
 // Define types
 type LoanContextType = {
   loanDetails: LoanCalculationInputs;
   loanResults: LoanCalculationOutput | undefined;
-  updateLoanDetails: (key: string, value: number | string | Date) => void;
+  updateLoanDetails: (key: string, value: number | string | Date | any) => void;
   setLoanDetails: React.Dispatch<React.SetStateAction<LoanCalculationInputs>>;
   isLoading: boolean;
 };
@@ -34,12 +38,13 @@ const defaultLoanDetails: LoanCalculationInputs = {
 
 // Provider component
 export const LoanProvider = ({ children }: { children: ReactNode }) => {
-  const [loanDetails, setLoanDetails] = useState<LoanCalculationInputs>(defaultLoanDetails);
+  const [loanDetails, setLoanDetails] =
+    useState<LoanCalculationInputs>(defaultLoanDetails);
   const [loanResults, setLoanResults] = useState<LoanCalculationOutput>();
   const [isLoading, setIsLoading] = useState(false);
 
   // Update specific loan detail field
-  const updateLoanDetails = (key: string, value: number | string | Date) => {
+  const updateLoanDetails = (key: string, value: any) => {
     setLoanDetails((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -56,7 +61,7 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
         setIsLoading(false);
       }
     };
-    
+
     fetchResults();
   }, [loanDetails]);
 
