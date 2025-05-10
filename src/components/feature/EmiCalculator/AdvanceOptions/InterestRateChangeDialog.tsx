@@ -33,13 +33,13 @@ export const InterestRateChangeDialog = () => {
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const minStartDate = useMemo(() => {
-    return formateDate(
-      loanResults?.schedule
-        ? new Date(loanResults.schedule[0].year, loanResults.schedule[0].month + 1)
-        : new Date()
-    );
+    const startDate = loanResults?.schedule
+      ? new Date(loanResults.schedule[0].year, loanResults.schedule[0].month + 1)
+      : new Date();
+    return formateDate(startDate);
   }, [loanResults?.schedule]);
 
+  // Initialize with valid default values to prevent undefined/controlled switching
   const [newRateChange, setNewRateChange] = useState<InterestRateChange>({
     id: uuid(),
     rate: 8.5,
@@ -68,22 +68,23 @@ export const InterestRateChangeDialog = () => {
   }, [hasConflictingInterestChange, newRateChange.effectiveDate]);
 
   useEffect(() => {
-    setNewRateChange((prev) => ({
-      ...prev,
-      effectiveDate: minStartDate,
-    }));
+    if (minStartDate) {
+      setNewRateChange((prev) => ({
+        ...prev,
+        effectiveDate: minStartDate,
+      }));
+    }
   }, [minStartDate]);
 
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => {
-        setNewRateChange((prev) => ({
-          ...prev,
+        setNewRateChange({
           id: uuid(),
           rate: 8.5,
           impact: ImpactType.Tenure,
-          effectiveDate: minStartDate,
-        }));
+          effectiveDate: minStartDate || formateDate(new Date()), // Always ensure a valid date string
+        });
         setValidationError(null);
       }, 1000);
     }
@@ -202,8 +203,8 @@ export const InterestRateChangeDialog = () => {
             <MonthPicker
               label="Effective From"
               required
-              minDate={new Date(minStartDate)}
-              value={new Date(newRateChange.effectiveDate)}
+              minDate={new Date(minStartDate || Date.now())} // Ensure we always have a valid Date object
+              value={new Date(newRateChange.effectiveDate)} // Ensure we always have a valid Date object
               onChange={(value) => {
                 setNewRateChange((prev) => ({
                   ...prev,

@@ -205,7 +205,7 @@ export const MonthPicker: FC<MonthPickerProps> = ({
           <TextField
             {...props}
             label={label}
-            value={inputValue || props.placeholder}
+            value={inputValue || props.placeholder || ""}
             className={`cursor-pointer text-left ${
               inputValue ? "" : "text-muted-foreground"
             }`}

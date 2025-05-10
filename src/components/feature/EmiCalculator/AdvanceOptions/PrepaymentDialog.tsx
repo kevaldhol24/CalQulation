@@ -34,20 +34,20 @@ export const PrepaymentDialog = () => {
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const minStartDate = useMemo(() => {
-    return formateDate(
-      loanResults?.schedule
-        ? new Date(loanResults.schedule[0].year, loanResults.schedule[0].month + 1)
-        : new Date()
-    );
+    const startDate = loanResults?.schedule
+      ? new Date(loanResults.schedule[0].year, loanResults.schedule[0].month + 1)
+      : new Date();
+    return formateDate(startDate);
   }, [loanResults?.schedule]);
 
+  // Initialize with default date instead of allowing undefined
   const [newPrepayment, setNewPrepayment] = useState<Prepayment>({
     id: uuid(),
     amount: 10000,
     type: PrepaymentFrequency.Onetime,
     impact: ImpactType.Tenure,
     startDate: formateDate(new Date()),
-    endDate: undefined,
+    endDate: formateDate(new Date()),  // Initialize with a valid date
   });
 
   // Check if the selected month already has a prepayment
@@ -80,15 +80,15 @@ export const PrepaymentDialog = () => {
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => {
-        setNewPrepayment((prev) => ({
-          ...prev,
+        // Always use defined values for all fields
+        setNewPrepayment({
           id: uuid(),
           amount: 10000,
           type: PrepaymentFrequency.Onetime,
           impact: ImpactType.Tenure,
           startDate: minStartDate,
-          endDate: undefined,
-        }));
+          endDate: formateDate(new Date()),  // Always initialize with a valid date
+        });
         setValidationError(null);
       }, 1000);
     }
@@ -113,11 +113,10 @@ export const PrepaymentDialog = () => {
     const prepayment = {
       ...newPrepayment,
       startDate: newPrepayment.startDate,
-      endDate:
-        newPrepayment.type === PrepaymentFrequency.Onetime ||
-        !newPrepayment.endDate
-          ? undefined
-          : newPrepayment.endDate,
+      // Only include endDate for monthly prepayments
+      endDate: newPrepayment.type === PrepaymentFrequency.Monthly 
+        ? newPrepayment.endDate 
+        : undefined,
     };
     updateLoanDetails("prepayments", [
       ...(loanDetails.prepayments || []),
@@ -254,11 +253,7 @@ export const PrepaymentDialog = () => {
               <MonthPicker
                 label="End Month"
                 minDate={new Date(newPrepayment.startDate)}
-                value={
-                  newPrepayment.endDate
-                    ? new Date(newPrepayment.endDate)
-                    : undefined
-                }
+                value={newPrepayment.endDate ? new Date(newPrepayment.endDate) : new Date(newPrepayment.startDate)} // Always provide a valid Date object
                 placeholder="Select month"
                 onChange={(value) => {
                   setNewPrepayment((prev) => ({

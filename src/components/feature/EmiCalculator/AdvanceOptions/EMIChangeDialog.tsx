@@ -26,16 +26,16 @@ export const EMIChangeDialog = () => {
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const minStartDate = useMemo(() => {
-    return formateDate(
-      loanResults?.schedule
-        ? new Date(
-            loanResults.schedule[0].year,
-            loanResults.schedule[0].month + 1
-          )
-        : new Date()
-    );
+    const startDate = loanResults?.schedule
+      ? new Date(
+          loanResults.schedule[0].year,
+          loanResults.schedule[0].month + 1
+        )
+      : new Date();
+    return formateDate(startDate);
   }, [loanResults?.schedule]);
 
+  // Initialize with valid default values to prevent undefined/controlled switching
   const [newEmiChange, setNewEmiChange] = useState<EMIChange>({
     id: uuid(),
     emi: 1000,
@@ -95,23 +95,26 @@ export const EMIChangeDialog = () => {
     }
   }, [newEmiChange.emi, minimumRequiredEMI, hasConflictingEmiChange, newEmiChange.startDate]);
 
+  // Update start date when minStartDate changes
   useEffect(() => {
-    setNewEmiChange((prev) => ({
-      ...prev,
-      startDate: minStartDate,
-    }));
+    if (minStartDate) {
+      setNewEmiChange((prev) => ({
+        ...prev,
+        startDate: minStartDate,
+      }));
+    }
   }, [minStartDate]);
 
+  // Reset form when dialog is closed
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => {
         const currentEmi = loanResults?.summary?.emi || 1000;
-        setNewEmiChange((prev) => ({
-          ...prev,
+        setNewEmiChange({
           id: uuid(),
           emi: Math.round(currentEmi * 1.1), // Default to 10% higher than current EMI
-          startDate: minStartDate,
-        }));
+          startDate: minStartDate || formateDate(new Date()), // Always ensure a valid date
+        });
         setValidationError(null);
       }, 1000);
     }
@@ -219,8 +222,8 @@ export const EMIChangeDialog = () => {
             <MonthPicker
               label="Effective From"
               required
-              minDate={new Date(minStartDate)}
-              value={new Date(newEmiChange.startDate)}
+              minDate={new Date(minStartDate)} // Ensure we always pass a valid Date object
+              value={new Date(newEmiChange.startDate)} // Ensure we always pass a valid Date object
               onChange={(value) => {
                 setNewEmiChange((prev) => ({
                   ...prev,
