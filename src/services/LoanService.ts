@@ -6,10 +6,15 @@ import {
   LoanCalculationOutput,
 } from "loanwise";
 
+
 export const calculateLoan = async (
   inputs: LoanCalculationInputs
-): Promise<LoanCalculationOutput> => {
-  const calculator = new AdvancedLoanCalculator(inputs);
-  const result = calculator.calculate();
-  return result;
-};
+): Promise<LoanCalculationOutput> => { 
+  try {
+    const loanService = new AdvancedLoanCalculator(inputs);
+    return loanService.calculate();
+  } catch (error) {
+    console.error("Error calculating loan:", error);
+    throw error;
+  }
+ }

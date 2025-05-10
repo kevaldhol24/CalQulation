@@ -34,7 +34,7 @@ export const PrepaymentDialog = () => {
   const minStartDate = useMemo(() => {
     return formateDate(
       loanResults?.schedule
-        ? new Date(loanResults.schedule[0].year, loanResults.schedule[0].month)
+        ? new Date(loanResults.schedule[0].year, loanResults.schedule[0].month + 1)
         : new Date()
     );
   }, [loanResults?.schedule]);

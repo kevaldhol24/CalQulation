@@ -1,4 +1,5 @@
 import { MonthPicker } from "@/components/common/MonthPicker";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,20 +13,25 @@ import {
 } from "@/components/ui/dialog";
 import { useLoan } from "@/contexts/LoanContext";
 import { formateDate } from "@/lib/utils";
-import { EMIChange, isEMISufficient } from "loanwise";
-import { CreditCard, Plus, XIcon } from "lucide-react";
+import { EMIChange } from "loanwise";
+import { AlertTriangle, CreditCard, Plus, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { AmountInput } from "../loanInputs/AmountInput";
 
 export const EMIChangeDialog = () => {
-  const { loanDetails, loanResults, updateLoanDetails } = useLoan();
+  const { loanDetails, loanResults, updateLoanDetails, getMinimumEMIForMonth } =
+    useLoan();
   const [isOpen, setIsOpen] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const minStartDate = useMemo(() => {
     return formateDate(
       loanResults?.schedule
-        ? new Date(loanResults.schedule[0].year, loanResults.schedule[0].month)
+        ? new Date(
+            loanResults.schedule[0].year,
+            loanResults.schedule[0].month + 1
+          )
         : new Date()
     );
   }, [loanResults?.schedule]);
@@ -39,19 +45,39 @@ export const EMIChangeDialog = () => {
   // Function to get the accurate EMI for the selected month
   const getSelectedMonthEMI = useMemo(() => {
     if (!loanResults?.schedule || !newEmiChange.startDate) return null;
-    
+
     const selectedDate = new Date(newEmiChange.startDate);
     const selectedMonth = selectedDate.getMonth();
     const selectedYear = selectedDate.getFullYear();
-    console.log("asdd", {selectedMonth, selectedYear,ss: loanResults.schedule})
 
     // Find the matching entry in the loan schedule
     const scheduleEntry = loanResults.schedule.find(
-      entry => entry.month - 1 === selectedMonth && entry.year === selectedYear
+      (entry) => entry.month === selectedMonth && entry.year === selectedYear
     );
 
     return scheduleEntry?.emiAmount || loanResults?.summary?.emi;
-  }, [loanResults?.schedule, loanResults?.summary?.emi, newEmiChange.startDate]);
+  }, [
+    loanResults?.schedule,
+    loanResults?.summary?.emi,
+    newEmiChange.startDate,
+  ]);
+
+  // Get minimum required EMI for the selected month
+  const minimumRequiredEMI = useMemo(() => {
+    if (!newEmiChange.startDate) return 0;
+    return getMinimumEMIForMonth(new Date(newEmiChange.startDate));
+  }, [newEmiChange.startDate, getMinimumEMIForMonth]);
+
+  // Validate EMI amount whenever it changes or date changes
+  useEffect(() => {
+    if (newEmiChange.emi < minimumRequiredEMI) {
+      setValidationError(
+        `EMI amount must be at least ${minimumRequiredEMI.toLocaleString()} for this month`
+      );
+    } else {
+      setValidationError(null);
+    }
+  }, [newEmiChange.emi, minimumRequiredEMI]);
 
   useEffect(() => {
     setNewEmiChange((prev) => ({
@@ -70,16 +96,20 @@ export const EMIChangeDialog = () => {
           emi: Math.round(currentEmi * 1.1), // Default to 10% higher than current EMI
           startDate: minStartDate,
         }));
+        setValidationError(null);
       }, 1000);
     }
   }, [isOpen, minStartDate, loanResults?.summary?.emi]);
 
   const handleSubmit = () => {
+    // Prevent submission if validation error exists
+    if (validationError) return;
+
     const emiChange = {
       ...newEmiChange,
       startDate: newEmiChange.startDate,
     };
-    
+
     updateLoanDetails("emiChanges", [
       ...(loanDetails.emiChanges || []),
       emiChange,
@@ -107,7 +137,7 @@ export const EMIChangeDialog = () => {
         <DialogHeader className="flex flex-row items-start justify-between">
           <div>
             <DialogTitle className="flex items-center">
-              <CreditCard className="mr-2" size={18}/>
+              <CreditCard className="mr-2" size={18} />
               New EMI Amount
             </DialogTitle>
             <DialogDescription className="mt-1">
@@ -124,6 +154,12 @@ export const EMIChangeDialog = () => {
           </Button>
         </DialogHeader>
         <div className="grid gap-2">
+          {validationError && (
+            <Alert variant="destructive" className="mt-2 border-destructive/65">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertDescription>{validationError}</AlertDescription>
+            </Alert>
+          )}
           <div>
             <AmountInput
               hideSlider
@@ -131,15 +167,16 @@ export const EMIChangeDialog = () => {
               onChange={(value) =>
                 setNewEmiChange((prev) => ({ ...prev, emi: value || 0 }))
               }
-              minValue={100}
+              minValue={1}
             />
             {getSelectedMonthEMI && (
               <p className="text-xs text-muted-foreground mt-1">
-                Current EMI for selected month: {getSelectedMonthEMI.toLocaleString()} 
+                Current EMI for selected month:{" "}
+                {getSelectedMonthEMI.toLocaleString()}
               </p>
             )}
           </div>
-          
+
           <div>
             <MonthPicker
               label="Effective From"
@@ -161,7 +198,11 @@ export const EMIChangeDialog = () => {
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={!!validationError}
+          >
             Submit
           </Button>
         </DialogFooter>

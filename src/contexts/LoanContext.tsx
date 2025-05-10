@@ -4,13 +4,18 @@
 import { formateDate } from "@/lib/utils";
 import { calculateLoan } from "@/services/LoanService";
 import {
+  calculateMinimumEMI,
+  LoanCalculationInputs,
+  LoanCalculationOutput,
+} from "loanwise";
+import {
   createContext,
+  ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useState,
-  ReactNode,
 } from "react";
-import { LoanCalculationInputs, LoanCalculationOutput } from "loanwise";
 
 // Define types
 type LoanContextType = {
@@ -18,6 +23,7 @@ type LoanContextType = {
   loanResults: LoanCalculationOutput | undefined;
   updateLoanDetails: (key: string, value: number | string | Date | any) => void;
   setLoanDetails: React.Dispatch<React.SetStateAction<LoanCalculationInputs>>;
+  getMinimumEMIForMonth: (date: Date) => number;
   isLoading: boolean;
 };
 
@@ -48,7 +54,6 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
     setLoanDetails((prev) => ({ ...prev, [key]: value }));
   };
 
-  // Calculate loan whenever loanDetails changes
   useEffect(() => {
     const fetchResults = async () => {
       setIsLoading(true);
@@ -65,11 +70,33 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
     fetchResults();
   }, [loanDetails]);
 
+  const getMinimumEMIForMonth = useCallback(
+    (date: Date) => {
+      if (!loanResults?.schedule) return 0;
+      
+      const month = date.getMonth();
+      const year = date.getFullYear();
+      
+      const emiForMonth = loanResults.schedule.find(
+        (emi) => emi.month === month && emi.year === year
+      );
+
+      if (!emiForMonth) return 0;
+      
+      return calculateMinimumEMI(
+        emiForMonth.remainingBalance,
+        emiForMonth.interestRate
+      );
+    },
+    [loanResults]
+  );
+
   return (
     <LoanContext.Provider
       value={{
         loanDetails,
         loanResults,
+        getMinimumEMIForMonth,
         updateLoanDetails,
         setLoanDetails,
         isLoading,

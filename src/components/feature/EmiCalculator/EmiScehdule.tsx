@@ -281,7 +281,7 @@ export const EmiSchedule = () => {
                           {item.emiNumber}
                         </TableCell>
                         <TableCell className="font-normal whitespace-nowrap">
-                          {MONTHS[item.month - 1]}
+                          {MONTHS[item.month]}
                         </TableCell>
                         <TableCell className="text-center font-normal whitespace-nowrap">
                           {formateCurrency(Number(item.emiAmount))}
