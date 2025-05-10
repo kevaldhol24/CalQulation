@@ -1,4 +1,5 @@
 import { MonthPicker } from "@/components/common/MonthPicker";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,9 +20,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useLoan } from "@/contexts/LoanContext";
-import { formateDate } from "@/lib/utils";
+import { formateDate, formatMonthYear, isSameMonth } from "@/lib/utils";
 import { ImpactType, Prepayment, PrepaymentFrequency } from "loanwise";
-import { Plus, XIcon } from "lucide-react";
+import { AlertTriangle, Plus, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { TbMoneybag } from "react-icons/tb";
 import { v4 as uuid } from "uuid";
@@ -30,6 +31,7 @@ import { AmountInput } from "../loanInputs/AmountInput";
 export const PrepaymentDialog = () => {
   const { loanDetails, loanResults, updateLoanDetails } = useLoan();
   const [isOpen, setIsOpen] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const minStartDate = useMemo(() => {
     return formateDate(
@@ -47,6 +49,26 @@ export const PrepaymentDialog = () => {
     startDate: formateDate(new Date()),
     endDate: undefined,
   });
+
+  // Check if the selected month already has a prepayment
+  const hasConflictingPrepayment = useMemo(() => {
+    if (!loanDetails.prepayments || !newPrepayment.startDate) return false;
+    
+    return loanDetails.prepayments.some(prepayment => 
+      isSameMonth(prepayment.startDate, newPrepayment.startDate)
+    );
+  }, [loanDetails.prepayments, newPrepayment.startDate]);
+
+  // Validate and check for conflicts whenever values change
+  useEffect(() => {
+    if (hasConflictingPrepayment) {
+      setValidationError(
+        `A prepayment already exists for ${formatMonthYear(newPrepayment.startDate)}. Please select a different month.`
+      );
+    } else {
+      setValidationError(null);
+    }
+  }, [hasConflictingPrepayment, newPrepayment.startDate]);
 
   useEffect(() => {
     setNewPrepayment((prev) => ({
@@ -67,11 +89,27 @@ export const PrepaymentDialog = () => {
           startDate: minStartDate,
           endDate: undefined,
         }));
+        setValidationError(null);
       }, 1000);
     }
   }, [isOpen, minStartDate]);
 
   const handleSubmit = () => {
+    // Check for conflicts again right before submission
+    const isConflict = loanDetails.prepayments?.some(prepayment => 
+      isSameMonth(prepayment.startDate, newPrepayment.startDate)
+    );
+    
+    if (isConflict) {
+      setValidationError(
+        `A prepayment already exists for ${formatMonthYear(newPrepayment.startDate)}. Please select a different month.`
+      );
+      return;
+    }
+
+    // Prevent submission if validation error exists
+    if (validationError) return;
+
     const prepayment = {
       ...newPrepayment,
       startDate: newPrepayment.startDate,
@@ -124,6 +162,13 @@ export const PrepaymentDialog = () => {
             <span className="sr-only">Close</span>
           </Button>
         </DialogHeader>
+        
+        {validationError && (
+          <Alert variant="destructive" className="mt-2 border-destructive/65">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>{validationError}</AlertDescription>
+          </Alert>
+        )}
         
         <div className="grid gap-2">
           <AmountInput
@@ -231,7 +276,11 @@ export const PrepaymentDialog = () => {
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button 
+            type="submit" 
+            onClick={handleSubmit}
+            disabled={!!validationError}
+          >
             Submit
           </Button>
         </DialogFooter>

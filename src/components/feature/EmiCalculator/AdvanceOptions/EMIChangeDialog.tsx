@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useLoan } from "@/contexts/LoanContext";
-import { formateDate } from "@/lib/utils";
+import { formateDate, formatMonthYear, isSameMonth } from "@/lib/utils";
 import { EMIChange } from "loanwise";
 import { AlertTriangle, CreditCard, Plus, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -62,22 +62,38 @@ export const EMIChangeDialog = () => {
     newEmiChange.startDate,
   ]);
 
+  // Check if the selected month already has an EMI change
+  const hasConflictingEmiChange = useMemo(() => {
+    if (!loanDetails.emiChanges || !newEmiChange.startDate) return false;
+    
+    return loanDetails.emiChanges.some(emiChange => 
+      isSameMonth(emiChange.startDate, newEmiChange.startDate)
+    );
+  }, [loanDetails.emiChanges, newEmiChange.startDate]);
+
   // Get minimum required EMI for the selected month
   const minimumRequiredEMI = useMemo(() => {
     if (!newEmiChange.startDate) return 0;
     return getMinimumEMIForMonth(new Date(newEmiChange.startDate));
   }, [newEmiChange.startDate, getMinimumEMIForMonth]);
 
-  // Validate EMI amount whenever it changes or date changes
+  // Validate EMI amount and check for conflicts whenever values change
   useEffect(() => {
-    if (newEmiChange.emi < minimumRequiredEMI) {
+    if (hasConflictingEmiChange) {
+      const selectedDate = new Date(newEmiChange.startDate);
+      const month = selectedDate.toLocaleString('default', { month: 'long' });
+      const year = selectedDate.getFullYear();
+      setValidationError(
+        `An EMI change already exists for ${month} ${year}. Please select a different month.`
+      );
+    } else if (newEmiChange.emi < minimumRequiredEMI) {
       setValidationError(
         `EMI amount must be at least ${minimumRequiredEMI.toLocaleString()} for this month`
       );
     } else {
       setValidationError(null);
     }
-  }, [newEmiChange.emi, minimumRequiredEMI]);
+  }, [newEmiChange.emi, minimumRequiredEMI, hasConflictingEmiChange, newEmiChange.startDate]);
 
   useEffect(() => {
     setNewEmiChange((prev) => ({
@@ -102,6 +118,26 @@ export const EMIChangeDialog = () => {
   }, [isOpen, minStartDate, loanResults?.summary?.emi]);
 
   const handleSubmit = () => {
+    // Check for conflicts again right before submission
+    const isConflict = loanDetails.emiChanges?.some(emiChange => 
+      isSameMonth(emiChange.startDate, newEmiChange.startDate)
+    );
+    
+    if (isConflict) {
+      setValidationError(
+        `An EMI change already exists for ${formatMonthYear(newEmiChange.startDate)}. Please select a different month.`
+      );
+      return;
+    }
+    
+    // Check if EMI is below minimum required
+    if (newEmiChange.emi < minimumRequiredEMI) {
+      setValidationError(
+        `EMI amount must be at least ${minimumRequiredEMI.toLocaleString()} for this month`
+      );
+      return;
+    }
+    
     // Prevent submission if validation error exists
     if (validationError) return;
 

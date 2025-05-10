@@ -1,4 +1,5 @@
 import { MonthPicker } from "@/components/common/MonthPicker";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,9 +20,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useLoan } from "@/contexts/LoanContext";
-import { formateDate } from "@/lib/utils";
+import { formateDate, formatMonthYear, isSameMonth } from "@/lib/utils";
 import { ImpactType, InterestRateChange } from "loanwise";
-import { Percent, Plus, XIcon } from "lucide-react";
+import { AlertTriangle, Percent, Plus, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { InterestInput } from "../loanInputs/InterestInput";
@@ -29,6 +30,7 @@ import { InterestInput } from "../loanInputs/InterestInput";
 export const InterestRateChangeDialog = () => {
   const { loanDetails, loanResults, updateLoanDetails } = useLoan();
   const [isOpen, setIsOpen] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const minStartDate = useMemo(() => {
     return formateDate(
@@ -44,6 +46,26 @@ export const InterestRateChangeDialog = () => {
     impact: ImpactType.Tenure,
     effectiveDate: formateDate(new Date()),
   });
+
+  // Check if the selected month already has an interest rate change
+  const hasConflictingInterestChange = useMemo(() => {
+    if (!loanDetails.interestRateChanges || !newRateChange.effectiveDate) return false;
+    
+    return loanDetails.interestRateChanges.some(interestChange => 
+      isSameMonth(interestChange.effectiveDate, newRateChange.effectiveDate)
+    );
+  }, [loanDetails.interestRateChanges, newRateChange.effectiveDate]);
+
+  // Validate and check for conflicts whenever values change
+  useEffect(() => {
+    if (hasConflictingInterestChange) {
+      setValidationError(
+        `An interest rate change already exists for ${formatMonthYear(newRateChange.effectiveDate)}. Please select a different month.`
+      );
+    } else {
+      setValidationError(null);
+    }
+  }, [hasConflictingInterestChange, newRateChange.effectiveDate]);
 
   useEffect(() => {
     setNewRateChange((prev) => ({
@@ -62,16 +84,32 @@ export const InterestRateChangeDialog = () => {
           impact: ImpactType.Tenure,
           effectiveDate: minStartDate,
         }));
+        setValidationError(null);
       }, 1000);
     }
   }, [isOpen, minStartDate]);
 
   const handleSubmit = () => {
+    // Check for conflicts again right before submission
+    const isConflict = loanDetails.interestRateChanges?.some(interestChange => 
+      isSameMonth(interestChange.effectiveDate, newRateChange.effectiveDate)
+    );
+    
+    if (isConflict) {
+      setValidationError(
+        `An interest rate change already exists for ${formatMonthYear(newRateChange.effectiveDate)}. Please select a different month.`
+      );
+      return;
+    }
+
+    // Prevent submission if validation error exists
+    if (validationError) return;
+
     const rateChange = {
       ...newRateChange,
       effectiveDate: newRateChange.effectiveDate,
     };
-    
+
     updateLoanDetails("interestRateChanges", [
       ...(loanDetails.interestRateChanges || []),
       rateChange,
@@ -115,6 +153,13 @@ export const InterestRateChangeDialog = () => {
             <span className="sr-only">Close</span>
           </Button>
         </DialogHeader>
+        
+        {validationError && (
+          <Alert variant="destructive" className="mt-2 border-destructive/65">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>{validationError}</AlertDescription>
+          </Alert>
+        )}
         
         <div className="grid gap-2">
           <div>
@@ -174,7 +219,11 @@ export const InterestRateChangeDialog = () => {
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button 
+            type="submit" 
+            onClick={handleSubmit}
+            disabled={!!validationError}
+          >
             Submit
           </Button>
         </DialogFooter>
