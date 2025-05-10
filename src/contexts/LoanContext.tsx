@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { formateDate } from "@/lib/utils";
+import { formateDate, formatMonthYear } from "@/lib/utils";
 import { calculateLoan } from "@/services/LoanService";
 import {
   calculateMinimumEMI,
   LoanCalculationInputs,
   LoanCalculationOutput,
+  PrepaymentFrequency,
 } from "loanwise";
 import {
   createContext,
@@ -14,6 +16,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -25,6 +28,8 @@ type LoanContextType = {
   setLoanDetails: React.Dispatch<React.SetStateAction<LoanCalculationInputs>>;
   getMinimumEMIForMonth: (date: Date) => number;
   isLoading: boolean;
+  conflictsExist: boolean;
+  conflictingMonths: Array<{month: string, types: string[]}>;
 };
 
 // Create context with default values
@@ -53,6 +58,73 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
   const updateLoanDetails = (key: string, value: any) => {
     setLoanDetails((prev) => ({ ...prev, [key]: value }));
   };
+
+  // Detect conflicts in advance inputs
+  const { conflictsExist, conflictingMonths } = useMemo(() => {
+    const { interestRateChanges, emiChanges, prepayments } = loanDetails;
+    const conflictMap = new Map<string, string[]>();
+    
+    // Helper to check if multiple changes exist for the same month
+    const checkAndAddConflict = (date: Date | string, type: string) => {
+      const monthYear = formatMonthYear(date);
+      if (!conflictMap.has(monthYear)) {
+        conflictMap.set(monthYear, [type]);
+      } else {
+        const existing = conflictMap.get(monthYear) || [];
+        if (!existing.includes(type)) {
+          conflictMap.set(monthYear, [...existing, type]);
+        }
+      }
+    };
+
+    // Check interest rate changes
+    interestRateChanges?.forEach(change => {
+      checkAndAddConflict(change.effectiveDate, 'interest rate');
+    });
+
+    // Check EMI changes
+    emiChanges?.forEach(change => {
+      checkAndAddConflict(change.startDate, 'EMI');
+    });
+
+    // Check prepayments
+    prepayments?.forEach(prepay => {
+      // For one-time prepayments
+      if (prepay.type === 'onetime') {
+        checkAndAddConflict(prepay.startDate, 'prepayment');
+      } 
+      // For recurring prepayments, check all months in the range
+      else if (prepay.type === PrepaymentFrequency.Monthly) {
+        const startDate = new Date(prepay.startDate);
+        const endDate = prepay.endDate ? new Date(prepay.endDate) : null;
+        
+        if (!endDate) {
+          checkAndAddConflict(startDate, 'prepayment');
+          return;
+        }
+
+        // For recurring prepayments with an end date, add all months in the range
+        const currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+          checkAndAddConflict(new Date(currentDate), 'prepayment');
+          currentDate.setMonth(currentDate.getMonth() + 1);
+        }
+      }
+    });
+    
+    // Filter to only months with multiple changes
+    const conflicts = Array.from(conflictMap.entries())
+      .filter(([_, types]) => types.length > 1)
+      .map(([month, types]) => ({
+        month,
+        types
+      }));
+    
+    return {
+      conflictsExist: conflicts.length > 0,
+      conflictingMonths: conflicts
+    };
+  }, [loanDetails]);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -100,6 +172,8 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
         updateLoanDetails,
         setLoanDetails,
         isLoading,
+        conflictsExist,
+        conflictingMonths,
       }}
     >
       {children}

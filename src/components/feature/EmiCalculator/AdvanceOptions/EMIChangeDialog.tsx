@@ -153,13 +153,15 @@ export const EMIChangeDialog = () => {
             <span className="sr-only">Close</span>
           </Button>
         </DialogHeader>
+        
+        {validationError && (
+          <Alert variant="destructive" className="mt-2 border-destructive/65">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>{validationError}</AlertDescription>
+          </Alert>
+        )}
+        
         <div className="grid gap-2">
-          {validationError && (
-            <Alert variant="destructive" className="mt-2 border-destructive/65">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertDescription>{validationError}</AlertDescription>
-            </Alert>
-          )}
           <div>
             <AmountInput
               hideSlider

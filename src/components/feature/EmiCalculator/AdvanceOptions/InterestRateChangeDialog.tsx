@@ -115,6 +115,7 @@ export const InterestRateChangeDialog = () => {
             <span className="sr-only">Close</span>
           </Button>
         </DialogHeader>
+        
         <div className="grid gap-2">
           <div>
             <InterestInput
