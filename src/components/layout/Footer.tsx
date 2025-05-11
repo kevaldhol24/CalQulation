@@ -84,12 +84,12 @@ export const Footer = () => {
             </h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/about-us"
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
                   About
-                </a>
+                </Link>
               </li>
               <li>
                 <a
@@ -117,28 +117,28 @@ export const Footer = () => {
             </h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/privacy-policy"
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="terms-of-service"
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
                   Terms of Service
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/disclaimer"
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
                   Disclaimer
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -147,7 +147,7 @@ export const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              &copy; {currentYear} FinCalc. All rights reserved.
+              &copy; {currentYear} Calqulation. All rights reserved.
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 md:mt-0">
               Designed and built with <span className="text-red-500">❤</span>{" "}
