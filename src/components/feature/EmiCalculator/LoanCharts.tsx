@@ -362,7 +362,7 @@ export const LoanCharts = () => {
         className="flex items-center justify-between cursor-pointer mb-2"
         onClick={toggleExpanded}
       >
-        <h2 className="text-lg font-bold">Loan Visualization</h2>
+        <h2 className="text-md font-bold">Loan Visualization</h2>
         <button
           className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
           aria-label={isExpanded ? "Collapse charts" : "Expand charts"}
