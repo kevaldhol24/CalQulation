@@ -101,10 +101,17 @@ export const EmiSchedule = () => {
 
   return (
     <>
-      <h2 className="text-md font-bold mt-6">EMI Schedule</h2>
+      <h2 className="text-md font-bold mt-6" id="emi-schedule-heading">EMI Schedule</h2>
       <div className="overflow-x-auto rounded-lg mt-2">
         <TooltipProvider>
-          <Table className="w-full shadow-md rounded-lg border-collapse text-sm border">
+          <Table 
+            className="w-full shadow-md rounded-lg border-collapse text-sm border"
+            aria-labelledby="emi-schedule-heading"
+            aria-describedby="emi-schedule-desc"
+          >
+            <caption id="emi-schedule-desc" className="sr-only">
+              Year-wise EMI schedule showing monthly installments, interest, principal payments, and remaining balance
+            </caption>
             <colgroup>
               <col className="text-nowrap w-4" />
               <col className="text-nowrap w-1/12" />
@@ -127,8 +134,9 @@ export const EmiSchedule = () => {
                     EMI Amount
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <span>
-                          <BiInfoCircle size={14} />
+                        <span className="cursor-help">
+                          <BiInfoCircle size={14} aria-hidden="true" />
+                          <span className="sr-only">Information about EMI amount</span>
                         </span>
                       </TooltipTrigger>
                       <TooltipContent side="top">
@@ -142,8 +150,9 @@ export const EmiSchedule = () => {
                     Interest
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <span>
-                          <BiInfoCircle size={14} />
+                        <span className="cursor-help">
+                          <BiInfoCircle size={14} aria-hidden="true" />
+                          <span className="sr-only">Information about interest</span>
                         </span>
                       </TooltipTrigger>
                       <TooltipContent side="top">
@@ -236,12 +245,23 @@ export const EmiSchedule = () => {
                   <TableRow
                     className="bg-gray-100 dark:bg-muted/40 cursor-pointer hover:bg-muted text-xs"
                     onClick={() => toggleYearExpansion(yearData.year)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleYearExpansion(yearData.year);
+                      }
+                    }}
+                    tabIndex={0}
+                    role="button"
+                    aria-expanded={expandedYears.includes(yearData.year)}
+                    aria-controls={`year-details-${yearData.year}`}
+                    aria-label={`Year ${yearData.year} summary, click to ${expandedYears.includes(yearData.year) ? 'collapse' : 'expand'}`}
                   >
                     <TableCell className="font-medium flex items-center whitespace-nowrap">
                       {expandedYears.includes(yearData.year) ? (
-                        <ChevronDown size={18} />
+                        <ChevronDown size={18} aria-hidden="true" />
                       ) : (
-                        <ChevronRight size={18} />
+                        <ChevronRight size={18} aria-hidden="true" />
                       )}
                     </TableCell>
                     <TableCell className="font-medium whitespace-nowrap">
@@ -276,6 +296,8 @@ export const EmiSchedule = () => {
                       <TableRow
                         key={`${yearData.year}-${item.emiNumber}`}
                         className="bg-background/50 text-xs"
+                        role="row"
+                        id={`year-details-${yearData.year}-row-${item.emiNumber}`}
                       >
                         <TableCell className="font-normal items-center whitespace-nowrap text-center">
                           {item.emiNumber}

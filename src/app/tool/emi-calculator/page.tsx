@@ -5,10 +5,56 @@ import { FaChartLine, FaLightbulb, FaRegClock, FaChartBar } from "react-icons/fa
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { BsGraphUp, BsBank } from "react-icons/bs";
 import { HiCurrencyDollar } from "react-icons/hi";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "EMI Calculator | Calculate - Loan EMI, Interest & Amortization Schedule",
+  description: "Calculate your loan EMI, total interest payable, and view detailed amortization schedule. Plan home loans, car loans & personal loans with advanced options like prepayments.",
+  keywords: "EMI calculator, loan EMI calculation, home loan EMI, car loan EMI, personal loan calculator, loan amortization schedule, prepayment calculator, interest rates",
+  openGraph: {
+    title: "EMI Calculator | Calculate - Loan EMI, Interest & Amortization Schedule",
+    description: "Calculate your loan EMI, total interest payable, and view detailed amortization schedule. Plan home loans, car loans & personal loans with advanced options.",
+    url: "https://calqulation.com/tool/emi-calculator",
+    images: [
+      {
+        url: "/Financial-planning.svg",
+        width: 1200,
+        height: 630,
+        alt: "EMI Calculator",
+      }
+    ],
+  }
+};
 
 export default function EmiCalculatorPage() {
+  // Schema.org structured data for the EMI calculator
+  const calculatorSchemaJson = {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "Loan EMI Calculator",
+    "description": "Calculate your loan EMI, total interest payable, and generate a detailed amortization schedule.",
+    "featureList": [
+      "Instant EMI calculation", 
+      "Amortization schedule", 
+      "Prepayment options",
+      "Interest rate change scenarios",
+      "Visual charts and graphs"
+    ],
+    "category": "Financial Tool",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(calculatorSchemaJson) }}
+      />
       {/* Hero section with enhanced visuals */}
       <div className="relative overflow-hidden">
         {/* Enhanced background with modern gradient */}

@@ -56,22 +56,25 @@ export const Prepayment = () => {
   );
 
   return (
-    <>
-      <motion.div
+    <>      <motion.div
         variants={{
           hidden: { opacity: 0, y: 20 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
         }}
         className="bg-gradient-to-br from-background to-emerald-100/40 dark:from-background dark:to-emerald-950/20 p-4 rounded-xl border border-emerald-300/50 dark:border-emerald-900/30 shadow-sm"
+        role="region"
+        aria-labelledby="prepayment-heading"
       >
-        <h4 className="flex justify-between items-center font-semibold text-emerald-500">
-          <span className="flex items-center gap-2">
-            <Rocket size={18} className="text-emerald-500" />
-            Prepayment
+        <h4 className="flex justify-between items-center font-semibold text-emerald-500">          <span className="flex items-center gap-2">
+            <Rocket size={18} className="text-emerald-500" aria-hidden="true" />
+            <span id="prepayment-heading">Prepayment</span>
             <TooltipProvider delayDuration={300}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <BsFillInfoCircleFill size={14} />
+                  <span className="cursor-help">
+                    <BsFillInfoCircleFill size={14} aria-hidden="true" />
+                    <span className="sr-only">Information about prepayment</span>
+                  </span>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Add prepayment to reduce loan term or EMI</p>

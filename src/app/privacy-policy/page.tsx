@@ -8,6 +8,23 @@ import {
   FaChild,
 } from "react-icons/fa";
 import { MdSecurity, MdEmail } from "react-icons/md";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | Calqulation - How We Protect Your Data",
+  description: "Learn how Calqulation collects, uses, and protects your personal information when you use our financial calculators and tools.",
+  keywords: "privacy policy, data protection, financial calculator privacy, personal information, cookie policy, GDPR compliance",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Privacy Policy | Calqulation - How We Protect Your Data",
+    description: "Learn how Calqulation collects, uses, and protects your personal information when you use our financial calculators and tools.",
+    url: "https://calqulation.com/privacy-policy",
+    type: "website"
+  }
+};
 
 export default function PrivacyPolicyPage() {
   const currentYear = new Date().getFullYear();
@@ -298,8 +315,7 @@ export default function PrivacyPolicyPage() {
                   </p>
                 </div>
               </div>
-            </div>
-          </section>
+            </div>          </section>
 
           {/* Contact Section */}
           <section className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl overflow-hidden shadow-xl text-white p-8">
@@ -320,8 +336,46 @@ export default function PrivacyPolicyPage() {
               </div>
             </div>
           </section>
+
+          {/* Last updated timestamp */}
+          <section className="mt-8 text-center">
+            <p className="text-sm text-gray-500 dark:text-gray-400">This Privacy Policy was last updated on May 11, {currentYear}</p>
+          </section>
+          
+          {/* SEO-friendly footer links */}
+          <section className="mt-8">
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="mb-4">Related Information:</p>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <a href="/terms-of-service" className="text-blue-600 dark:text-blue-400 hover:underline">Terms of Service</a>
+                <a href="/disclaimer" className="text-blue-600 dark:text-blue-400 hover:underline">Disclaimer</a>
+                <a href="/about-us" className="text-blue-600 dark:text-blue-400 hover:underline">About Us</a>
+                <a href="/tool/emi-calculator" className="text-blue-600 dark:text-blue-400 hover:underline">EMI Calculator</a>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
+
+      {/* Structured data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Privacy Policy | Calqulation - How We Protect Your Data",
+            "description": "Learn how Calqulation collects, uses, and protects your personal information when you use our financial calculators and tools.",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Calqulation",
+              "logo": "https://calqulation.com/Logo.png"
+            },
+            "datePublished": "2025-01-01",
+            "dateModified": `2025-05-11`
+          })
+        }}
+      />
     </div>
   );
 }

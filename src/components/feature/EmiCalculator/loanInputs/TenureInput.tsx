@@ -73,11 +73,11 @@ export const TenureInput: FC<TenureInputProps> = ({
     <div>
       <TextField
         {...props}
-        label="Amount"
+        label="Tenure"
         required
-        id="loanAmount"
-        name="amount"
-        title="amount"
+        id="loanTenure"
+        name="tenure"
+        title="tenure"
         endAdornment={
           <div>
             <Button
@@ -87,6 +87,8 @@ export const TenureInput: FC<TenureInputProps> = ({
               }`}
               style={{ borderRadius: "0" }}
               onClick={() => handleTenureUnitChange("Yr")}
+              aria-label="Set tenure in years"
+              aria-pressed={tenureUnit === "Yr"}
             >
               Yr
             </Button>
@@ -97,13 +99,15 @@ export const TenureInput: FC<TenureInputProps> = ({
               }`}
               style={{ borderRadius: "0 6px 6px 0" }}
               onClick={() => handleTenureUnitChange("Mo")}
+              aria-label="Set tenure in months"
+              aria-pressed={tenureUnit === "Mo"}
             >
               Mo
             </Button>
           </div>
         }
         adornmentClassName="!right-0 !px-0 !top-[24px] !border-none"
-        placeholder="Enter amount"
+        placeholder="Enter tenure"
         className="w-full pr-11"
         value={
           tenureUnit === "Yr" && localValue
@@ -112,7 +116,10 @@ export const TenureInput: FC<TenureInputProps> = ({
         }
         onChange={({ target: { value } }) => handleChange(value)}
         onBlur={handleBlur}
+        aria-label="Loan tenure"
+        aria-describedby="tenure-hint"
       />
+      <span id="tenure-hint" className="sr-only">Enter loan tenure in {tenureUnit === "Yr" ? "years" : "months"}</span>
       <div className="mt-1">
         <Slider
           min={12}
@@ -129,6 +136,11 @@ export const TenureInput: FC<TenureInputProps> = ({
           ]}
           value={localValue !== null ? localValue : undefined}
           onChange={handleSliderChange}
+          aria-label="Loan tenure slider"
+          aria-valuemin={12}
+          aria-valuemax={360}
+          aria-valuenow={localValue || 12}
+          aria-valuetext={`${tenureUnit === "Yr" ? (localValue || 12) / 12 : localValue || 12} ${tenureUnit === "Yr" ? "years" : "months"}`}
         />
       </div>
     </div>

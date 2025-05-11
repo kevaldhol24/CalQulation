@@ -64,20 +64,26 @@ export const SummaryCard: FC<SummaryCardProps> = ({
 }) => {
   // Get the color classes or default to purple
   const colorClasses = colorMappings[color] || colorMappings.purple;
+  // Generate a unique ID for aria-describedby
+  const helpTextId = `help-${title.toLowerCase().replace(/\s+/g, '-')}`;
 
   return (
     <div
       className={`rounded border px-4 py-2 ${colorClasses.bg} ${colorClasses.border} flex items-center justify-between rounded-md`}
+      role="region"
+      aria-label={`${title} information`}
     >
-      <div className={colorClasses.icon}>
+      <div className={colorClasses.icon} aria-hidden="true">
         {icon || <RocketIcon size={28} />}
       </div>
       <div className="flex flex-col items-end gap-0">
-        <span className={`text-muted-foreground text-sm font-bold`}>
+        <span className={`text-muted-foreground text-sm font-bold`} id={`title-${title.toLowerCase().replace(/\s+/g, '-')}`}>
           {title}
         </span>
-        <p className={`text-lg font-bold`}>{value}</p>
-        <span className={`text-muted-foreground text-xs`}>{helpText}</span>
+        <p className={`text-lg font-bold`} aria-labelledby={`title-${title.toLowerCase().replace(/\s+/g, '-')}`} aria-describedby={helpTextId}>
+          {value}
+        </p>
+        <span className={`text-muted-foreground text-xs`} id={helpTextId}>{helpText}</span>
       </div>
     </div>
   );

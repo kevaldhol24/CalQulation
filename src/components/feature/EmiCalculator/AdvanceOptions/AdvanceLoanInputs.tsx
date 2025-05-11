@@ -51,43 +51,54 @@ export const AdvanceLoanInputs = () => {
   };
 
   return (
-    <div className="rounded-xl bg-background/50 ">
-      <h3 className="text-lg font-bold flex items-center cursor-pointer gap-2 hover:text-accent-foreground transition-colors">
+    <div className="rounded-xl bg-background/50 ">      <h3 className="text-lg font-bold flex items-center cursor-pointer gap-2 hover:text-accent-foreground transition-colors">
         <button
           className="text-primary bg-primary/10 p-1 rounded-full"
           onClick={() => setShowAdvanceOptions(!showAdvanceOptions)}
+          aria-expanded={showAdvanceOptions}
+          aria-controls="advanced-options-content"
+          aria-label={showAdvanceOptions ? "Collapse advanced options" : "Expand advanced options"}
         >
           {showAdvanceOptions ? (
-            <ChevronDown size={18} />
+            <ChevronDown size={18} aria-hidden="true" />
           ) : (
-            <ChevronRight size={18} />
+            <ChevronRight size={18} aria-hidden="true" />
           )}
         </button>
         <span
           className=""
           role="button"
           onClick={() => setShowAdvanceOptions(!showAdvanceOptions)}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setShowAdvanceOptions(!showAdvanceOptions);
+            }
+          }}
         >
           Advance Loan Options
         </span>
 
         {/* Badge showing the number of advanced options when count > 0 */}
         {totalAdvancedOptions > 0 && (
-          <span className="ml-2 text-xs font-semibold bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
+          <span className="ml-2 text-xs font-semibold bg-primary text-primary-foreground px-2 py-0.5 rounded-full" aria-label={`${totalAdvancedOptions} advanced options configured`}>
             {totalAdvancedOptions}
           </span>
         )}
       </h3>
 
       <AnimatePresence>
-        {showAdvanceOptions && (
-          <motion.div
+        {showAdvanceOptions && (          <motion.div
+            id="advanced-options-content"
             key="advanced-options"
             initial="hidden"
             animate="visible"
             exit="hidden"
             variants={animationVariants}
             className="mt-6 space-y-6 overflow-hidden"
+            role="region"
+            aria-label="Advanced loan options"
           >
             <Alert variant="default" className="bg-info/10 border-info/30">
               <TbInfoCircle className="h-4 w-4" />

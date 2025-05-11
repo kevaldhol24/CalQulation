@@ -7,6 +7,23 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import { MdCalculate, MdEmail } from "react-icons/md";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Disclaimer | Calqulation - Financial Tools",
+  description: "Important information about the use, accuracy and limitations of Calqulation's financial calculators and tools.",
+  keywords: "disclaimer, financial calculator disclaimer, loan calculator disclaimer, financial tool limitations, legal terms",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Disclaimer | Calqulation - Financial Tools",
+    description: "Important information about the use, accuracy and limitations of Calqulation's financial calculators and tools.",
+    url: "https://calqulation.com/disclaimer",
+    type: "website"
+  }
+};
 
 export default function DisclaimerPage() {
   return (
@@ -211,8 +228,7 @@ export default function DisclaimerPage() {
                   </p>
                 </div>
               </div>
-            </div>
-          </section>
+            </div>          </section>
 
           {/* Contact Section */}
           <section className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl overflow-hidden shadow-xl text-white p-8">
@@ -235,8 +251,41 @@ export default function DisclaimerPage() {
               </div>
             </div>
           </section>
+
+          {/* SEO-friendly footer links */}
+          <section className="mt-12">
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="mb-4">Related Information:</p>
+              <div className="flex flex-wrap gap-4">
+                <a href="/terms-of-service" className="text-blue-600 dark:text-blue-400 hover:underline">Terms of Service</a>
+                <a href="/privacy-policy" className="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a>
+                <a href="/about-us" className="text-blue-600 dark:text-blue-400 hover:underline">About Us</a>
+                <a href="/tool/emi-calculator" className="text-blue-600 dark:text-blue-400 hover:underline">EMI Calculator</a>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
+
+      {/* Structured data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Disclaimer | Calqulation Financial Tools",
+            "description": "Important information about the use, accuracy and limitations of Calqulation's financial calculators and tools.",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Calqulation",
+              "logo": "https://calqulation.com/Logo.png"
+            },
+            "datePublished": "2025-05-11",
+            "dateModified": "2025-05-11"
+          })
+        }}
+      />
     </div>
   );
 }

@@ -65,7 +65,10 @@ export const AmountInput: FC<AmountInputProps> = ({
         value={localValue ? localValue.toLocaleString() : ""}
         onChange={handleInputChange}
         onBlur={handleBlur}
+        aria-label="Loan amount"
+        aria-describedby="amount-hint"
       />
+      <span id="amount-hint" className="sr-only">Enter loan amount in rupees</span>
       {!hideSlider && (
         <div className="mt-1">
           <Slider
@@ -82,6 +85,10 @@ export const AmountInput: FC<AmountInputProps> = ({
             ]}
             value={localValue !== null ? localValue : undefined}
             onChange={handleSliderChange}
+            aria-label="Loan amount slider"
+            aria-valuemin={100000}
+            aria-valuemax={10000000}
+            aria-valuenow={localValue || 100000}
           />
         </div>
       )}

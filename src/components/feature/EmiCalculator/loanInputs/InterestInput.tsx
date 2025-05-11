@@ -60,7 +60,6 @@ export const InterestInput: FC<InterestInputProps> = ({
       onChange(value ? parseFloat(value) : null);
     }
   }, [localValue, onChange, minValue, maxValue]);
-
   return (
     <div>
       <TextField
@@ -76,8 +75,10 @@ export const InterestInput: FC<InterestInputProps> = ({
         value={localValue?.toLocaleString() || ""}
         onChange={handleInputChange}
         onBlur={handleBlur}
+        aria-label="Interest rate percentage"
+        aria-describedby="interest-hint"
       />
-      {!hideSlider && (
+      <span id="interest-hint" className="sr-only">Enter annual interest rate in percentage</span>      {!hideSlider && (
         <div className="mt-1">
           <Slider
             min={3}
@@ -94,6 +95,10 @@ export const InterestInput: FC<InterestInputProps> = ({
               { value: 20, label: "20%" },
               { value: 25, label: "25%" },
             ]}
+            aria-label="Interest rate slider"
+            aria-valuemin={3}
+            aria-valuemax={30}
+            aria-valuenow={localValue ? parseFloat(localValue) : 3}
           />
         </div>
       )}

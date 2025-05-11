@@ -361,21 +361,35 @@ export const LoanCharts = () => {
       <div
         className="flex items-center justify-between cursor-pointer mb-2"
         onClick={toggleExpanded}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleExpanded();
+          }
+        }}
+        aria-expanded={isExpanded}
+        aria-controls="chart-content"
       >
         <h2 className="text-md font-bold">Loan Visualization</h2>
         <button
           className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
           aria-label={isExpanded ? "Collapse charts" : "Expand charts"}
         >
-          {isExpanded ? <FaChevronUp /> : <FaChevronDown />}
+          {isExpanded ? <FaChevronUp aria-hidden="true" /> : <FaChevronDown aria-hidden="true" />}
         </button>
       </div>
 
       {/* Collapsible content with transition */}
       <div
+        id="chart-content"
         className={`transition-all duration-300 ease-in-out overflow-hidden ${
           isExpanded ? "max-h-[3000px] opacity-100" : "max-h-0 opacity-0"
         }`}
+        aria-hidden={!isExpanded}
+        role="region"
+        aria-label="Loan charts and visualizations"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Principal vs Interest Donut Chart */}
