@@ -35,7 +35,10 @@ export const PrepaymentDialog = () => {
 
   const minStartDate = useMemo(() => {
     const startDate = loanResults?.schedule
-      ? new Date(loanResults.schedule[0].year, loanResults.schedule[0].month + 1)
+      ? new Date(
+          loanResults.schedule[0].year,
+          loanResults.schedule[0].month + 1
+        )
       : new Date();
     return formateDate(startDate);
   }, [loanResults?.schedule]);
@@ -47,28 +50,31 @@ export const PrepaymentDialog = () => {
     type: PrepaymentFrequency.Onetime,
     impact: ImpactType.Tenure,
     startDate: formateDate(new Date()),
-    endDate: formateDate(new Date()),  // Initialize with a valid date
+    endDate: undefined, // Initialize with a valid date
   });
 
   // Check if the selected month already has a prepayment
   const hasConflictingPrepayment = useMemo(() => {
     if (!loanDetails.prepayments || !newPrepayment.startDate) return false;
-    
-    return loanDetails.prepayments.some(prepayment => 
+
+    return loanDetails.prepayments.some((prepayment) =>
       isSameMonth(prepayment.startDate, newPrepayment.startDate)
     );
   }, [loanDetails.prepayments, newPrepayment.startDate]);
 
   // Validate and check for conflicts whenever values change
   useEffect(() => {
+    if (!validationError) return;
     if (hasConflictingPrepayment) {
       setValidationError(
-        `A prepayment already exists for ${formatMonthYear(newPrepayment.startDate)}. Please select a different month.`
+        `A prepayment already exists for ${formatMonthYear(
+          newPrepayment.startDate
+        )}. Please select a different month.`
       );
     } else {
       setValidationError(null);
     }
-  }, [hasConflictingPrepayment, newPrepayment.startDate]);
+  }, [hasConflictingPrepayment, newPrepayment.startDate, validationError]);
 
   useEffect(() => {
     setNewPrepayment((prev) => ({
@@ -87,7 +93,7 @@ export const PrepaymentDialog = () => {
           type: PrepaymentFrequency.Onetime,
           impact: ImpactType.Tenure,
           startDate: minStartDate,
-          endDate: formateDate(new Date()),  // Always initialize with a valid date
+          endDate: undefined, // Always initialize with a valid date
         });
         setValidationError(null);
       }, 1000);
@@ -96,13 +102,15 @@ export const PrepaymentDialog = () => {
 
   const handleSubmit = () => {
     // Check for conflicts again right before submission
-    const isConflict = loanDetails.prepayments?.some(prepayment => 
+    const isConflict = loanDetails.prepayments?.some((prepayment) =>
       isSameMonth(prepayment.startDate, newPrepayment.startDate)
     );
-    
+
     if (isConflict) {
       setValidationError(
-        `A prepayment already exists for ${formatMonthYear(newPrepayment.startDate)}. Please select a different month.`
+        `A prepayment already exists for ${formatMonthYear(
+          newPrepayment.startDate
+        )}. Please select a different month.`
       );
       return;
     }
@@ -114,9 +122,10 @@ export const PrepaymentDialog = () => {
       ...newPrepayment,
       startDate: newPrepayment.startDate,
       // Only include endDate for monthly prepayments
-      endDate: newPrepayment.type === PrepaymentFrequency.Monthly 
-        ? newPrepayment.endDate 
-        : undefined,
+      endDate:
+        newPrepayment.type === PrepaymentFrequency.Monthly
+          ? newPrepayment.endDate
+          : undefined,
     };
     updateLoanDetails("prepayments", [
       ...(loanDetails.prepayments || []),
@@ -161,14 +170,14 @@ export const PrepaymentDialog = () => {
             <span className="sr-only">Close</span>
           </Button>
         </DialogHeader>
-        
+
         {validationError && (
           <Alert variant="destructive" className="mt-2 border-destructive/65">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>{validationError}</AlertDescription>
           </Alert>
         )}
-        
+
         <div className="grid gap-2">
           <AmountInput
             hideSlider
@@ -253,7 +262,11 @@ export const PrepaymentDialog = () => {
               <MonthPicker
                 label="End Month"
                 minDate={new Date(newPrepayment.startDate)}
-                value={newPrepayment.endDate ? new Date(newPrepayment.endDate) : new Date(newPrepayment.startDate)} // Always provide a valid Date object
+                value={
+                  newPrepayment.endDate
+                    ? new Date(newPrepayment.endDate)
+                    : undefined
+                } // Always provide a valid Date object
                 placeholder="Select month"
                 onChange={(value) => {
                   setNewPrepayment((prev) => ({
@@ -271,8 +284,8 @@ export const PrepaymentDialog = () => {
               Cancel
             </Button>
           </DialogClose>
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             onClick={handleSubmit}
             disabled={!!validationError}
           >
