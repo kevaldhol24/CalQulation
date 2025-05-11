@@ -3,7 +3,7 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useLoan } from "@/contexts/LoanContext";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, ChevronDown, ChevronRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import { TbInfoCircle } from "react-icons/tb";
@@ -29,6 +29,26 @@ export const AdvanceLoanInputs = () => {
     loanDetails.emiChanges,
     loanDetails.interestRateChanges,
   ]);
+
+  // Animation variants for smooth expansion and collapse
+  const animationVariants = {
+    hidden: { 
+      opacity: 0, 
+      height: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    },
+    visible: {
+      opacity: 1,
+      height: "auto",
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    }
+  };
 
   return (
     <div className="rounded-xl bg-background/50 ">
@@ -59,90 +79,87 @@ export const AdvanceLoanInputs = () => {
         )}
       </h3>
 
-      {showAdvanceOptions && (
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0, height: 0 },
-            visible: {
-              opacity: 1,
-              height: "auto",
-              transition: { duration: 0.3 },
-            },
-          }}
-          className="mt-6 space-y-6"
-        >
-          <Alert variant="default" className="bg-info/10 border-info/30">
-            <TbInfoCircle className="h-4 w-4" />
-            <AlertDescription>
-              <p className="font-medium">Advance input options</p>
-              <p className="text-sm">
-                Learn more about advance input options before adding{" "}
-                <AdvanceOptionsInfoDialog
-                  trigger={
-                    <Button variant="ghost" size="sm" className="h-1 px-1">
-                      Learn more...
-                    </Button>
-                  }
-                />
-              </p>
-              <div className="flex justify-end"></div>
-            </AlertDescription>
-          </Alert>
-
-          {/* Dynamic conflict alert */}
-          {conflictsExist && (
-            <Alert
-              variant="destructive"
-              className="bg-destructive/10 border-destructive/30"
-            >
-              <AlertTriangle className="h-4 w-4" />
+      <AnimatePresence>
+        {showAdvanceOptions && (
+          <motion.div
+            key="advanced-options"
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={animationVariants}
+            className="mt-6 space-y-6 overflow-hidden"
+          >
+            <Alert variant="default" className="bg-info/10 border-info/30">
+              <TbInfoCircle className="h-4 w-4" />
               <AlertDescription>
-                <p className="font-medium mb-1">
-                  Conflicts detected in your inputs!
-                </p>
+                <p className="font-medium">Advance input options</p>
                 <p className="text-sm">
-                  The following months have multiple changes scheduled:
+                  Learn more about advance input options before adding{" "}
+                  <AdvanceOptionsInfoDialog
+                    trigger={
+                      <Button variant="ghost" size="sm" className="h-1 px-1">
+                        Learn more...
+                      </Button>
+                    }
+                  />
                 </p>
-                <ul className="list-disc pl-5 text-sm mt-1">
-                  {conflictingMonths.map((conflict, index) => (
-                    <li key={index}>
-                      <strong>{conflict.month}</strong>:{" "}
-                      {conflict.types.join(", ")}
-                      {conflict.types.length > 1 && (
-                        <span className="italic text-xs ml-1">
-                          (applied in the order:{" "}
-                          {conflict.types
-                            .sort((a, b) => {
-                              const order = {
-                                "interest rate": 1,
-                                EMI: 2,
-                                prepayment: 3,
-                              };
-                              return (
-                                (order[a as keyof typeof order] || 0) -
-                                (order[b as keyof typeof order] || 0)
-                              );
-                            })
-                            .join(" → ")}
-                          )
-                        </span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                <div className="flex justify-end"></div>
               </AlertDescription>
             </Alert>
-          )}
 
-          <div className="grid grid-cols-1 gap-3">
-            <Prepayment />
-            <InterestChange />
-            <EmiChange />
-          </div>
-        </motion.div>
-      )}
+            {/* Dynamic conflict alert */}
+            {conflictsExist && (
+              <Alert
+                variant="destructive"
+                className="bg-destructive/10 border-destructive/30"
+              >
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription>
+                  <p className="font-medium mb-1">
+                    Conflicts detected in your inputs!
+                  </p>
+                  <p className="text-sm">
+                    The following months have multiple changes scheduled:
+                  </p>
+                  <ul className="list-disc pl-5 text-sm mt-1">
+                    {conflictingMonths.map((conflict, index) => (
+                      <li key={index}>
+                        <strong>{conflict.month}</strong>:{" "}
+                        {conflict.types.join(", ")}
+                        {conflict.types.length > 1 && (
+                          <span className="italic text-xs ml-1">
+                            (applied in the order:{" "}
+                            {conflict.types
+                              .sort((a, b) => {
+                                const order = {
+                                  "interest rate": 1,
+                                  EMI: 2,
+                                  prepayment: 3,
+                                };
+                                return (
+                                  (order[a as keyof typeof order] || 0) -
+                                  (order[b as keyof typeof order] || 0)
+                                );
+                              })
+                              .join(" → ")}
+                            )
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </AlertDescription>
+              </Alert>
+            )}
+
+            <div className="grid grid-cols-1 gap-3">
+              <Prepayment />
+              <InterestChange />
+              <EmiChange />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
