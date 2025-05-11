@@ -15,10 +15,13 @@ import { useCallback } from "react";
 import { useLoan } from "@/contexts/LoanContext";
 import moment from "moment";
 import { InterestRateChangeDialog } from "./InterestRateChangeDialog";
+import { IconType } from "react-icons";
+import { isSameMonth } from "@/lib/utils";
 
 export const InterestChange = () => {
   const {
-    loanDetails: { interestRateChanges },
+    loanDetails: { interestRateChanges, initialInterestRate },
+    loanResults,
     setLoanDetails,
   } = useLoan();
 
@@ -40,6 +43,34 @@ export const InterestChange = () => {
       }));
     },
     [interestRateChanges, setLoanDetails]
+  );
+
+  // Function to determine if a rate change is an increase or decrease compared to the previous month's rate
+  const getComparisonIcon = useCallback(
+    (rateChange: InterestRateChange): { icon: IconType; color: "destructive" | "emerald" } => {
+      if (!loanResults?.schedule) {
+        // If no schedule is available, compare with initial interest rate
+        return rateChange.rate > initialInterestRate 
+          ? { icon: TrendingUp, color: "destructive" } 
+          : { icon: TrendingDown, color: "emerald" };
+      }
+     
+      const previousMonth = new Date(rateChange.effectiveDate);
+      previousMonth.setMonth(previousMonth.getMonth() - 1);
+      
+      const previousScheduleItem = loanResults.schedule.find(item => 
+        isSameMonth(previousMonth, new Date(item.date))
+      );
+      
+      // If no previous schedule item is found, compare with initial interest rate
+      const previousRate = previousScheduleItem?.interestRate || initialInterestRate;
+      
+      // Compare current rate with previous rate to determine if it's an increase or decrease
+      return rateChange.rate > previousRate 
+        ? { icon: TrendingUp, color: "destructive" } 
+        : { icon: TrendingDown, color: "emerald" };
+    },
+    [initialInterestRate, loanResults?.schedule]
   );
 
   return (
@@ -70,21 +101,24 @@ export const InterestChange = () => {
 
       {interestRateChanges && interestRateChanges.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
-          {interestRateChanges.map((rateChange) => (
-            <ExtraItemCard
-              key={rateChange.id}
-              icon={rateChange.rate > 0 ? TrendingUp : TrendingDown}
-              color={rateChange.rate > 0 ? "destructive" : "emerald"}
-              amount={rateChange.rate}
-              dateRange={getRateChangeText(rateChange)}
-              onDelete={() => deleteRateChange(rateChange.id)}
-              badgeColor="amber"
-              badgeIcon={rateChange.impact === ImpactType.EMI ? Coins : CalendarRange}
-              badgeText={rateChange.impact}
-              displayType="percentage"
-              tooltipText={`Will ${rateChange.impact === ImpactType.EMI ? 'affect your EMI' : 'change your loan tenure'}`}
-            />
-          ))}
+          {interestRateChanges.map((rateChange) => {
+            const { icon, color } = getComparisonIcon(rateChange);
+            return (
+              <ExtraItemCard
+                key={rateChange.id}
+                icon={icon}
+                color={color}
+                amount={rateChange.rate}
+                dateRange={getRateChangeText(rateChange)}
+                onDelete={() => deleteRateChange(rateChange.id)}
+                badgeColor="amber"
+                badgeIcon={rateChange.impact === ImpactType.EMI ? Coins : CalendarRange}
+                badgeText={rateChange.impact}
+                displayType="percentage"
+                tooltipText={`Will ${rateChange.impact === ImpactType.EMI ? 'affect your EMI' : 'change your loan tenure'}`}
+              />
+            );
+          })}
         </div>
       ) : (
         <div className="text-sm text-center text-muted-foreground italic">

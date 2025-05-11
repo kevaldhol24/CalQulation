@@ -46,6 +46,7 @@ export const LoanCalculator = () => {
             }
           />
         </div>
+        <p className="text-sm text-muted-foreground mt-4 italic">* Calculator shows estimated results. Actual numbers may differ.</p>
       </div>
 
       <div className="bg-background rounded-lg p-6 shadow-lg mt-6">
