@@ -4,6 +4,7 @@ import { formateDate } from "@/lib/utils";
 import { MonthPicker } from "../../common/MonthPicker";
 import { AdvanceLoanInputs } from "./AdvanceOptions/AdvanceLoanInputs";
 import { EmiSchedule } from "./EmiScehdule";
+import { LoanCharts } from "./LoanCharts";
 import { AmountInput } from "./loanInputs/AmountInput";
 import { InterestInput } from "./loanInputs/InterestInput";
 import { TenureInput } from "./loanInputs/TenureInput";
@@ -55,6 +56,9 @@ export const LoanCalculator = () => {
 
       <div className="bg-background rounded-lg p-6 shadow-lg mt-6">
         <LoanSummary />
+        <div className="mt-6">
+          <LoanCharts />
+        </div>
         <EmiSchedule />
       </div>
     </div>
