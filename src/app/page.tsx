@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     url: "https://calqulation.com",
     images: [
       {
-        url: "/Logo.png",
+        url: "/Calqulation.png",
         width: 1200,
         height: 630,
         alt: "Calqulation - Financial Calculator Tools",

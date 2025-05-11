@@ -279,7 +279,7 @@ export default function DisclaimerPage() {
             "publisher": {
               "@type": "Organization",
               "name": "Calqulation",
-              "logo": "https://calqulation.com/Logo.png"
+              "logo": "https://calqulation.com/Calqulation.png"
             },
             "datePublished": "2025-05-11",
             "dateModified": "2025-05-11"

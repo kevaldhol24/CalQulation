@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/Logo.png',
+        url: '/Calqulation.png',
         width: 1200,
         height: 630,
         alt: 'Calqulation Logo',

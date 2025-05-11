@@ -15,25 +15,27 @@ export const metadata: Metadata = {
   title: "About Us | Calqulation - Making Financial Decisions Simple",
   description:
     "Learn about Calqulation's mission to simplify financial decisions through interactive calculators and educational tools. Meet our team and discover our values.",
-  keywords: "Calqulation, financial calculators, financial tools, financial decisions, financial planning, about us, company mission, finance team",
+  keywords:
+    "Calqulation, financial calculators, financial tools, financial decisions, financial planning, about us, company mission, finance team",
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
     title: "About Us | Calqulation - Making Financial Decisions Simple",
-    description: "Learn about Calqulation's mission to simplify financial decisions through interactive calculators and educational tools.",
+    description:
+      "Learn about Calqulation's mission to simplify financial decisions through interactive calculators and educational tools.",
     url: "https://calqulation.com/about-us",
     type: "website",
     images: [
       {
-        url: "/Logo.png",
+        url: "/Calqulation.png",
         width: 1200,
         height: 630,
         alt: "Calqulation Team",
-      }
+      },
     ],
-  }
+  },
 };
 
 export default function AboutUsPage() {
@@ -458,22 +460,32 @@ export default function AboutUsPage() {
         {/* SEO-friendly footer section with links */}
         <section className="mb-12">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Explore Our Tools</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              Explore Our Tools
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <a 
+              <a
                 href="/tool/emi-calculator"
                 className="bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 p-4 rounded-xl transition-colors border border-blue-200 dark:border-blue-800"
               >
-                <h3 className="font-bold text-blue-700 dark:text-blue-400 mb-2">EMI Calculator</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">Plan your loan journey with our comprehensive EMI calculator</p>
+                <h3 className="font-bold text-blue-700 dark:text-blue-400 mb-2">
+                  EMI Calculator
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  Plan your loan journey with our comprehensive EMI calculator
+                </p>
               </a>
-              
-              <a 
+
+              <a
                 href="/disclaimer"
                 className="bg-purple-50 hover:bg-purple-100 dark:bg-purple-900/20 dark:hover:bg-purple-900/30 p-4 rounded-xl transition-colors border border-purple-200 dark:border-purple-800"
               >
-                <h3 className="font-bold text-purple-700 dark:text-purple-400 mb-2">Important Information</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">Read our disclaimer and terms of service</p>
+                <h3 className="font-bold text-purple-700 dark:text-purple-400 mb-2">
+                  Important Information
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  Read our disclaimer and terms of service
+                </p>
               </a>
             </div>
           </div>
@@ -487,28 +499,29 @@ export default function AboutUsPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "Calqulation",
-            "url": "https://calqulation.com",
-            "logo": "https://calqulation.com/Logo.png",
-            "description": "Making complex financial decisions simple through interactive calculators and educational tools",
-            "sameAs": [
+            name: "Calqulation",
+            url: "https://calqulation.com",
+            logo: "https://calqulation.com/Calqulation.png",
+            description:
+              "Making complex financial decisions simple through interactive calculators and educational tools",
+            sameAs: [
               "https://twitter.com/calqulation",
               "https://www.linkedin.com/company/calqulation",
-              "https://www.facebook.com/calqulation"
+              "https://www.facebook.com/calqulation",
             ],
-            "foundingDate": "2024-01-01",
-            "founders": [
+            foundingDate: "2024-01-01",
+            founders: [
               {
                 "@type": "Person",
-                "name": "Calqulation Founder"
-              }
+                name: "Calqulation Founder",
+              },
             ],
-            "contactPoint": {
+            contactPoint: {
               "@type": "ContactPoint",
-              "contactType": "customer service",
-              "email": "contact@calqulation.com"
-            }
-          })
+              contactType: "customer service",
+              email: "contact@calqulation.com",
+            },
+          }),
         }}
       />
     </div>
