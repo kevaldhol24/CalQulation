@@ -54,6 +54,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/tool/emi-calculator"
+                  prefetch={true}
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors flex items-center gap-2"
                 >
                   <BsCalculator size={14} />
@@ -86,6 +87,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/about-us"
+                  prefetch={true}
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
                   About
@@ -94,6 +96,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/coming-soon"
+                  prefetch={true}
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
                   Financial Guides
@@ -102,6 +105,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/coming-soon"
+                  prefetch={true}
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
                   Blog
@@ -119,6 +123,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/privacy-policy"
+                  prefetch={true}
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
                   Privacy Policy
@@ -126,7 +131,8 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="terms-of-service"
+                  href="/terms-of-service"
+                  prefetch={true}
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
                   Terms of Service
@@ -135,6 +141,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/disclaimer"
+                  prefetch={true}
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
                   Disclaimer

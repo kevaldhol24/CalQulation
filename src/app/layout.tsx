@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Footer } from "@/components/layout";
+import { NavigationProgress } from "@/components/layout/NavigationProgress";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -70,6 +71,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
+          <NavigationProgress />
           {children}
           <Footer/>
         </ThemeProvider>
