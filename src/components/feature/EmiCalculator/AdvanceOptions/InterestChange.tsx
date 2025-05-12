@@ -84,6 +84,18 @@ export const InterestChange = () => {
     [initialInterestRate, loanResults?.schedule]
   );
 
+  const getImpact = useCallback(
+    (id: string) => {
+      if (!loanResults?.impacts) return;
+      const rateChangeImpact =
+        loanResults.impacts.interestRateChangeImpacts.find(
+          (item) => item.interestChangeId === id
+        );
+      return rateChangeImpact;
+    },
+    [loanResults?.impacts]
+  );
+
   return (
     <motion.div
       variants={{
@@ -128,11 +140,8 @@ export const InterestChange = () => {
                 }
                 badgeText={rateChange.impact}
                 displayType="percentage"
-                tooltipText={`Will ${
-                  rateChange.impact === ImpactType.EMI
-                    ? "affect your EMI"
-                    : "change your loan tenure"
-                }`}
+                impact="interestRate"
+                impactData={getImpact(rateChange.id)}
               />
             );
           })}

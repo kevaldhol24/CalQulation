@@ -736,7 +736,7 @@ export const AdvanceOptionsInfoDialog = ({ trigger }: InfoDialogProps) => {
 
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 rounded-b-xl flex justify-between items-center">
           <div className="text-white text-sm">
-            Got a question about loan calculations?
+            Got a question about loan calculations? <a href="mailto:contact@calqulation.com" className="text-accent">contact@calqulation.com</a>
           </div>
           <Button
             onClick={() => setIsOpen(false)}

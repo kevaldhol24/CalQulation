@@ -21,6 +21,7 @@ export const Prepayment = () => {
   const {
     loanDetails: { prepayments },
     setLoanDetails,
+    loanResults,
   } = useLoan();
 
   const getPrepaymentText = (prepayment: IPrepayment) => {
@@ -55,9 +56,19 @@ export const Prepayment = () => {
     [prepayments, setLoanDetails]
   );
 
+  const getImpact = useCallback(
+    (id: string) => {
+      if (!loanResults?.impacts) return;
+      const prepaymentImpact = loanResults.impacts.prepaymentImpacts.find(
+        (item) => item.prepaymentId === id
+      );
+      return prepaymentImpact;
+    },
+    [loanResults?.impacts]
+  );
+
   return (
     <>
-      {" "}
       <motion.div
         variants={{
           hidden: { opacity: 0, y: 20 },
@@ -68,7 +79,6 @@ export const Prepayment = () => {
         aria-labelledby="prepayment-heading"
       >
         <h4 className="flex justify-between items-center font-semibold text-emerald-500">
-          {" "}
           <span className="flex items-center gap-2">
             <Rocket size={18} className="text-emerald-500" aria-hidden="true" />
             <span id="prepayment-heading">Prepayment</span>
@@ -101,7 +111,8 @@ export const Prepayment = () => {
                 amount={prepayment.amount}
                 dateRange={getPrepaymentText(prepayment)}
                 onDelete={() => deletePrepayment(prepayment.id)}
-                tooltipText="Will reduce your loan tenure"
+                impactData={getImpact(prepayment.id)}
+                impact="prepayment"
                 badgeText={prepayment.impact}
               />
             ))}

@@ -8,6 +8,7 @@ import { GiMoneyStack } from "react-icons/gi";
 import { GrMoney } from "react-icons/gr";
 import { IoMdCalendar } from "react-icons/io";
 import { TbMoneybag } from "react-icons/tb";
+import { CollectiveImpactSummary } from "./CollectiveImpactSummary";
 import { SummaryCard } from "./SummaryCard";
 
 export const LoanSummary = () => {
@@ -73,6 +74,9 @@ export const LoanSummary = () => {
           icon={<IoMdCalendar size={28} />}
         />
       </div>
+      
+      {/* Collective Impact Summary */}
+      <CollectiveImpactSummary />
     </div>
   );
 };
