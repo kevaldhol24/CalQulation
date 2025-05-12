@@ -68,7 +68,9 @@ export const AmountInput: FC<AmountInputProps> = ({
         aria-label="Loan amount"
         aria-describedby="amount-hint"
       />
-      <span id="amount-hint" className="sr-only">Enter loan amount in rupees</span>
+      <span id="amount-hint" className="sr-only">
+        Enter loan amount in rupees
+      </span>
       {!hideSlider && (
         <div className="mt-1">
           <Slider

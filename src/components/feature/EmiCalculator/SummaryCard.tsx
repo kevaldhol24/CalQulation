@@ -65,7 +65,7 @@ export const SummaryCard: FC<SummaryCardProps> = ({
   // Get the color classes or default to purple
   const colorClasses = colorMappings[color] || colorMappings.purple;
   // Generate a unique ID for aria-describedby
-  const helpTextId = `help-${title.toLowerCase().replace(/\s+/g, '-')}`;
+  const helpTextId = `help-${title.toLowerCase().replace(/\s+/g, "-")}`;
 
   return (
     <div
@@ -77,13 +77,22 @@ export const SummaryCard: FC<SummaryCardProps> = ({
         {icon || <RocketIcon size={28} />}
       </div>
       <div className="flex flex-col items-end gap-0">
-        <span className={`text-muted-foreground text-sm font-bold`} id={`title-${title.toLowerCase().replace(/\s+/g, '-')}`}>
+        <span
+          className={`text-muted-foreground text-sm font-bold`}
+          id={`title-${title.toLowerCase().replace(/\s+/g, "-")}`}
+        >
           {title}
         </span>
-        <p className={`text-lg font-bold`} aria-labelledby={`title-${title.toLowerCase().replace(/\s+/g, '-')}`} aria-describedby={helpTextId}>
+        <p
+          className={`text-lg font-bold`}
+          aria-labelledby={`title-${title.toLowerCase().replace(/\s+/g, "-")}`}
+          aria-describedby={helpTextId}
+        >
           {value}
         </p>
-        <span className={`text-muted-foreground text-xs`} id={helpTextId}>{helpText}</span>
+        <span className={`text-muted-foreground text-xs`} id={helpTextId}>
+          {helpText}
+        </span>
       </div>
     </div>
   );

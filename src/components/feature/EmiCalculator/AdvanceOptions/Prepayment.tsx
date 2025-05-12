@@ -56,7 +56,9 @@ export const Prepayment = () => {
   );
 
   return (
-    <>      <motion.div
+    <>
+      {" "}
+      <motion.div
         variants={{
           hidden: { opacity: 0, y: 20 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
@@ -65,7 +67,9 @@ export const Prepayment = () => {
         role="region"
         aria-labelledby="prepayment-heading"
       >
-        <h4 className="flex justify-between items-center font-semibold text-emerald-500">          <span className="flex items-center gap-2">
+        <h4 className="flex justify-between items-center font-semibold text-emerald-500">
+          {" "}
+          <span className="flex items-center gap-2">
             <Rocket size={18} className="text-emerald-500" aria-hidden="true" />
             <span id="prepayment-heading">Prepayment</span>
             <TooltipProvider delayDuration={300}>
@@ -73,7 +77,9 @@ export const Prepayment = () => {
                 <TooltipTrigger asChild>
                   <span className="cursor-help">
                     <BsFillInfoCircleFill size={14} aria-hidden="true" />
-                    <span className="sr-only">Information about prepayment</span>
+                    <span className="sr-only">
+                      Information about prepayment
+                    </span>
                   </span>
                 </TooltipTrigger>
                 <TooltipContent>

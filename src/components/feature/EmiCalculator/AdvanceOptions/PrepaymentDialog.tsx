@@ -137,7 +137,8 @@ export const PrepaymentDialog = () => {
 
   return (
     <Dialog open={isOpen}>
-      <DialogTrigger asChild>        <Button
+      <DialogTrigger asChild>
+        <Button
           variant="outline"
           onClick={() => setIsOpen(true)}
           className="border-dashed bg-emerald-50/50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100/50 dark:hover:bg-emerald-800/20 transition-all group"
@@ -146,21 +147,30 @@ export const PrepaymentDialog = () => {
           <Plus className="size-4" aria-hidden="true" />
           Add
         </Button>
-      </DialogTrigger>      <DialogContent
+      </DialogTrigger>
+      <DialogContent
         className="sm:max-w-[475px]"
         onClose={() => setIsOpen(false)}
         aria-labelledby="prepayment-dialog-title"
         aria-describedby="prepayment-dialog-description"
       >
         <DialogHeader className="flex flex-row items-start justify-between">
-          <div>            <DialogTitle className="flex items-center" id="prepayment-dialog-title">
+          <div>
+            <DialogTitle
+              className="flex items-center"
+              id="prepayment-dialog-title"
+            >
               <TbMoneybag className="mr-2" aria-hidden="true" />
               New Prepayment
             </DialogTitle>
-            <DialogDescription className="mt-1" id="prepayment-dialog-description">
+            <DialogDescription
+              className="mt-1"
+              id="prepayment-dialog-description"
+            >
               Prepayments help you pay off your loan faster.
             </DialogDescription>
-          </div>          <Button
+          </div>{" "}
+          <Button
             variant="ghost"
             className="p-1 h-6 w-6"
             onClick={() => setIsOpen(false)}
@@ -190,7 +200,9 @@ export const PrepaymentDialog = () => {
           />
 
           <div className="grid  grid-cols-1 sm:grid-cols-2 gap-2">
-            <div>          <label className="text-sm" id="prepayment-type-label">
+            <div>
+              {" "}
+              <label className="text-sm" id="prepayment-type-label">
                 Type <span className="text-destructive">*</span>
               </label>
               <Select
@@ -200,7 +212,10 @@ export const PrepaymentDialog = () => {
                 }
                 aria-labelledby="prepayment-type-label"
               >
-                <SelectTrigger className="w-full" aria-label="Select prepayment type">
+                <SelectTrigger
+                  className="w-full"
+                  aria-label="Select prepayment type"
+                >
                   <SelectValue placeholder="Select a type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -278,7 +293,9 @@ export const PrepaymentDialog = () => {
             )}
           </div>
         </div>
-        <DialogFooter>          <DialogClose asChild>
+        <DialogFooter>
+          {" "}
+          <DialogClose asChild>
             <Button variant="outline" onClick={() => setIsOpen(false)}>
               Cancel
             </Button>

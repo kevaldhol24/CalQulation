@@ -32,32 +32,38 @@ export const AdvanceLoanInputs = () => {
 
   // Animation variants for smooth expansion and collapse
   const animationVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       height: 0,
       transition: {
         duration: 0.3,
-        ease: "easeInOut"
-      }
+        ease: "easeInOut",
+      },
     },
     visible: {
       opacity: 1,
       height: "auto",
       transition: {
         duration: 0.3,
-        ease: "easeInOut"
-      }
-    }
+        ease: "easeInOut",
+      },
+    },
   };
 
   return (
-    <div className="rounded-xl bg-background/50 ">      <h3 className="text-lg font-bold flex items-center cursor-pointer gap-2 hover:text-accent-foreground transition-colors">
+    <div className="rounded-xl bg-background/50 ">
+      {" "}
+      <h3 className="text-lg font-bold flex items-center cursor-pointer gap-2 hover:text-accent-foreground transition-colors">
         <button
           className="text-primary bg-primary/10 p-1 rounded-full"
           onClick={() => setShowAdvanceOptions(!showAdvanceOptions)}
           aria-expanded={showAdvanceOptions}
           aria-controls="advanced-options-content"
-          aria-label={showAdvanceOptions ? "Collapse advanced options" : "Expand advanced options"}
+          aria-label={
+            showAdvanceOptions
+              ? "Collapse advanced options"
+              : "Expand advanced options"
+          }
         >
           {showAdvanceOptions ? (
             <ChevronDown size={18} aria-hidden="true" />
@@ -71,7 +77,7 @@ export const AdvanceLoanInputs = () => {
           onClick={() => setShowAdvanceOptions(!showAdvanceOptions)}
           tabIndex={0}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+            if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
               setShowAdvanceOptions(!showAdvanceOptions);
             }
@@ -82,14 +88,17 @@ export const AdvanceLoanInputs = () => {
 
         {/* Badge showing the number of advanced options when count > 0 */}
         {totalAdvancedOptions > 0 && (
-          <span className="ml-2 text-xs font-semibold bg-primary text-primary-foreground px-2 py-0.5 rounded-full" aria-label={`${totalAdvancedOptions} advanced options configured`}>
+          <span
+            className="ml-2 text-xs font-semibold bg-primary text-primary-foreground px-2 py-0.5 rounded-full"
+            aria-label={`${totalAdvancedOptions} advanced options configured`}
+          >
             {totalAdvancedOptions}
           </span>
         )}
       </h3>
-
       <AnimatePresence>
-        {showAdvanceOptions && (          <motion.div
+        {showAdvanceOptions && (
+          <motion.div
             id="advanced-options-content"
             key="advanced-options"
             initial="hidden"

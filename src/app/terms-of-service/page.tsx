@@ -20,20 +20,22 @@ export const metadata = {
   title: "Terms of Service | Calqulation - User Agreement",
   description:
     "Terms and conditions for using Calqulation's financial calculators and services. Learn about your rights and responsibilities when using our tools.",
-  keywords: "terms of service, user agreement, financial calculator terms, legal terms, Calqulation terms, financial tools terms and conditions",
+  keywords:
+    "terms of service, user agreement, financial calculator terms, legal terms, Calqulation terms, financial tools terms and conditions",
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
     title: "Terms of Service | Calqulation - User Agreement",
-    description: "Terms and conditions for using Calqulation's financial calculators and services. Learn about your rights and responsibilities when using our tools.",
+    description:
+      "Terms and conditions for using Calqulation's financial calculators and services. Learn about your rights and responsibilities when using our tools.",
     url: "https://calqulation.com/terms-of-service",
-    type: "website"
+    type: "website",
   },
   alternates: {
-    canonical: "https://calqulation.com/terms-of-service"
-  }
+    canonical: "https://calqulation.com/terms-of-service",
+  },
 };
 
 export default function TermsOfServicePage() {
@@ -72,7 +74,7 @@ export default function TermsOfServicePage() {
           </div>
         </div>
 
-       <WaveSeparator />
+        <WaveSeparator />
       </div>
 
       {/* Main content section */}
@@ -437,10 +439,30 @@ export default function TermsOfServicePage() {
             <div className="text-sm text-gray-600 dark:text-gray-400">
               <p className="mb-4">Related Information:</p>
               <div className="flex flex-wrap gap-4 justify-center">
-                <a href="/privacy-policy" className="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a>
-                <a href="/disclaimer" className="text-blue-600 dark:text-blue-400 hover:underline">Disclaimer</a>
-                <a href="/about-us" className="text-blue-600 dark:text-blue-400 hover:underline">About Us</a>
-                <a href="/tool/emi-calculator" className="text-blue-600 dark:text-blue-400 hover:underline">EMI Calculator</a>
+                <a
+                  href="/privacy-policy"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  Privacy Policy
+                </a>
+                <a
+                  href="/disclaimer"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  Disclaimer
+                </a>
+                <a
+                  href="/about-us"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  About Us
+                </a>
+                <a
+                  href="/tool/emi-calculator"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  EMI Calculator
+                </a>
               </div>
             </div>
           </section>
@@ -454,17 +476,18 @@ export default function TermsOfServicePage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Terms of Service | Calqulation - User Agreement",
-            "description": "Terms and conditions for using Calqulation's financial calculators and services.",
-            "publisher": {
+            name: "Terms of Service | Calqulation - User Agreement",
+            description:
+              "Terms and conditions for using Calqulation's financial calculators and services.",
+            publisher: {
               "@type": "Organization",
-              "name": "Calqulation",
-              "logo": "https://calqulation.com/Calqulation.png"
+              name: "Calqulation",
+              logo: "https://calqulation.com/Calqulation.png",
             },
-            "datePublished": "2025-01-01",
-            "dateModified": "2025-05-11",
-            "inLanguage": "en-US"
-          })
+            datePublished: "2025-01-01",
+            dateModified: "2025-05-11",
+            inLanguage: "en-US",
+          }),
         }}
       />
     </div>

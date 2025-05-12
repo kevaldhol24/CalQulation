@@ -39,10 +39,10 @@ export const Slider: React.FC<SliderProps> = ({
   };
   const getMarkStyles = (markValue: number) => {
     const percentage = ((markValue - min) / (max - min)) * 100;
-    
+
     return {
       left: `${percentage}%`,
-      transform: "translateX(-50%)"
+      transform: "translateX(-50%)",
     };
   };
 
@@ -77,7 +77,9 @@ export const Slider: React.FC<SliderProps> = ({
               >
                 <div
                   className={`w-2 h-2 rounded-full ${
-                    localValue >= mark.value ? "bg-primary" : "bg-border dark:bg-[#464646]"
+                    localValue >= mark.value
+                      ? "bg-primary"
+                      : "bg-border dark:bg-[#464646]"
                   }`}
                 />
                 <span className="text-[10px] whitespace-nowrap text-muted-foreground">

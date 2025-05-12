@@ -119,7 +119,9 @@ export const TenureInput: FC<TenureInputProps> = ({
         aria-label="Loan tenure"
         aria-describedby="tenure-hint"
       />
-      <span id="tenure-hint" className="sr-only">Enter loan tenure in {tenureUnit === "Yr" ? "years" : "months"}</span>
+      <span id="tenure-hint" className="sr-only">
+        Enter loan tenure in {tenureUnit === "Yr" ? "years" : "months"}
+      </span>
       <div className="mt-1">
         <Slider
           min={12}
@@ -140,7 +142,9 @@ export const TenureInput: FC<TenureInputProps> = ({
           aria-valuemin={12}
           aria-valuemax={360}
           aria-valuenow={localValue || 12}
-          aria-valuetext={`${tenureUnit === "Yr" ? (localValue || 12) / 12 : localValue || 12} ${tenureUnit === "Yr" ? "years" : "months"}`}
+          aria-valuetext={`${
+            tenureUnit === "Yr" ? (localValue || 12) / 12 : localValue || 12
+          } ${tenureUnit === "Yr" ? "years" : "months"}`}
         />
       </div>
     </div>

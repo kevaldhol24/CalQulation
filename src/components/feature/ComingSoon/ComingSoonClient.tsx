@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { FormEventHandler, useEffect, useState } from "react";
 import { FaRegBell, FaRocket } from "react-icons/fa";
@@ -8,47 +8,57 @@ const CountdownTimer = ({ launchDate }: { launchDate: Date }) => {
     days: 30,
     hours: 12,
     minutes: 45,
-    seconds: 20
+    seconds: 20,
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
       const difference = launchDate.getTime() - now.getTime();
-      
+
       if (difference <= 0) {
         clearInterval(interval);
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         return;
       }
-      
+
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const hours = Math.floor(
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-      
+
       setTimeLeft({ days, hours, minutes, seconds });
     }, 1000);
-    
+
     return () => clearInterval(interval);
   }, [launchDate]);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-16">
       <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 p-6 text-center">
-        <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-1">{timeLeft.days}</div>
+        <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-1">
+          {timeLeft.days}
+        </div>
         <div className="text-sm text-gray-500 dark:text-gray-400">Days</div>
       </div>
       <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 p-6 text-center">
-        <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-1">{timeLeft.hours}</div>
+        <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-1">
+          {timeLeft.hours}
+        </div>
         <div className="text-sm text-gray-500 dark:text-gray-400">Hours</div>
       </div>
       <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 p-6 text-center">
-        <div className="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mb-1">{timeLeft.minutes}</div>
+        <div className="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mb-1">
+          {timeLeft.minutes}
+        </div>
         <div className="text-sm text-gray-500 dark:text-gray-400">Minutes</div>
       </div>
       <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 p-6 text-center">
-        <div className="text-4xl font-bold text-pink-600 dark:text-pink-400 mb-1">{timeLeft.seconds}</div>
+        <div className="text-4xl font-bold text-pink-600 dark:text-pink-400 mb-1">
+          {timeLeft.seconds}
+        </div>
         <div className="text-sm text-gray-500 dark:text-gray-400">Seconds</div>
       </div>
     </div>
@@ -59,7 +69,7 @@ export default function ComingSoonClient() {
   // Set launch date 30 days from now
   const launchDate = new Date();
   launchDate.setDate(launchDate.getDate() + 30);
-  
+
   // Placeholder function for form submission
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -80,7 +90,8 @@ export default function ComingSoonClient() {
           </h2>
           <div className="mt-2 h-1 w-20 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
           <p className="mt-4 text-gray-600 dark:text-gray-300">
-            We&apos;re putting the finishing touches on our next generation of financial calculators.
+            We&apos;re putting the finishing touches on our next generation of
+            financial calculators.
           </p>
         </div>
 
@@ -100,7 +111,8 @@ export default function ComingSoonClient() {
                 Get Notified When We Launch
               </h2>
               <p className="text-blue-100 mb-0">
-                Subscribe to our newsletter and be the first to know when our new financial tools are available.
+                Subscribe to our newsletter and be the first to know when our
+                new financial tools are available.
               </p>
             </div>
             <div className="md:w-1/3">

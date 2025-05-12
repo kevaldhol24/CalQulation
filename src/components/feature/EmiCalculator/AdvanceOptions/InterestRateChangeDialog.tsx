@@ -34,7 +34,10 @@ export const InterestRateChangeDialog = () => {
 
   const minStartDate = useMemo(() => {
     const startDate = loanResults?.schedule
-      ? new Date(loanResults.schedule[0].year, loanResults.schedule[0].month + 1)
+      ? new Date(
+          loanResults.schedule[0].year,
+          loanResults.schedule[0].month + 1
+        )
       : new Date();
     return formateDate(startDate);
   }, [loanResults?.schedule]);
@@ -49,9 +52,10 @@ export const InterestRateChangeDialog = () => {
 
   // Check if the selected month already has an interest rate change
   const hasConflictingInterestChange = useMemo(() => {
-    if (!loanDetails.interestRateChanges || !newRateChange.effectiveDate) return false;
-    
-    return loanDetails.interestRateChanges.some(interestChange => 
+    if (!loanDetails.interestRateChanges || !newRateChange.effectiveDate)
+      return false;
+
+    return loanDetails.interestRateChanges.some((interestChange) =>
       isSameMonth(interestChange.effectiveDate, newRateChange.effectiveDate)
     );
   }, [loanDetails.interestRateChanges, newRateChange.effectiveDate]);
@@ -60,7 +64,9 @@ export const InterestRateChangeDialog = () => {
   useEffect(() => {
     if (hasConflictingInterestChange) {
       setValidationError(
-        `An interest rate change already exists for ${formatMonthYear(newRateChange.effectiveDate)}. Please select a different month.`
+        `An interest rate change already exists for ${formatMonthYear(
+          newRateChange.effectiveDate
+        )}. Please select a different month.`
       );
     } else {
       setValidationError(null);
@@ -92,13 +98,15 @@ export const InterestRateChangeDialog = () => {
 
   const handleSubmit = () => {
     // Check for conflicts again right before submission
-    const isConflict = loanDetails.interestRateChanges?.some(interestChange => 
+    const isConflict = loanDetails.interestRateChanges?.some((interestChange) =>
       isSameMonth(interestChange.effectiveDate, newRateChange.effectiveDate)
     );
-    
+
     if (isConflict) {
       setValidationError(
-        `An interest rate change already exists for ${formatMonthYear(newRateChange.effectiveDate)}. Please select a different month.`
+        `An interest rate change already exists for ${formatMonthYear(
+          newRateChange.effectiveDate
+        )}. Please select a different month.`
       );
       return;
     }
@@ -154,14 +162,14 @@ export const InterestRateChangeDialog = () => {
             <span className="sr-only">Close</span>
           </Button>
         </DialogHeader>
-        
+
         {validationError && (
           <Alert variant="destructive" className="mt-2 border-destructive/65">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>{validationError}</AlertDescription>
           </Alert>
         )}
-        
+
         <div className="grid gap-2">
           <div>
             <InterestInput
@@ -198,7 +206,7 @@ export const InterestRateChangeDialog = () => {
               </SelectContent>
             </Select>
           </div>
-          
+
           <div>
             <MonthPicker
               label="Effective From"
@@ -220,8 +228,8 @@ export const InterestRateChangeDialog = () => {
               Cancel
             </Button>
           </DialogClose>
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             onClick={handleSubmit}
             disabled={!!validationError}
           >

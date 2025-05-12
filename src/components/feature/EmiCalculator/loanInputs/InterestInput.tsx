@@ -78,7 +78,10 @@ export const InterestInput: FC<InterestInputProps> = ({
         aria-label="Interest rate percentage"
         aria-describedby="interest-hint"
       />
-      <span id="interest-hint" className="sr-only">Enter annual interest rate in percentage</span>      {!hideSlider && (
+      <span id="interest-hint" className="sr-only">
+        Enter annual interest rate in percentage
+      </span>{" "}
+      {!hideSlider && (
         <div className="mt-1">
           <Slider
             min={3}

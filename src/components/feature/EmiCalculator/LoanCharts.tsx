@@ -364,7 +364,7 @@ export const LoanCharts = () => {
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
+          if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             toggleExpanded();
           }
@@ -377,7 +377,11 @@ export const LoanCharts = () => {
           className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
           aria-label={isExpanded ? "Collapse charts" : "Expand charts"}
         >
-          {isExpanded ? <FaChevronUp aria-hidden="true" /> : <FaChevronDown aria-hidden="true" />}
+          {isExpanded ? (
+            <FaChevronUp aria-hidden="true" />
+          ) : (
+            <FaChevronDown aria-hidden="true" />
+          )}
         </button>
       </div>
 

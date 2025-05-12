@@ -1,7 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CalendarRange, Coins, Percent, TrendingDown, TrendingUp } from "lucide-react";
+import {
+  CalendarRange,
+  Coins,
+  Percent,
+  TrendingDown,
+  TrendingUp,
+} from "lucide-react";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import {
   Tooltip,
@@ -27,7 +33,9 @@ export const InterestChange = () => {
 
   const getRateChangeText = (rateChange: InterestRateChange) => {
     const DATE_FORMAT = "MMMM YYYY";
-    const effectiveDateFormatted = moment(rateChange.effectiveDate).format(DATE_FORMAT);
+    const effectiveDateFormatted = moment(rateChange.effectiveDate).format(
+      DATE_FORMAT
+    );
     return `Effective from ${effectiveDateFormatted}`;
   };
 
@@ -47,27 +55,30 @@ export const InterestChange = () => {
 
   // Function to determine if a rate change is an increase or decrease compared to the previous month's rate
   const getComparisonIcon = useCallback(
-    (rateChange: InterestRateChange): { icon: IconType; color: "destructive" | "emerald" } => {
+    (
+      rateChange: InterestRateChange
+    ): { icon: IconType; color: "destructive" | "emerald" } => {
       if (!loanResults?.schedule) {
         // If no schedule is available, compare with initial interest rate
-        return rateChange.rate > initialInterestRate 
-          ? { icon: TrendingUp, color: "destructive" } 
+        return rateChange.rate > initialInterestRate
+          ? { icon: TrendingUp, color: "destructive" }
           : { icon: TrendingDown, color: "emerald" };
       }
-     
+
       const previousMonth = new Date(rateChange.effectiveDate);
       previousMonth.setMonth(previousMonth.getMonth() - 1);
-      
-      const previousScheduleItem = loanResults.schedule.find(item => 
+
+      const previousScheduleItem = loanResults.schedule.find((item) =>
         isSameMonth(previousMonth, new Date(item.date))
       );
-      
+
       // If no previous schedule item is found, compare with initial interest rate
-      const previousRate = previousScheduleItem?.interestRate || initialInterestRate;
-      
+      const previousRate =
+        previousScheduleItem?.interestRate || initialInterestRate;
+
       // Compare current rate with previous rate to determine if it's an increase or decrease
-      return rateChange.rate > previousRate 
-        ? { icon: TrendingUp, color: "destructive" } 
+      return rateChange.rate > previousRate
+        ? { icon: TrendingUp, color: "destructive" }
         : { icon: TrendingDown, color: "emerald" };
     },
     [initialInterestRate, loanResults?.schedule]
@@ -112,10 +123,16 @@ export const InterestChange = () => {
                 dateRange={getRateChangeText(rateChange)}
                 onDelete={() => deleteRateChange(rateChange.id)}
                 badgeColor="amber"
-                badgeIcon={rateChange.impact === ImpactType.EMI ? Coins : CalendarRange}
+                badgeIcon={
+                  rateChange.impact === ImpactType.EMI ? Coins : CalendarRange
+                }
                 badgeText={rateChange.impact}
                 displayType="percentage"
-                tooltipText={`Will ${rateChange.impact === ImpactType.EMI ? 'affect your EMI' : 'change your loan tenure'}`}
+                tooltipText={`Will ${
+                  rateChange.impact === ImpactType.EMI
+                    ? "affect your EMI"
+                    : "change your loan tenure"
+                }`}
               />
             );
           })}

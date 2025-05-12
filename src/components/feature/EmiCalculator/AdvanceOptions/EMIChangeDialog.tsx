@@ -65,8 +65,8 @@ export const EMIChangeDialog = () => {
   // Check if the selected month already has an EMI change
   const hasConflictingEmiChange = useMemo(() => {
     if (!loanDetails.emiChanges || !newEmiChange.startDate) return false;
-    
-    return loanDetails.emiChanges.some(emiChange => 
+
+    return loanDetails.emiChanges.some((emiChange) =>
       isSameMonth(emiChange.startDate, newEmiChange.startDate)
     );
   }, [loanDetails.emiChanges, newEmiChange.startDate]);
@@ -81,7 +81,7 @@ export const EMIChangeDialog = () => {
   useEffect(() => {
     if (hasConflictingEmiChange) {
       const selectedDate = new Date(newEmiChange.startDate);
-      const month = selectedDate.toLocaleString('default', { month: 'long' });
+      const month = selectedDate.toLocaleString("default", { month: "long" });
       const year = selectedDate.getFullYear();
       setValidationError(
         `An EMI change already exists for ${month} ${year}. Please select a different month.`
@@ -93,7 +93,12 @@ export const EMIChangeDialog = () => {
     } else {
       setValidationError(null);
     }
-  }, [newEmiChange.emi, minimumRequiredEMI, hasConflictingEmiChange, newEmiChange.startDate]);
+  }, [
+    newEmiChange.emi,
+    minimumRequiredEMI,
+    hasConflictingEmiChange,
+    newEmiChange.startDate,
+  ]);
 
   // Update start date when minStartDate changes
   useEffect(() => {
@@ -122,17 +127,19 @@ export const EMIChangeDialog = () => {
 
   const handleSubmit = () => {
     // Check for conflicts again right before submission
-    const isConflict = loanDetails.emiChanges?.some(emiChange => 
+    const isConflict = loanDetails.emiChanges?.some((emiChange) =>
       isSameMonth(emiChange.startDate, newEmiChange.startDate)
     );
-    
+
     if (isConflict) {
       setValidationError(
-        `An EMI change already exists for ${formatMonthYear(newEmiChange.startDate)}. Please select a different month.`
+        `An EMI change already exists for ${formatMonthYear(
+          newEmiChange.startDate
+        )}. Please select a different month.`
       );
       return;
     }
-    
+
     // Check if EMI is below minimum required
     if (newEmiChange.emi < minimumRequiredEMI) {
       setValidationError(
@@ -140,7 +147,7 @@ export const EMIChangeDialog = () => {
       );
       return;
     }
-    
+
     // Prevent submission if validation error exists
     if (validationError) return;
 
@@ -192,14 +199,14 @@ export const EMIChangeDialog = () => {
             <span className="sr-only">Close</span>
           </Button>
         </DialogHeader>
-        
+
         {validationError && (
           <Alert variant="destructive" className="mt-2 border-destructive/65">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>{validationError}</AlertDescription>
           </Alert>
         )}
-        
+
         <div className="grid gap-2">
           <div>
             <AmountInput

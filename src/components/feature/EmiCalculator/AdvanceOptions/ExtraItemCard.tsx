@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { CURRENCY_ISO } from "@/lib/constants";
 import { ArrowDown, Trash2 } from "lucide-react";
@@ -52,20 +52,20 @@ interface ExtraItemCardProps {
   amount: number;
   dateRange: string;
   onDelete: () => void;
-  
+
   // Optional props with defaults
   icon?: IconType | LucideIcon;
   color?: ColorTheme;
-  
+
   // Badge props
   showBadge?: boolean;
   badgeIcon?: LucideIcon;
   badgeText?: string;
   badgeColor?: ColorTheme;
-  
+
   // Display type
-  displayType?: 'currency' | 'percentage';
-  
+  displayType?: "currency" | "percentage";
+
   // Tooltip props
   tooltipText?: string;
 }
@@ -81,13 +81,12 @@ export const ExtraItemCard = ({
   badgeText = "Tenure",
   badgeColor,
   displayType = "currency",
-  tooltipText = "Will reduce your loan tenure"
+  tooltipText = "Will reduce your loan tenure",
 }: ExtraItemCardProps) => {
-  
   // Get theme colors
   const theme = colorThemes[color];
   const badgeTheme = badgeColor ? colorThemes[badgeColor] : theme;
-  
+
   const formatValue = (value: number) => {
     if (displayType === "percentage") {
       return `${value}%`;
@@ -114,7 +113,9 @@ export const ExtraItemCard = ({
               <TooltipProvider delayDuration={300}>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className={`${badgeTheme.badgeBg} ${badgeTheme.badgeText} capitalize rounded-full px-3 py-1 text-xs flex items-center gap-1.5 font-normal`}>
+                    <div
+                      className={`${badgeTheme.badgeBg} ${badgeTheme.badgeText} capitalize rounded-full px-3 py-1 text-xs flex items-center gap-1.5 font-normal`}
+                    >
                       <BadgeIcon size={14} />
                       {badgeText}
                     </div>
