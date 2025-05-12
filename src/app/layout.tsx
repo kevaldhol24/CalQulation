@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Footer } from "@/components/layout";
 import { NavigationProgress } from "@/components/layout/NavigationProgress";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -71,7 +72,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <NavigationProgress />
+          <Suspense fallback={<div className="h-1 bg-gray-200 dark:bg-gray-800"></div>}>
+            <NavigationProgress />
+          </Suspense>
           {children}
           <Footer/>
         </ThemeProvider>

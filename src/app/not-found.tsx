@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   }
 };
 
+// This ensures the component is rendered as a Server Component without client-side interactivity
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col justify-center items-center px-4 py-16">

@@ -3,10 +3,15 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+/**
+ * Navigation progress indicator component
+ * Wrapped in Suspense in the layout.tsx file to handle the searchParams CSR bailout
+ */
 export function NavigationProgress() {
   const [isNavigating, setIsNavigating] = useState(false);
   const [progress, setProgress] = useState(0);
   const pathname = usePathname();
+  // This hook needs to be wrapped in a Suspense boundary (done in layout.tsx)
   const searchParams = useSearchParams();
 
   useEffect(() => {
