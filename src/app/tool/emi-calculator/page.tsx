@@ -44,7 +44,7 @@ export default function EmiCalculatorPage() {
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "priceCurrency": "USD"
+      "priceCurrency": "INR"
     }
   };
 

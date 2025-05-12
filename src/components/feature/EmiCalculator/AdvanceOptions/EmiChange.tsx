@@ -58,6 +58,17 @@ export const EmiChange = () => {
     [loanResults?.schedule]
   );
 
+  const getImpact = useCallback(
+    (id: string) => {
+      if (!loanResults?.impacts) return;
+      const prepaymentImpact = loanResults.impacts.emiChangeImpacts.find(
+        (item) => item.emiChangeId === id
+      );
+      return prepaymentImpact;
+    },
+    [loanResults?.impacts]
+  );
+
   return (
     <motion.div
       variants={{
@@ -99,11 +110,8 @@ export const EmiChange = () => {
                 onDelete={() => deleteEmiChange(emiChange.id)}
                 showBadge={false}
                 displayType="currency"
-                tooltipText={`EMI will ${
-                  emiChange.emi > (loanResults?.summary?.emi || 0)
-                    ? "increase"
-                    : "decrease"
-                } from this date`}
+                impact="emi"
+                impactData={getImpact(emiChange.id)}
               />
             );
           })}
