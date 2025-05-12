@@ -151,22 +151,14 @@ export const PrepaymentDialog = () => {
       <DialogContent
         className="sm:max-w-[475px]"
         onClose={() => setIsOpen(false)}
-        aria-labelledby="prepayment-dialog-title"
-        aria-describedby="prepayment-dialog-description"
       >
         <DialogHeader className="flex flex-row items-start justify-between">
           <div>
-            <DialogTitle
-              className="flex items-center"
-              id="prepayment-dialog-title"
-            >
+            <DialogTitle className="flex items-center">
               <TbMoneybag className="mr-2" aria-hidden="true" />
               New Prepayment
             </DialogTitle>
-            <DialogDescription
-              className="mt-1"
-              id="prepayment-dialog-description"
-            >
+            <DialogDescription className="mt-1">
               Prepayments help you pay off your loan faster.
             </DialogDescription>
           </div>{" "}
