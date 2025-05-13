@@ -1,6 +1,9 @@
-# Allow all web crawlers to access all content
+# *
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Host
+Host: https://calqulation.com
+
+# Sitemaps
 Sitemap: https://calqulation.com/sitemap.xml
