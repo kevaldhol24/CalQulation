@@ -5,6 +5,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { CURRENCY_ISO } from "@/lib/constants";
+import { formateCurrency } from "@/lib/utils";
 import {
   EMIChangeImpact,
   InterestRateChangeImpact,
@@ -229,7 +230,7 @@ export const ExtraItemCard = ({
                           : "text-red-600 dark:text-red-400"
                       }`}
                     >
-                      {formatValue(Math.abs(refinedImpact.emiImpact))}
+                      {formateCurrency(Math.abs(refinedImpact.emiImpact))}
                       
                     </div>
                   </div>
@@ -266,7 +267,7 @@ export const ExtraItemCard = ({
                           : "text-red-600 dark:text-red-400"
                       }`}
                     >
-                      {formatValue(Math.abs(refinedImpact.interestImpact))}
+                      {formateCurrency(Math.abs(refinedImpact.interestImpact))}
                     </div>
                   </div>
                 )}

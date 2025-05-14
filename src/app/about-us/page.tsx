@@ -361,29 +361,35 @@ export default function AboutUsPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="flex justify-center flex-col md:flex-row gap-8">
             {/* Team Member 1 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-xl">
+            <div className="w-full md:w-1/3 bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-xl">
               <div className="h-2 bg-gradient-to-r from-blue-500 to-purple-600"></div>
               <div className="p-6 text-center">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold">
-                  AJ
+                  <Image
+                    src="/Images/keval_dhol.png"
+                    alt="Keval Dhol"
+                    width={96}
+                    height={96}
+                    className="rounded-full object-none object-top"
+                  />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  Alex Johnson
+                  Keval Dhol
                 </h3>
                 <p className="text-sm text-blue-600 dark:text-blue-400 mb-4">
                   Founder & Developer
                 </p>
                 <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Financial analyst turned developer with a passion for making
-                  financial concepts accessible to everyone.
+                  Developer with a passion for making financial concepts
+                  accessible to everyone.
                 </p>
               </div>
             </div>
 
             {/* Team Member 2 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-xl">
+            {/* <div className="w-full md:w-1/3 bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-xl">
               <div className="h-2 bg-gradient-to-r from-purple-500 to-pink-600"></div>
               <div className="p-6 text-center">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold">
@@ -400,24 +406,24 @@ export default function AboutUsPage() {
                   that make complex financial tools feel approachable.
                 </p>
               </div>
-            </div>
+            </div> */}
 
             {/* Team Member 3 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-xl">
+            <div className="w-full md:w-1/3 bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-xl">
               <div className="h-2 bg-gradient-to-r from-emerald-500 to-green-600"></div>
               <div className="p-6 text-center">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold">
-                  RL
+                  BM
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  Ryan Lee
+                  Bhavya Mehta
                 </h3>
                 <p className="text-sm text-emerald-600 dark:text-emerald-400 mb-4">
-                  Financial Advisor
+                  Web Advisor
                 </p>
                 <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Ensures our calculators are built on sound financial
-                  principles and reflect real-world financial scenarios.
+                  Ensures our calculators are built on sound financial and web
+                  principles and reflect real-world scenarios.
                 </p>
               </div>
             </div>

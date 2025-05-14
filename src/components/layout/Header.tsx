@@ -14,7 +14,7 @@ import { Logo } from "./Logo";
 
 export const Header = () => {
   return (
-    <header className="bg-white dark:bg-gray-950 sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800">
+    <header className="bg-white dark:bg-gray-950 sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 max-h-[68]">
       <div className="container flex justify-between items-center w-full max-w-7xl mx-auto px-4 sm:px-6 py-4">
         <Link href="/" className="flex items-center group">
           <Logo />
