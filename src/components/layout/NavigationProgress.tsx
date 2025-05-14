@@ -60,7 +60,17 @@ export function NavigationProgress() {
         anchor.href &&
         anchor.href.startsWith(window.location.origin)
       ) {
-        // Internal navigation
+        // Check if the link is to the current page
+        const url = new URL(anchor.href);
+        const currentUrl = new URL(window.location.href);
+        
+        // Compare pathname and search params to determine if it's the same page
+        if (url.pathname === currentUrl.pathname && url.search === currentUrl.search) {
+          // If it's the same page, don't start the progress
+          return;
+        }
+
+        // Internal navigation to a different page
         startProgress();
       }
     };
@@ -85,7 +95,7 @@ export function NavigationProgress() {
   }
 
   return (
-    <div className="fixed top-[70px] left-0 right-0 h-1 z-50 bg-gray-200 dark:bg-gray-800">
+    <div className="fixed top-[64px] left-0 right-0 h-1 z-50 bg-gray-200 dark:bg-gray-800">
       <div
         className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300 ease-out"
         style={{ width: `${progress}%` }}

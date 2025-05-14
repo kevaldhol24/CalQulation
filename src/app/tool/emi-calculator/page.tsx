@@ -1,11 +1,9 @@
 import { LoanCalculator } from "@/components/feature/EmiCalculator/LoanCalculator";
 import { LoanProvider } from "@/contexts/LoanContext";
-import { MdCalculate } from "react-icons/md";
-import { FaChartLine, FaLightbulb, FaRegClock, FaChartBar } from "react-icons/fa";
-import { RiMoneyDollarCircleFill } from "react-icons/ri";
-import { BsGraphUp, BsBank } from "react-icons/bs";
-import { HiCurrencyDollar } from "react-icons/hi";
 import { Metadata } from "next";
+import { BsBank, BsGraphUp } from "react-icons/bs";
+import { FaChartBar, FaChartLine, FaLightbulb, FaRegClock } from "react-icons/fa";
+import { RiMoneyDollarCircleFill } from "react-icons/ri";
 
 export const metadata: Metadata = {
   title: "EMI Calculator | Calculate - Loan EMI, Interest & Amortization Schedule",
@@ -62,18 +60,13 @@ export default function EmiCalculatorPage() {
         
         {/* Animated floating shapes */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-[20px] w-64 h-64 bg-white opacity-10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/3 right-[20px] w-96 h-96 bg-blue-300 opacity-10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
-          <div className="absolute top-1/2 right-[20px] w-48 h-48 bg-purple-300 opacity-10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }}></div>
+          <div className="absolute top-[100px] right-[20px] w-64 h-64 bg-white opacity-10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-[100px] right-1/2 translate-x-1/2 w-96 h-96 bg-blue-300 opacity-10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
+          <div className="absolute top-[100px] left-[20px] w-48 h-48 bg-purple-300 opacity-10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }}></div>
         </div>
         
-        <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 z-10">
-          <div className="text-center mb-12">
-            {/* Icon with glow effect */}
-            <div className="inline-flex items-center justify-center p-3 bg-white/10 backdrop-blur-md rounded-full mb-4 shadow-lg shadow-blue-500/20">
-              <MdCalculate className="text-white text-4xl animate-pulse" />
-            </div>
-            
+        <div className="relative max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 z-10">
+          <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-3">
               <span className="inline-block animate-shimmer bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
                 EMI Calculator
@@ -83,14 +76,8 @@ export default function EmiCalculatorPage() {
               Plan your loan journey with precision. Get accurate EMI calculations with our advanced financial tool.
             </p>
             
-            {/* Call-to-action button with animation */}
-            <button className="mt-8 px-6 py-3 bg-white hover:bg-blue-50 text-blue-700 font-medium rounded-full shadow-lg transform transition hover:scale-105 hover:shadow-xl flex items-center mx-auto">
-              <HiCurrencyDollar className="mr-2 text-blue-600" />
-              <span>Calculate Your EMI Now</span>
-            </button>
-            
             {/* Feature badges */}
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
+            <div className="flex flex-wrap justify-center gap-4 mt-3">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
                 <BsGraphUp className="mr-1" /> Instant Results
               </span>

@@ -201,20 +201,23 @@ export const MonthPicker: FC<MonthPickerProps> = ({
   return (
     <div className={`relative ${props.wrapperClassName}`}>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <TextField
-            {...props}
-            label={label}
-            value={inputValue || props.placeholder || ""}
-            className={`cursor-pointer text-left ${
-              inputValue ? "" : "text-muted-foreground"
-            }`}
-            endAdornment={
-              <div className="h-full py-1 cursor-pointer">
-                <IoMdCalendar />
-              </div>
-            }
-          />
+        <DropdownMenuTrigger className="w-full" asChild>
+          <div className="w-full">
+            <TextField
+              {...props}
+              label={label}
+              value={inputValue || props.placeholder || ""}
+              className={`cursor-pointer text-left ${
+                inputValue ? "" : "text-muted-foreground"
+              }`}
+              readOnly
+              endAdornment={
+                <div className="h-full py-1 cursor-pointer" onClick={() => {}}>
+                  <IoMdCalendar />
+                </div>
+              }
+            />
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" data-state="open">
           <div className="flex items-center justify-between px-2 py-1">
