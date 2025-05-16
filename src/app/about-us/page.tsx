@@ -447,12 +447,12 @@ export default function AboutUsPage() {
                 </p>
                 <div className="inline-block px-6 py-4 border border-white/20 bg-white/10 backdrop-blur-sm rounded-xl text-base font-medium shadow-sm text-white">
                   <MdEmail className="mr-2 h-5 w-5 inline-block align-sub" />
-                  <a
-                    href="mailto:hello@calqulation.com"
+                  <Link
+                    href="/contact"
                     className="hover:underline"
                   >
-                    hello@calqulation.com
-                  </a>
+                    Contact Us?
+                  </Link>
                 </div>
               </div>
 
@@ -522,11 +522,11 @@ export default function AboutUsPage() {
                 name: "Calqulation Founder",
               },
             ],
-            contactPoint: {
-              "@type": "ContactPoint",
-              contactType: "customer service",
-              email: "contact@calqulation.com",
-            },
+            // contactPoint: {
+            //   "@type": "ContactPoint",
+            //   contactType: "customer service",
+            //   email: "contact@calqulation.com",
+            // },
           }),
         }}
       />

@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { MdSecurity, MdEmail } from "react-icons/md";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Calqulation - How We Protect Your Data",
@@ -331,12 +332,12 @@ export default function PrivacyPolicyPage() {
               </p>
               <div className="inline-flex items-center justify-center px-6 py-4 border border-white/20 bg-white/10 backdrop-blur-sm rounded-xl text-base font-medium shadow-sm text-white">
                 <MdEmail className="mr-2 h-5 w-5" />
-                <a
-                  href="mailto:privacy@calqulation.com"
+                <Link
+                  href="/contact"
                   className="hover:underline"
                 >
-                  privacy@calqulation.com
-                </a>
+                  Contact Us
+                </Link>
               </div>
             </div>
           </section>

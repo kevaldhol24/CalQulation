@@ -30,3 +30,18 @@ model Comment {
     @@index([postId])
     @@index([parentId])
 }
+
+model Contact {
+    id        String   @id @default(uuid())
+    name      String
+    email     String
+    subject   String
+    message   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    status    String   @default("UNREAD") // UNREAD, READ, RESPONDED
+    resolved  Boolean  @default(false)
+
+    @@index([status])
+    @@index([email])
+}

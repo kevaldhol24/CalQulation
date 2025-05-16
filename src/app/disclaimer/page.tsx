@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { MdCalculate, MdEmail } from "react-icons/md";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Disclaimer | Calqulation - Financial Tools",
@@ -242,12 +243,12 @@ export default function DisclaimerPage() {
               </p>
               <div className="inline-block px-6 py-4 border border-white/20 bg-white/10 backdrop-blur-sm rounded-xl text-base font-medium shadow-sm text-white">
                 <MdEmail className="mr-2 h-5 w-5 inline-block align-sub" />
-                <a
-                  href="mailto:hello@calqulation.com"
+                <Link
+                  href="/contact"
                   className="hover:underline"
                 >
-                  hello@calqulation.com
-                </a>
+                  Contact Us
+                </Link>
               </div>
             </div>
           </section>

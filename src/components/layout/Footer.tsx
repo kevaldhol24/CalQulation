@@ -95,11 +95,11 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/coming-soon"
+                  href="/contact"
                   prefetch={true}
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                 >
-                  Financial Guides
+                  Contact Us
                 </Link>
               </li>
               <li>
