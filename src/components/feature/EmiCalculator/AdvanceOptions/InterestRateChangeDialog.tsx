@@ -141,7 +141,6 @@ export const InterestRateChangeDialog = () => {
       </DialogTrigger>
       <DialogContent
         className="sm:max-w-[475px]"
-        onClose={() => setIsOpen(false)}
       >
         <DialogHeader className="flex flex-row items-start justify-between">
           <div>
@@ -182,7 +181,6 @@ export const InterestRateChangeDialog = () => {
               maxValue={30}
             />
           </div>
-
           <div>
             <label className="text-sm">
               Impact <span className="text-destructive">*</span>
@@ -206,7 +204,6 @@ export const InterestRateChangeDialog = () => {
               </SelectContent>
             </Select>
           </div>
-
           <div>
             <MonthPicker
               label="Effective From"

@@ -150,7 +150,6 @@ export const PrepaymentDialog = () => {
       </DialogTrigger>
       <DialogContent
         className="sm:max-w-[475px]"
-        onClose={() => setIsOpen(false)}
       >
         <DialogHeader className="flex flex-row items-start justify-between">
           <div>
@@ -253,6 +252,7 @@ export const PrepaymentDialog = () => {
                 : ""
             }`}
           >
+            
             <MonthPicker
               label="Start Month"
               required
