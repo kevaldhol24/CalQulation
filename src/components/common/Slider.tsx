@@ -9,7 +9,7 @@ interface SliderProps {
   min: number;
   max: number;
   step?: number;
-  onChange?: (value: number) => void;
+  onChange?: (value: number, isDragging?: boolean) => void;
 }
 
 export const Slider: React.FC<SliderProps> = ({
@@ -21,10 +21,27 @@ export const Slider: React.FC<SliderProps> = ({
   onChange,
 }) => {
   const [localValue, setLocalValue] = useState<number>(value || min);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleChange = ([newValue]: number[]) => {
     setLocalValue(newValue);
-    onChange?.(newValue);
+    // During dragging, we only update the local value and notify parent with isDragging=true
+    // This allows the parent to decide whether to trigger expensive calculations
+    if (onChange) {
+      onChange(newValue, isDragging);
+    }
+  };
+
+  const handleSliderDragStart = () => {
+    setIsDragging(true);
+  };
+
+  const handleSliderDragEnd = () => {
+    setIsDragging(false);
+    // When dragging ends, send the final value with isDragging=false
+    if (onChange) {
+      onChange(localValue, false);
+    }
   };
 
   useEffect(() => {
@@ -32,10 +49,9 @@ export const Slider: React.FC<SliderProps> = ({
       setLocalValue(value);
     }
   }, [value]);
-
   const handleMarkClick = (markValue: number) => {
     setLocalValue(markValue);
-    onChange?.(markValue);
+    onChange?.(markValue, false);
   };
   const getMarkStyles = (markValue: number) => {
     const percentage = ((markValue - min) / (max - min)) * 100;
@@ -56,6 +72,8 @@ export const Slider: React.FC<SliderProps> = ({
           max={max}
           step={step}
           onValueChange={handleChange}
+          onPointerDown={handleSliderDragStart}
+          onPointerUp={handleSliderDragEnd}
         />
       </div>
       {marks && (

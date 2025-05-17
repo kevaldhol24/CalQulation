@@ -417,12 +417,12 @@ export default function TermsOfServicePage() {
               </p>
               <div className="inline-flex items-center justify-center px-6 py-4 border border-white/20 bg-white/10 backdrop-blur-sm rounded-xl text-base font-medium shadow-sm text-white">
                 <MdEmail className="mr-2 h-5 w-5" />
-                <a
-                  href="mailto:terms@calqulation.com"
+                <Link
+                  href="/contact"
                   className="hover:underline"
                 >
-                  terms@calqulation.com
-                </a>
+                  Contact Us
+                </Link>
               </div>
             </div>
           </section>

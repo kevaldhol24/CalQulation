@@ -15,6 +15,7 @@ export const LoanCalculator = () => {
   const { loanDetails, updateLoanDetails } = useLoan();
 
   const handleChange = (value: number, key: string) => {
+    if (value === loanDetails[key as keyof typeof loanDetails]) return;
     updateLoanDetails(key, value);
   };
 
@@ -26,7 +27,10 @@ export const LoanCalculator = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-2">
             <AmountInput
               value={loanDetails.loanAmount}
-              onChange={(value) => handleChange(Number(value), "loanAmount")}
+              onChange={(value) => {
+                console.log("loan amount", value);
+                handleChange(Number(value), "loanAmount");
+              }}
             />
             <InterestInput
               value={loanDetails.initialInterestRate}
@@ -36,7 +40,7 @@ export const LoanCalculator = () => {
             />
             <TenureInput
               defaultValue={loanDetails.tenureMonths}
-              onBlur={(value) => handleChange(Number(value), "tenureMonths")}
+              onChange={(value) => handleChange(Number(value), "tenureMonths")}
             />
             <MonthPicker
               defaultValue={new Date(loanDetails.startDate)}
