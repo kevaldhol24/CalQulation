@@ -42,9 +42,10 @@ export const InterestInput: FC<InterestInputProps> = ({
     setLocalValue(newValue);
   };
 
-  const handleSliderChange = (value: number | null) => {
+  const handleSliderChange = (value: number | null, isDragging?: boolean) => {
     setLocalValue(value?.toString() || null);
-    if (onChange) {
+    // Only trigger onChange when not dragging (on final value).
+    if (onChange && !isDragging) {
       onChange(value);
     }
   };

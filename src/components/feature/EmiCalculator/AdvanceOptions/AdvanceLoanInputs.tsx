@@ -13,7 +13,7 @@ import { InterestChange } from "./InterestChange";
 import { Prepayment } from "./Prepayment";
 
 export const AdvanceLoanInputs = () => {
-  const [showAdvanceOptions, setShowAdvanceOptions] = useState(false);
+  const [showAdvanceOptions, setShowAdvanceOptions] = useState(true);
   const { loanDetails, conflictsExist, conflictingMonths } = useLoan();
 
   // Calculate the total number of advanced options

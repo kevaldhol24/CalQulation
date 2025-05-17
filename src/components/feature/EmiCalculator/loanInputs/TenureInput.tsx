@@ -9,8 +9,8 @@ interface TenureInputProps
   extends Omit<React.ComponentProps<"input">, "value" | "onChange" | "onBlur"> {
   value?: number;
   defaultValue?: number;
+  hideSlider?: boolean;
   onChange?: (value: number | null) => void;
-  onBlur?: (value: number | null) => void;
 }
 
 const MAX_VALUE = 360; // 30 years in months
@@ -19,8 +19,8 @@ const MIN_VALUE = 6; // 1 year in months
 export const TenureInput: FC<TenureInputProps> = ({
   value,
   defaultValue,
+  hideSlider,
   onChange,
-  onBlur,
   ...props
 }) => {
   const [localValue, setLocalValue] = useState<number | null>(
@@ -49,9 +49,8 @@ export const TenureInput: FC<TenureInputProps> = ({
         numericValue = numericValue * 12;
       }
       setLocalValue(numericValue);
-      onChange?.(numericValue);
     },
-    [defaultValue, localValue, onChange, tenureUnit]
+    [defaultValue, localValue, tenureUnit]
   );
 
   const handleBlur = useCallback(() => {
@@ -61,12 +60,15 @@ export const TenureInput: FC<TenureInputProps> = ({
       setLocalValue(numericValue);
     }
     setLocalValue(numericValue);
-    onBlur?.(numericValue);
-  }, [localValue, onBlur]);
+    onChange?.(numericValue);
+  }, [localValue, onChange]);
 
-  const handleSliderChange = (newValue: number) => {
+  const handleSliderChange = (newValue: number, isDragging?: boolean) => {
     setLocalValue(newValue);
-    onChange?.(newValue);
+    // Only trigger onChange when not dragging (on final value)
+    if (onChange && !isDragging) {
+      onChange(newValue);
+    }
   };
 
   return (
@@ -122,31 +124,33 @@ export const TenureInput: FC<TenureInputProps> = ({
       <span id="tenure-hint" className="sr-only">
         Enter loan tenure in {tenureUnit === "Yr" ? "years" : "months"}
       </span>
-      <div className="mt-1">
-        <Slider
-          min={12}
-          max={360}
-          step={6}
-          marks={[
-            { value: 24, label: tenureUnit === "Mo" ? "24 Mo" : "2 Yr" },
-            { value: 60, label: tenureUnit === "Mo" ? "60 Mo" : "5 Yr" },
-            { value: 120, label: tenureUnit === "Mo" ? "120 Mo" : "10 Yr" },
-            { value: 180, label: tenureUnit === "Mo" ? "180 Mo" : "15 Yr" },
-            { value: 240, label: tenureUnit === "Mo" ? "240 Mo" : "20 Yr" },
-            { value: 300, label: tenureUnit === "Mo" ? "300 Mo" : "25 Yr" },
-            { value: 360, label: tenureUnit === "Mo" ? "360 Mo" : "30 Yr" },
-          ]}
-          value={localValue !== null ? localValue : undefined}
-          onChange={handleSliderChange}
-          aria-label="Loan tenure slider"
-          aria-valuemin={12}
-          aria-valuemax={360}
-          aria-valuenow={localValue || 12}
-          aria-valuetext={`${
-            tenureUnit === "Yr" ? (localValue || 12) / 12 : localValue || 12
-          } ${tenureUnit === "Yr" ? "years" : "months"}`}
-        />
-      </div>
+      {!hideSlider && (
+        <div className="mt-1">
+          <Slider
+            min={12}
+            max={360}
+            step={6}
+            marks={[
+              { value: 24, label: tenureUnit === "Mo" ? "24 Mo" : "2 Yr" },
+              { value: 60, label: tenureUnit === "Mo" ? "60 Mo" : "5 Yr" },
+              { value: 120, label: tenureUnit === "Mo" ? "120 Mo" : "10 Yr" },
+              { value: 180, label: tenureUnit === "Mo" ? "180 Mo" : "15 Yr" },
+              { value: 240, label: tenureUnit === "Mo" ? "240 Mo" : "20 Yr" },
+              { value: 300, label: tenureUnit === "Mo" ? "300 Mo" : "25 Yr" },
+              { value: 360, label: tenureUnit === "Mo" ? "360 Mo" : "30 Yr" },
+            ]}
+            value={localValue !== null ? localValue : undefined}
+            onChange={handleSliderChange}
+            aria-label="Loan tenure slider"
+            aria-valuemin={12}
+            aria-valuemax={360}
+            aria-valuenow={localValue || 12}
+            aria-valuetext={`${
+              tenureUnit === "Yr" ? (localValue || 12) / 12 : localValue || 12
+            } ${tenureUnit === "Yr" ? "years" : "months"}`}
+          />
+        </div>
+      )}
     </div>
   );
 };
