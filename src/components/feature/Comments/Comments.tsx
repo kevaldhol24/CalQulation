@@ -10,7 +10,7 @@ interface CommentsProps {
 export async function Comments({ postId }: CommentsProps) {
   // Fetch comments server-side for SEO optimization
   const comments = await getComments(postId);
-  
+  console.log("comments log", comments, postId);
   return (
     <div className="my-10" id="comments">
       <div className="mb-8">
