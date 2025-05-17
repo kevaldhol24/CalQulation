@@ -2,7 +2,6 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { cache } from "react";
 
 interface CommentSubmission {
   body: string;
@@ -11,32 +10,33 @@ interface CommentSubmission {
   postId: string;
 }
 
-// Using cache to optimize repeated calls on the server
-export const getComments = cache(async (postId: string) => {
+// Disable caching to ensure fresh data on each request
+export const getComments = async (postId: string) => {
   try {
+    // Use no-store option to disable caching and ensure fresh data
     const comments = await prisma.comment.findMany({
       where: {
         postId: postId,
         approved: true, // Only show approved comments
         deleted: false, // Don't show deleted comments
-        spam: false // Don't show spam comments
+        spam: false, // Don't show spam comments
       },
       orderBy: [
         {
-          parentId: 'asc' // null values first (top-level comments)
+          parentId: "asc", // null values first (top-level comments)
         },
         {
-          createdAt: 'desc' // newest first within each level
-        }
-      ]
+          createdAt: "desc", // newest first within each level
+        },
+      ],
     });
-    
+
     return comments;
   } catch (error) {
     console.error("Error fetching comments:", error);
     return [];
   }
-});
+};
 
 export async function submitComment(data: CommentSubmission) {
   try {
@@ -64,19 +64,21 @@ export async function submitComment(data: CommentSubmission) {
       },
     });
 
-    // Revalidate the path where comments are displayed
-    revalidatePath(`/${data.postId}`);
+    // Revalidate the path where comments are displayed - ensure it's the correct path
+    // For example, if postId is "tool_emi-calculator", revalidate "/tool/emi-calculator"
+    const pagePath = data.postId.replace('_', '/');
+    revalidatePath(`/${pagePath}`);
 
-    return { 
-      success: true, 
+    return {
+      success: true,
       message: "Your comment has been submitted and will appear after review.",
-      comment
+      comment,
     };
   } catch (error) {
     console.error("Error submitting comment:", error);
-    return { 
-      error: "Failed to submit comment. Please try again.", 
-      success: false 
+    return {
+      error: "Failed to submit comment. Please try again.",
+      success: false,
     };
   }
 }
