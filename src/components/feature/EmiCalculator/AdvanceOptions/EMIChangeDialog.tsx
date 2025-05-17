@@ -178,7 +178,6 @@ export const EMIChangeDialog = () => {
       </DialogTrigger>
       <DialogContent
         className="sm:max-w-[475px]"
-        onClose={() => setIsOpen(false)}
       >
         <DialogHeader className="flex flex-row items-start justify-between">
           <div>
@@ -224,7 +223,6 @@ export const EMIChangeDialog = () => {
               </p>
             )}
           </div>
-
           <div>
             <MonthPicker
               label="Effective From"
