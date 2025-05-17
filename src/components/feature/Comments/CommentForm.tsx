@@ -67,9 +67,10 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setSubmitted(true);
-    
+
     // Validate all fields
     const newErrors = {
       body: !comment.body.trim() ? "Comment text is required" : undefined,
@@ -136,7 +137,7 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
         </h3>
       </div>
 
-      <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <Textarea
             id="comment-textarea"
@@ -216,8 +217,8 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
         <div className="flex justify-end">
           <Button
             className="flex items-center gap-2"
-            onClick={handleSubmit}
             disabled={isSubmitting}
+            type="submit"
           >
             {isSubmitting ? (
               <>
@@ -232,7 +233,7 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
             )}
           </Button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -32,3 +32,13 @@ export const isSameMonth = (date1: string | Date, date2: string | Date): boolean
 export const formatMonthYear = (date: string | Date): string => {
   return moment(date).format('MMMM YYYY');
 };
+
+/**
+ * Checks if we're running in development mode
+ */
+export const isDevelopment = process.env.NODE_ENV === 'development';
+
+/**
+ * Checks if we're running in production mode
+ */
+export const isProduction = process.env.NODE_ENV === 'production';

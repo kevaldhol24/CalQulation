@@ -10,9 +10,10 @@ interface CommentSubmission {
   postId: string;
 }
 
-// Using cache to optimize repeated calls on the server
+// Disable caching to ensure fresh data on each request
 export const getComments = async (postId: string) => {
   try {
+    // Use no-store option to disable caching and ensure fresh data
     const comments = await prisma.comment.findMany({
       where: {
         postId: postId,
@@ -63,8 +64,10 @@ export async function submitComment(data: CommentSubmission) {
       },
     });
 
-    // Revalidate the path where comments are displayed
-    revalidatePath(`/${data.postId}`);
+    // Revalidate the path where comments are displayed - ensure it's the correct path
+    // For example, if postId is "tool_emi-calculator", revalidate "/tool/emi-calculator"
+    const pagePath = data.postId.replace('_', '/');
+    revalidatePath(`/${pagePath}`);
 
     return {
       success: true,

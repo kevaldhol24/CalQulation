@@ -1,5 +1,3 @@
-"use client";
-
 import { Comment as CommentType } from '@prisma/client';
 import moment from 'moment';
 import { MessageSquare } from 'lucide-react';
@@ -104,3 +102,6 @@ export const CommentList = ({ comments }: CommentListProps) => {
     </div>
   );
 };
+
+// Export a dynamic configuration to prevent static optimization of this page
+export const dynamic = "force-dynamic";
