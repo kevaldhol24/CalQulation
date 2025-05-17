@@ -723,9 +723,12 @@ export default function EmiCalculatorPage() {
         </div>
 
         <div>
+          {/* Set the dynamic parameter to ensure the page is regenerated on each request */}
           <Comments postId="tool_emi-calculator" />
         </div>
       </div>
     </div>
   );
 }
+
+

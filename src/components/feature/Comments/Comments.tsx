@@ -2,12 +2,16 @@ import { getComments } from "@/actions/commentActions";
 import { CommentForm } from "./CommentForm";
 import { CommentList } from "./CommentList";
 import { CommentFab } from "./CommentFab";
+import { unstable_noStore } from "next/cache";
 
 interface CommentsProps {
   postId: string;
 }
 
 export async function Comments({ postId }: CommentsProps) {
+  // Ensure no caching at the component level
+  unstable_noStore();
+  
   // Fetch comments server-side for SEO optimization
   const comments = await getComments(postId);
 
