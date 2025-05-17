@@ -2,6 +2,7 @@ import ComingSoonClient from "@/components/feature/ComingSoon/ComingSoonClient";
 import { WaveSeparator } from "@/components/layout/WaveSeparator";
 import { CheckCheckIcon } from "lucide-react";
 import { Metadata } from "next";
+import Link from "next/link";
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { GrArticle, GrCurrency } from "react-icons/gr";
 import { MdEmail } from "react-icons/md";
@@ -176,13 +177,13 @@ export default function ComingSoonPage() {
               <FaLinkedinIn className="text-blue-700 h-6 w-6" />
               <span className="sr-only">LinkedIn</span>
             </a>
-            <a
-              href="mailto:updates@calqulation.com"
+            <Link
+              href="/contact"
               className="bg-white dark:bg-gray-800 p-4 rounded-full shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-700"
             >
               <MdEmail className="text-red-500 h-6 w-6" />
-              <span className="sr-only">Email</span>
-            </a>
+              <span className="sr-only">Contact Us?</span>
+            </Link>
           </div>
         </section>
 

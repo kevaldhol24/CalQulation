@@ -43,9 +43,10 @@ export const AmountInput: FC<AmountInputProps> = ({
     }
   };
 
-  const handleSliderChange = (value: number | null) => {
+  const handleSliderChange = (value: number | null, isDragging?: boolean) => {
     setLocalValue(value);
-    if (onChange) {
+    // Only trigger onChange when not dragging (on final value)
+    if (onChange && !isDragging) {
       onChange(value);
     }
   };

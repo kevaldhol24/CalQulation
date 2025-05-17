@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CreditCard, Percent } from "lucide-react";
+import Link from "next/link";
 import { ReactNode, useState } from "react";
 import { FaChevronRight, FaQuestion } from "react-icons/fa";
 import { IoMdInformationCircleOutline } from "react-icons/io";
@@ -736,7 +737,7 @@ export const AdvanceOptionsInfoDialog = ({ trigger }: InfoDialogProps) => {
 
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 rounded-b-xl flex justify-between items-center">
           <div className="text-white text-sm">
-            Got a question about loan calculations? <a href="mailto:contact@calqulation.com" className="text-accent">contact@calqulation.com</a>
+            Got a question about loan calculations? <Link href="/contact" className="text-accent">Contact Us</Link>
           </div>
           <Button
             onClick={() => setIsOpen(false)}

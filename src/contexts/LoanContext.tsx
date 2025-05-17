@@ -17,6 +17,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -29,7 +30,7 @@ type LoanContextType = {
   getMinimumEMIForMonth: (date: Date) => number;
   isLoading: boolean;
   conflictsExist: boolean;
-  conflictingMonths: Array<{month: string, types: string[]}>;
+  conflictingMonths: Array<{ month: string; types: string[] }>;
 };
 
 // Create context with default values
@@ -54,6 +55,9 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
   const [loanResults, setLoanResults] = useState<LoanCalculationOutput>();
   const [isLoading, setIsLoading] = useState(false);
 
+  // Use ref for timeout to avoid dependency cycle
+  const calculationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   // Update specific loan detail field
   const updateLoanDetails = (key: string, value: any) => {
     setLoanDetails((prev) => ({ ...prev, [key]: value }));
@@ -63,7 +67,7 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
   const { conflictsExist, conflictingMonths } = useMemo(() => {
     const { interestRateChanges, emiChanges, prepayments } = loanDetails;
     const conflictMap = new Map<string, string[]>();
-    
+
     // Helper to check if multiple changes exist for the same month
     const checkAndAddConflict = (date: Date | string, type: string) => {
       const monthYear = formatMonthYear(date);
@@ -78,56 +82,62 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
     };
 
     // Check interest rate changes
-    interestRateChanges?.forEach(change => {
-      checkAndAddConflict(change.effectiveDate, 'interest rate');
+    interestRateChanges?.forEach((change) => {
+      checkAndAddConflict(change.effectiveDate, "interest rate");
     });
 
     // Check EMI changes
-    emiChanges?.forEach(change => {
-      checkAndAddConflict(change.startDate, 'EMI');
+    emiChanges?.forEach((change) => {
+      checkAndAddConflict(change.startDate, "EMI");
     });
 
     // Check prepayments
-    prepayments?.forEach(prepay => {
+    prepayments?.forEach((prepay) => {
       // For one-time prepayments
-      if (prepay.type === 'onetime') {
-        checkAndAddConflict(prepay.startDate, 'prepayment');
-      } 
+      if (prepay.type === "onetime") {
+        checkAndAddConflict(prepay.startDate, "prepayment");
+      }
       // For recurring prepayments, check all months in the range
       else if (prepay.type === PrepaymentFrequency.Monthly) {
         const startDate = new Date(prepay.startDate);
         const endDate = prepay.endDate ? new Date(prepay.endDate) : null;
-        
+
         if (!endDate) {
-          checkAndAddConflict(startDate, 'prepayment');
+          checkAndAddConflict(startDate, "prepayment");
           return;
         }
 
         // For recurring prepayments with an end date, add all months in the range
         const currentDate = new Date(startDate);
         while (currentDate <= endDate) {
-          checkAndAddConflict(new Date(currentDate), 'prepayment');
+          checkAndAddConflict(new Date(currentDate), "prepayment");
           currentDate.setMonth(currentDate.getMonth() + 1);
         }
       }
     });
-    
+
     // Filter to only months with multiple changes
     const conflicts = Array.from(conflictMap.entries())
       .filter(([_, types]) => types.length > 1)
       .map(([month, types]) => ({
         month,
-        types
+        types,
       }));
-    
+
     return {
       conflictsExist: conflicts.length > 0,
-      conflictingMonths: conflicts
+      conflictingMonths: conflicts,
     };
   }, [loanDetails]);
-
+  
   useEffect(() => {
-    const fetchResults = async () => {
+    // Clear any existing timeout to prevent stale calculations
+    if (calculationTimeoutRef.current) {
+      clearTimeout(calculationTimeoutRef.current);
+    }
+
+    // Set a new timeout to debounce the calculation
+    const timeoutId = setTimeout(async () => {
       setIsLoading(true);
       try {
         const results = await calculateLoan(loanDetails);
@@ -137,24 +147,31 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
       } finally {
         setIsLoading(false);
       }
-    };
+    }, 300); // 300ms debounce delay
 
-    fetchResults();
+    calculationTimeoutRef.current = timeoutId;
+
+    // Cleanup
+    return () => {
+      if (calculationTimeoutRef.current) {
+        clearTimeout(calculationTimeoutRef.current);
+      }
+    };
   }, [loanDetails]);
 
   const getMinimumEMIForMonth = useCallback(
     (date: Date) => {
       if (!loanResults?.schedule) return 0;
-      
+
       const month = date.getMonth();
       const year = date.getFullYear();
-      
+
       const emiForMonth = loanResults.schedule.find(
         (emi) => emi.month === month && emi.year === year
       );
 
       if (!emiForMonth) return 0;
-      
+
       return calculateMinimumEMI(
         emiForMonth.remainingBalance,
         emiForMonth.interestRate
