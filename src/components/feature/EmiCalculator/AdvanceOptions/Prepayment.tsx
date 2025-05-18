@@ -118,7 +118,7 @@ export const Prepayment = () => {
             ))}
           </div>
         ) : (
-          <div className="text-sm text-muted-foreground text-center italic">
+          <div className="text-sm text-muted-foreground text-center italic mt-2">
             No prepayment added
           </div>
         )}

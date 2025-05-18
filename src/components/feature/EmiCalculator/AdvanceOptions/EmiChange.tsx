@@ -117,7 +117,7 @@ export const EmiChange = () => {
           })}
         </div>
       ) : (
-        <div className="text-sm text-center text-muted-foreground italic">
+        <div className="text-sm text-center text-muted-foreground italic mt-2">
           No EMI adjustments scheduled
         </div>
       )}
