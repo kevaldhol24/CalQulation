@@ -1,12 +1,13 @@
 {
   "redirects": [
     {
-      "source": "http://calqulation.com/:path*",
-      "destination": "https://www.calqulation.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "https://calqulation.com/:path*",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "calqulation.com"
+        }
+      ],
       "destination": "https://www.calqulation.com/:path*",
       "permanent": true
     }
