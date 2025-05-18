@@ -14,21 +14,24 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Calqulation | Free Online Financial Calculators & Tools",
-  description: "Comprehensive collection of free financial calculators for loans, investments, and retirement planning. Make informed financial decisions with our easy-to-use tools.",
-  keywords: "financial calculator, loan calculator, EMI calculator, investment calculator, retirement planning, financial tools, financial planning",
+  description:
+    "Comprehensive collection of free financial calculators for loans, investments, and retirement planning. Make informed financial decisions with our easy-to-use tools.",
+  keywords:
+    "financial calculator, loan calculator, EMI calculator, investment calculator, retirement planning, financial tools, financial planning",
   openGraph: {
     title: "Calqulation | Free Online Financial Calculators & Tools",
-    description: "Comprehensive collection of free financial calculators for loans, investments, and retirement planning. Make informed financial decisions with our easy-to-use tools.",
-    url: "https://calqulation.com",
+    description:
+      "Comprehensive collection of free financial calculators for loans, investments, and retirement planning. Make informed financial decisions with our easy-to-use tools.",
+    url: "https://www.calqulation.com",
     images: [
       {
         url: "/Calqulation.png",
         width: 1200,
         height: 630,
         alt: "Calqulation - Financial Calculator Tools",
-      }
+      },
     ],
-  }
+  },
 };
 
 export default function Home() {

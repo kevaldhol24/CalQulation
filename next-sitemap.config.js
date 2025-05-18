@@ -1,6 +1,19 @@
 module.exports = {
-  siteUrl: 'https://calqulation.com',
+  siteUrl: 'https://www.calqulation.com',
   generateRobotsTxt: true,
   changefreq: 'weekly',
   priority: 0.7,
+  additionalPaths: async () => {
+    return [
+      {
+        loc: '/tool/emi-calculator',
+        changefreq: 'weekly',
+        priority: 0.9,
+        lastmod: new Date().toISOString(),
+      },
+    ];
+  },
+  // Include all routes, including dynamic ones
+  generateIndexSitemap: true,
+  excludePages: [], // Don't exclude any pages
 };

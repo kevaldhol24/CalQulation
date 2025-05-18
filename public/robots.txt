@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://calqulation.com
+Host: https://www.calqulation.com
 
 # Sitemaps
-Sitemap: https://calqulation.com/sitemap.xml
+Sitemap: https://www.calqulation.com/sitemap.xml

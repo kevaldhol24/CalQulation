@@ -2,6 +2,7 @@ import { Comments } from "@/components/feature/Comments";
 import { LoanCalculator } from "@/components/feature/EmiCalculator/LoanCalculator";
 import { LoanProvider } from "@/contexts/LoanContext";
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { BsBank, BsGraphUp } from "react-icons/bs";
 import {
   FaChartBar,
@@ -17,13 +18,13 @@ export const metadata: Metadata = {
   description:
     "Calculate your loan EMI, total interest payable, and view detailed amortization schedule. Plan home loans, car loans & personal loans with advanced options like prepayments.",
   keywords:
-    "EMI calculator, loan EMI calculation, home loan EMI, car loan EMI, personal loan calculator, loan amortization schedule, prepayment calculator, interest rates",
+    "EMI calculator, loan calculator with floating rate, loan EMI calculation, home loan EMI, car loan EMI, personal loan calculator, loan amortization schedule, prepayment calculator, interest rates",
   openGraph: {
     title:
       "EMI Calculator | Calculate - Loan EMI, Interest & Amortization Schedule",
     description:
       "Calculate your loan EMI, total interest payable, and view detailed amortization schedule. Plan home loans, car loans & personal loans with advanced options.",
-    url: "https://calqulation.com/tool/emi-calculator",
+    url: "https://www.calqulation.com/tool/emi-calculator",
     images: [
       {
         url: "/Financial-planning.svg",
@@ -110,13 +111,18 @@ export default function EmiCalculatorPage() {
               </span>
             </div>
           </div>
-
           {/* Calculator section with enhanced styling */}
           <div className="relative overflow-hidden">
             <div className="rounded-xl overflow-hidden">
-              <LoanProvider>
-                <LoanCalculator />
-              </LoanProvider>
+              <Suspense
+                fallback={
+                  <div className="h-1 bg-gray-200 dark:bg-gray-800"></div>
+                }
+              >
+                <LoanProvider>
+                  <LoanCalculator />
+                </LoanProvider>
+              </Suspense>
             </div>
           </div>
         </div>
@@ -730,5 +736,3 @@ export default function EmiCalculatorPage() {
     </div>
   );
 }
-
-
