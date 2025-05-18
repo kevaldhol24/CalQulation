@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout";
 import { NavigationProgress } from "@/components/layout/NavigationProgress";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,11 +29,14 @@ export const metadata: Metadata = {
   creator: "Calqulation",
   publisher: "Calqulation",
   applicationName: "Calqulation",
+  alternates: {
+    canonical: "https://www.calqulation.com",
+  },
   openGraph: {
     title: "Calqulation | Smart Financial Calculation Tools",
     description:
       "Advanced financial calculators to plan your loans, investments, and financial future with confidence. Calculate EMIs, interest rates, and more.",
-    url: "https://calqulation.com",
+    url: "https://www.calqulation.com",
     siteName: "Calqulation",
     locale: "en_US",
     type: "website",
@@ -52,7 +56,7 @@ export const metadata: Metadata = {
       "Advanced financial calculators to plan your loans, investments, and financial future with confidence.",
     images: ["/Calqulation.png"],
   },
-  metadataBase: new URL("https://calqulation.com"),
+  metadataBase: new URL("https://www.calqulation.com"),
 };
 
 export default function RootLayout({
@@ -62,8 +66,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      {" "}
       <head>
-        <link rel="canonical" href="https://calqulation.com" />
+        <link rel="canonical" href="https://www.calqulation.com" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
@@ -84,6 +89,7 @@ export default function RootLayout({
             <NavigationProgress />
           </Suspense>
           {children}
+          <Toaster position="top-right" />
           <Footer />
         </ThemeProvider>
 
@@ -95,7 +101,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebApplication",
               name: "Calqulation",
-              url: "https://calqulation.com",
+              url: "https://www.calqulation.com",
               description:
                 "Advanced financial calculators to plan your loans, investments, and financial future with confidence.",
               applicationCategory: "FinanceApplication",

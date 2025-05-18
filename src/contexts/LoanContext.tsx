@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { getSharedCalculation } from "@/actions/sharedCalculationActions";
 import { formateDate, formatMonthYear } from "@/lib/utils";
 import { calculateLoan } from "@/services/LoanService";
 import {
@@ -20,6 +21,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useSearchParams } from "next/navigation";
 
 // Define types
 type LoanContextType = {
@@ -29,6 +31,10 @@ type LoanContextType = {
   setLoanDetails: React.Dispatch<React.SetStateAction<LoanCalculationInputs>>;
   getMinimumEMIForMonth: (date: Date) => number;
   isLoading: boolean;
+  isSharedLoading: boolean;
+  isInitialLoad: boolean;
+  isShared: boolean;
+  sharedId?: string | null;
   conflictsExist: boolean;
   conflictingMonths: Array<{ month: string; types: string[] }>;
 };
@@ -54,9 +60,42 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
     useState<LoanCalculationInputs>(defaultLoanDetails);
   const [loanResults, setLoanResults] = useState<LoanCalculationOutput>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingShared, setIsLoadingShared] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  
+  // Use search params to get the shared ID if available
+  const searchParams = useSearchParams();
+  const sharedId = searchParams.get('share');
 
   // Use ref for timeout to avoid dependency cycle
   const calculationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  // Load shared calculation if the ID is provided in the URL
+  useEffect(() => {
+    const loadSharedCalculation = async () => {
+      if (!sharedId) {
+        setIsInitialLoad(false);
+        return;
+      }
+
+      setIsLoadingShared(true);
+      try {
+        const result = await getSharedCalculation(sharedId);
+        
+        if (result.success && result.loanDetails) {
+          setLoanDetails(result.loanDetails);
+        } else {
+          // console.error("Error loading shared calculation:", result.error);
+        }
+      } catch (error) {
+        // console.error("Error loading shared calculation:", error);
+      } finally {
+        setIsLoadingShared(false);
+        setIsInitialLoad(false);
+      }
+    };
+
+    loadSharedCalculation();
+  }, [sharedId]);
 
   // Update specific loan detail field
   const updateLoanDetails = (key: string, value: any) => {
@@ -179,7 +218,6 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
     },
     [loanResults]
   );
-
   return (
     <LoanContext.Provider
       value={{
@@ -188,7 +226,11 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
         getMinimumEMIForMonth,
         updateLoanDetails,
         setLoanDetails,
-        isLoading,
+        isLoading: isLoading || isLoadingShared,
+        isSharedLoading: isLoadingShared,
+        isInitialLoad,
+        isShared: !!sharedId,
+        sharedId,
         conflictsExist,
         conflictingMonths,
       }}

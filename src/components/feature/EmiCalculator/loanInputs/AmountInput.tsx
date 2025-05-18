@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { Slider } from "../../../common/Slider";
 import { TextField } from "../../../common/TextField";
 
@@ -22,6 +22,10 @@ export const AmountInput: FC<AmountInputProps> = ({
   ...props
 }) => {
   const [localValue, setLocalValue] = useState<number | null>(value || null);
+
+  useEffect(() => {
+    setLocalValue(value || null);
+  }, [value]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === "") {

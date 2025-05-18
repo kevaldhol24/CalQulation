@@ -147,7 +147,7 @@ export const InterestChange = () => {
           })}
         </div>
       ) : (
-        <div className="text-sm text-center text-muted-foreground italic">
+        <div className="text-sm text-center text-muted-foreground italic mt-2">
           No interest rate changes scheduled
         </div>
       )}

@@ -21,11 +21,14 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: "https://www.calqulation.com/privacy-policy",
+  },
   openGraph: {
     title: "Privacy Policy | Calqulation - How We Protect Your Data",
     description:
       "Learn how Calqulation collects, uses, and protects your personal information when you use our financial calculators and tools.",
-    url: "https://calqulation.com/privacy-policy",
+    url: "https://www.calqulation.com/privacy-policy",
     type: "website",
   },
 };
@@ -332,10 +335,7 @@ export default function PrivacyPolicyPage() {
               </p>
               <div className="inline-flex items-center justify-center px-6 py-4 border border-white/20 bg-white/10 backdrop-blur-sm rounded-xl text-base font-medium shadow-sm text-white">
                 <MdEmail className="mr-2 h-5 w-5" />
-                <Link
-                  href="/contact"
-                  className="hover:underline"
-                >
+                <Link href="/contact" className="hover:underline">
                   Contact Us
                 </Link>
               </div>
@@ -397,7 +397,7 @@ export default function PrivacyPolicyPage() {
             publisher: {
               "@type": "Organization",
               name: "Calqulation",
-              logo: "https://calqulation.com/Calqulation.png",
+              logo: "https://www.calqulation.com/Calqulation.png",
             },
             datePublished: "2025-01-01",
             dateModified: `2025-05-11`,

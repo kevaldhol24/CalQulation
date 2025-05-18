@@ -46,3 +46,12 @@ model Contact {
     @@index([status])
     @@index([email])
 }
+
+model SharedCalculation {
+    id        String   @id @default(cuid())
+    data      Json
+    createdAt DateTime @default(now())
+    expiresAt DateTime 
+
+    @@index([expiresAt])
+}

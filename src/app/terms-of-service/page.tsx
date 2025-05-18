@@ -30,11 +30,11 @@ export const metadata = {
     title: "Terms of Service | Calqulation - User Agreement",
     description:
       "Terms and conditions for using Calqulation's financial calculators and services. Learn about your rights and responsibilities when using our tools.",
-    url: "https://calqulation.com/terms-of-service",
+    url: "https://www.calqulation.com/terms-of-service",
     type: "website",
   },
   alternates: {
-    canonical: "https://calqulation.com/terms-of-service",
+    canonical: "https://www.calqulation.com/terms-of-service",
   },
 };
 
@@ -417,10 +417,7 @@ export default function TermsOfServicePage() {
               </p>
               <div className="inline-flex items-center justify-center px-6 py-4 border border-white/20 bg-white/10 backdrop-blur-sm rounded-xl text-base font-medium shadow-sm text-white">
                 <MdEmail className="mr-2 h-5 w-5" />
-                <Link
-                  href="/contact"
-                  className="hover:underline"
-                >
+                <Link href="/contact" className="hover:underline">
                   Contact Us
                 </Link>
               </div>
@@ -482,7 +479,7 @@ export default function TermsOfServicePage() {
             publisher: {
               "@type": "Organization",
               name: "Calqulation",
-              logo: "https://calqulation.com/Calqulation.png",
+              logo: "https://www.calqulation.com/Calqulation.png",
             },
             datePublished: "2025-01-01",
             dateModified: "2025-05-11",
