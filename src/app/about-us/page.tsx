@@ -21,11 +21,14 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: "https://www.calqulation.com/about-us",
+  },
   openGraph: {
     title: "About Us | Calqulation - Making Financial Decisions Simple",
     description:
       "Learn about Calqulation's mission to simplify financial decisions through interactive calculators and educational tools.",
-    url: "https://calqulation.com/about-us",
+    url: "https://www.calqulation.com/about-us",
     type: "website",
     images: [
       {
@@ -447,10 +450,7 @@ export default function AboutUsPage() {
                 </p>
                 <div className="inline-block px-6 py-4 border border-white/20 bg-white/10 backdrop-blur-sm rounded-xl text-base font-medium shadow-sm text-white">
                   <MdEmail className="mr-2 h-5 w-5 inline-block align-sub" />
-                  <Link
-                    href="/contact"
-                    className="hover:underline"
-                  >
+                  <Link href="/contact" className="hover:underline">
                     Contact Us?
                   </Link>
                 </div>
@@ -506,8 +506,8 @@ export default function AboutUsPage() {
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "Calqulation",
-            url: "https://calqulation.com",
-            logo: "https://calqulation.com/Calqulation.png",
+            url: "https://www.calqulation.com",
+            logo: "https://www.calqulation.com/Calqulation.png",
             description:
               "Making complex financial decisions simple through interactive calculators and educational tools",
             sameAs: [

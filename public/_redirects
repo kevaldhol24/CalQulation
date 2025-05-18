@@ -1,0 +1,3 @@
+# Redirect domain variations to canonical URL
+http://calqulation.com/* https://www.calqulation.com/:splat 301!
+https://calqulation.com/* https://www.calqulation.com/:splat 301!

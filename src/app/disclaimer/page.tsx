@@ -12,18 +12,21 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Disclaimer | Calqulation - Financial Tools",
-  description: "Important information about the use, accuracy and limitations of Calqulation's financial calculators and tools.",
-  keywords: "disclaimer, financial calculator disclaimer, loan calculator disclaimer, financial tool limitations, legal terms",
+  description:
+    "Important information about the use, accuracy and limitations of Calqulation's financial calculators and tools.",
+  keywords:
+    "disclaimer, financial calculator disclaimer, loan calculator disclaimer, financial tool limitations, legal terms",
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
     title: "Disclaimer | Calqulation - Financial Tools",
-    description: "Important information about the use, accuracy and limitations of Calqulation's financial calculators and tools.",
-    url: "https://calqulation.com/disclaimer",
-    type: "website"
-  }
+    description:
+      "Important information about the use, accuracy and limitations of Calqulation's financial calculators and tools.",
+    url: "https://www.calqulation.com/disclaimer",
+    type: "website",
+  },
 };
 
 export default function DisclaimerPage() {
@@ -229,7 +232,8 @@ export default function DisclaimerPage() {
                   </p>
                 </div>
               </div>
-            </div>          </section>
+            </div>{" "}
+          </section>
 
           {/* Contact Section */}
           <section className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl overflow-hidden shadow-xl text-white p-8">
@@ -243,10 +247,7 @@ export default function DisclaimerPage() {
               </p>
               <div className="inline-block px-6 py-4 border border-white/20 bg-white/10 backdrop-blur-sm rounded-xl text-base font-medium shadow-sm text-white">
                 <MdEmail className="mr-2 h-5 w-5 inline-block align-sub" />
-                <Link
-                  href="/contact"
-                  className="hover:underline"
-                >
+                <Link href="/contact" className="hover:underline">
                   Contact Us
                 </Link>
               </div>
@@ -258,10 +259,30 @@ export default function DisclaimerPage() {
             <div className="text-sm text-gray-600 dark:text-gray-400">
               <p className="mb-4">Related Information:</p>
               <div className="flex flex-wrap gap-4">
-                <a href="/terms-of-service" className="text-blue-600 dark:text-blue-400 hover:underline">Terms of Service</a>
-                <a href="/privacy-policy" className="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a>
-                <a href="/about-us" className="text-blue-600 dark:text-blue-400 hover:underline">About Us</a>
-                <a href="/tool/emi-calculator" className="text-blue-600 dark:text-blue-400 hover:underline">EMI Calculator</a>
+                <a
+                  href="/terms-of-service"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  Terms of Service
+                </a>
+                <a
+                  href="/privacy-policy"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  Privacy Policy
+                </a>
+                <a
+                  href="/about-us"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  About Us
+                </a>
+                <a
+                  href="/tool/emi-calculator"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  EMI Calculator
+                </a>
               </div>
             </div>
           </section>
@@ -275,16 +296,17 @@ export default function DisclaimerPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Disclaimer | Calqulation Financial Tools",
-            "description": "Important information about the use, accuracy and limitations of Calqulation's financial calculators and tools.",
-            "publisher": {
+            name: "Disclaimer | Calqulation Financial Tools",
+            description:
+              "Important information about the use, accuracy and limitations of Calqulation's financial calculators and tools.",
+            publisher: {
               "@type": "Organization",
-              "name": "Calqulation",
-              "logo": "https://calqulation.com/Calqulation.png"
+              name: "Calqulation",
+              logo: "https://www.calqulation.com/Calqulation.png",
             },
-            "datePublished": "2025-05-11",
-            "dateModified": "2025-05-11"
-          })
+            datePublished: "2025-05-11",
+            dateModified: "2025-05-11",
+          }),
         }}
       />
     </div>

@@ -1,11 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  poweredByHeader: false, // Remove X-Powered-By header for security
+  /* config options here */  poweredByHeader: false, // Remove X-Powered-By header for security
   reactStrictMode: true,
   images: {
-    domains: ['calqulation.com'],
+    domains: ['calqulation.com', 'www.calqulation.com'],
     formats: ['image/avif', 'image/webp'],
   },
   compress: true, // Enable gzip compression for better performance
@@ -33,10 +32,34 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
-  },
-  // Add redirects for common variations of URLs
+  },  // Add redirects for common variations of URLs
   async redirects() {
     return [
+      // Redirect HTTP to HTTPS and non-www to www
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'calqulation.com',
+          },
+        ],
+        destination: 'https://www.calqulation.com/:path*',
+        permanent: true,
+      },
+      // Redirect HTTP non-www to HTTPS www
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'calqulation.com',
+          },
+        ],
+        destination: 'https://www.calqulation.com/:path*',
+        permanent: true,
+      },
+      // Feature-specific redirects
       {
         source: '/emi-calculator',
         destination: '/tool/emi-calculator',
