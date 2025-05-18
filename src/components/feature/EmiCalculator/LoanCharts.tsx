@@ -20,6 +20,7 @@ import {
   Filler,
   TooltipItem,
   ChartOptions,
+  ScriptableContext,
 } from "chart.js";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
 
@@ -63,44 +64,68 @@ export const LoanCharts = () => {
   const isDarkTheme =
     theme === "dark" || (theme === "system" && systemTheme === "dark");
 
-  // Define theme-aware colors
+  // Define theme-aware colors with refined modern palette
   const colors = {
     background: isDarkTheme
-      ? "rgba(30, 41, 59, 0.7)"
+      ? "rgba(15, 23, 42, 0.8)"
       : "rgba(255, 255, 255, 1)",
-    gridLines: isDarkTheme ? "rgba(148, 163, 184, 0.15)" : "rgba(0, 0, 0, 0.1)",
-    text: isDarkTheme ? "rgba(255, 255, 255, 0.87)" : "rgba(0, 0, 0, 0.87)",
+    gridLines: isDarkTheme
+      ? "rgba(148, 163, 184, 0.12)"
+      : "rgba(0, 0, 0, 0.06)",
+    text: isDarkTheme ? "rgba(255, 255, 255, 0.9)" : "rgba(30, 41, 59, 0.9)",
     principal: {
-      main: "#3b82f6",
-      bg: isDarkTheme ? "rgba(59, 130, 246, 0.7)" : "rgba(59, 130, 246, 0.8)",
-      border: isDarkTheme ? "#60a5fa" : "#2563eb",
+      main: "#0ea5e9", // Changed to a more vibrant blue
+      bg: isDarkTheme ? "rgba(14, 165, 233, 0.65)" : "rgba(14, 165, 233, 0.75)",
+      gradient: isDarkTheme
+        ? "rgba(14, 165, 233, 0.85)"
+        : "rgba(14, 165, 233, 0.95)",
+      border: isDarkTheme ? "#38bdf8" : "#0284c7",
     },
     interest: {
-      main: "#ef4444",
-      bg: isDarkTheme ? "rgba(239, 68, 68, 0.7)" : "rgba(239, 68, 68, 0.8)",
-      border: isDarkTheme ? "#f87171" : "#dc2626",
+      main: "#f43f5e", // Vivid pink/red
+      bg: isDarkTheme ? "rgba(244, 63, 94, 0.65)" : "rgba(244, 63, 94, 0.75)",
+      gradient: isDarkTheme
+        ? "rgba(244, 63, 94, 0.85)"
+        : "rgba(244, 63, 94, 0.95)",
+      border: isDarkTheme ? "#fb7185" : "#e11d48",
     },
     prepayment: {
-      main: "#10b981",
-      bg: isDarkTheme ? "rgba(16, 185, 129, 0.7)" : "rgba(16, 185, 129, 0.8)",
+      main: "#10b981", // Emerald green
+      bg: isDarkTheme ? "rgba(16, 185, 129, 0.65)" : "rgba(16, 185, 129, 0.75)",
+      gradient: isDarkTheme
+        ? "rgba(16, 185, 129, 0.85)"
+        : "rgba(16, 185, 129, 0.95)",
       border: isDarkTheme ? "#34d399" : "#059669",
     },
     balance: {
-      main: "#8884d8",
-      bg: isDarkTheme ? "rgba(136, 132, 216, 0.7)" : "rgba(136, 132, 216, 0.5)",
-      border: isDarkTheme ? "#a5a3e0" : "#6d67d0",
+      main: "#8b5cf6", // Bright purple
+      bg: isDarkTheme ? "rgba(139, 92, 246, 0.55)" : "rgba(139, 92, 246, 0.45)",
+      gradient: isDarkTheme
+        ? "rgba(139, 92, 246, 0.75)"
+        : "rgba(139, 92, 246, 0.65)",
+      border: isDarkTheme ? "#a78bfa" : "#7c3aed",
     },
   };
-
-  // Process EMI schedule data for charts - moved up before conditional return
+  // Process EMI schedule data for charts
   const scheduleChartData = useMemo(() => {
     if (!loanResults?.schedule) return [] as ScheduleChartItem[];
 
-    // Group by year and quarter for better visualization (not showing all months to avoid clutter)
-    const yearlyData = loanResults.schedule.reduce(
+    // Calculate sampling interval based on the loan length
+    // For longer loans, sample less frequently to avoid overcrowding
+    const totalEMIs = loanResults.schedule.length;
+    let samplingInterval = 3; // Default quarterly
+
+    if (totalEMIs > 120) { // For loans > 10 years (120 months)
+      samplingInterval = 6; // Every 6 months
+    } else if (totalEMIs > 240) { // For loans > 20 years
+      samplingInterval = 12; // Yearly
+    }
+
+    // Group by sampling interval for better visualization
+    const sampledData = loanResults.schedule.reduce(
       (acc: ScheduleChartItem[], item: EMIScheduleItem, index: number) => {
-        // Use every 3rd month (quarterly) for charting to avoid overcrowding
-        if (index % 3 === 0 || index === loanResults.schedule.length - 1) {
+        // Sample data based on interval, always include first and last point
+        if (index % samplingInterval === 0 || index === loanResults.schedule.length - 1) {
           acc.push({
             emiNumber: item.emiNumber,
             date: `${item.emiNumber}`,
@@ -115,10 +140,10 @@ export const LoanCharts = () => {
       []
     );
 
-    return yearlyData;
+    return sampledData;
   }, [loanResults?.schedule]);
 
-  // Extract yearly trends for amortization - moved up before conditional return
+  // Extract yearly trends for amortization
   const amortizationData = useMemo(() => {
     if (!loanResults?.schedule)
       return {
@@ -173,17 +198,20 @@ export const LoanCharts = () => {
     loanAmount,
     totalInterestPayable,
     totalPrepayment,
-    // emi,
     totalAmountPayable,
   } = loanResults.summary;
 
-  // Data for principal vs interest donut chart
+  // Data for principal vs interest donut chart with improved colors
   const principalVsInterestData = {
     labels: ["Principal", "Interest", "Prepayment"],
     datasets: [
       {
         label: "Payment Breakdown",
-        data: [loanAmount, totalInterestPayable, totalPrepayment],
+        data: [
+          totalPrepayment ? loanAmount - totalPrepayment : loanAmount,
+          totalInterestPayable,
+          totalPrepayment || 0,
+        ],
         backgroundColor: [
           colors.principal.bg,
           colors.interest.bg,
@@ -194,12 +222,24 @@ export const LoanCharts = () => {
           colors.interest.border,
           colors.prepayment.border,
         ],
-        borderWidth: 1,
+        borderWidth: 1.5,
+        hoverBackgroundColor: [
+          colors.principal.gradient,
+          colors.interest.gradient,
+          colors.prepayment.gradient,
+        ],
+        hoverBorderColor: [
+          colors.principal.border,
+          colors.interest.border,
+          colors.prepayment.border,
+        ],
+        hoverBorderWidth: 2,
+        hoverOffset: 8,
       },
     ],
   };
 
-  // Line chart data for loan balance over time
+  // Line chart data for loan balance over time with improved gradient fill
   const balanceChartData = {
     labels: scheduleChartData.map((item) => item.date),
     datasets: [
@@ -207,61 +247,124 @@ export const LoanCharts = () => {
         label: "Remaining Balance",
         data: scheduleChartData.map((item) => item.remainingBalance),
         borderColor: colors.balance.border,
-        backgroundColor: colors.balance.bg,
+        backgroundColor: (context: ScriptableContext<"line">) => {
+          const chart = context.chart;
+          const { ctx, chartArea } = chart;
+          if (!chartArea) return colors.balance.bg;
+
+          // Create gradient fill
+          const gradient = ctx.createLinearGradient(
+            0,
+            chartArea.top,
+            0,
+            chartArea.bottom
+          );
+          gradient.addColorStop(0, colors.balance.bg);
+          gradient.addColorStop(1, "rgba(139, 92, 246, 0.05)");
+          return gradient;
+        },
         fill: true,
         tension: 0.4,
+        borderWidth: 2.5,
+        pointRadius: 2,
+        pointHoverRadius: 6,
+        pointBackgroundColor: colors.balance.border,
+        pointHoverBackgroundColor: colors.balance.main,
+        pointHoverBorderColor: isDarkTheme
+          ? "rgba(255, 255, 255, 0.8)"
+          : "rgba(255, 255, 255, 1)",
+        pointHoverBorderWidth: 2,
       },
       {
         label: "Principal Paid",
         data: scheduleChartData.map((item) => item.principalPaidTillDate),
         borderColor: colors.principal.border,
-        backgroundColor: colors.principal.bg,
+        backgroundColor: (context: ScriptableContext<"line">) => {
+          const chart = context.chart;
+          const { ctx, chartArea } = chart;
+          if (!chartArea) return colors.principal.bg;
+
+          // Create gradient fill
+          const gradient = ctx.createLinearGradient(
+            0,
+            chartArea.top,
+            0,
+            chartArea.bottom
+          );
+          gradient.addColorStop(0, colors.principal.bg);
+          gradient.addColorStop(1, "rgba(14, 165, 233, 0.05)");
+          return gradient;
+        },
         fill: true,
         tension: 0.4,
+        borderWidth: 2.5,
+        pointRadius: 2,
+        pointHoverRadius: 6,
+        pointBackgroundColor: colors.principal.border,
+        pointHoverBackgroundColor: colors.principal.main,
+        pointHoverBorderColor: isDarkTheme
+          ? "rgba(255, 255, 255, 0.8)"
+          : "rgba(255, 255, 255, 1)",
+        pointHoverBorderWidth: 2,
       },
     ],
   };
 
-  // Monthly payment breakdown line chart data
-  //   const paymentBreakdownData = {
-  //     labels: scheduleChartData.map(item => item.date),
-  //     datasets: [
-  //       {
-  //         label: 'Principal',
-  //         data: scheduleChartData.map(item => item.principalPaid),
-  //         borderColor: colors.principal.border,
-  //         backgroundColor: colors.principal.bg,
-  //         borderWidth: 2,
-  //         pointRadius: 0,
-  //         tension: 0.4,
-  //       },
-  //       {
-  //         label: 'Interest',
-  //         data: scheduleChartData.map(item => item.interestPaid),
-  //         borderColor: colors.interest.border,
-  //         backgroundColor: colors.interest.bg,
-  //         borderWidth: 2,
-  //         pointRadius: 0,
-  //         tension: 0.4,
-  //       },
-  //     ],
-  //   };
-
-  // Yearly amortization bar chart data
+  // Yearly amortization bar chart data with enhanced styling
   const yearlyAmortizationData = {
     labels: amortizationData.years,
     datasets: [
       {
         label: "Principal Paid",
         data: amortizationData.principalData,
-        backgroundColor: colors.principal.bg,
+        backgroundColor: (context: ScriptableContext<"bar">) => {
+          const chart = context.chart;
+          const { ctx, chartArea } = chart;
+          if (!chartArea) return colors.principal.bg;
+
+          // Create gradient fill
+          const gradient = ctx.createLinearGradient(
+            0,
+            chartArea.bottom,
+            0,
+            chartArea.top
+          );
+          gradient.addColorStop(0, colors.principal.bg);
+          gradient.addColorStop(1, colors.principal.gradient);
+          return gradient;
+        },
+        borderRadius: 4,
+        borderSkipped: false,
         stack: "Stack 0",
+        hoverBackgroundColor: colors.principal.gradient,
+        borderColor: colors.principal.border,
+        borderWidth: 1,
       },
       {
         label: "Interest Paid",
         data: amortizationData.interestData,
-        backgroundColor: colors.interest.bg,
+        backgroundColor: (context: ScriptableContext<"bar">) => {
+          const chart = context.chart;
+          const { ctx, chartArea } = chart;
+          if (!chartArea) return colors.interest.bg;
+
+          // Create gradient fill
+          const gradient = ctx.createLinearGradient(
+            0,
+            chartArea.bottom,
+            0,
+            chartArea.top
+          );
+          gradient.addColorStop(0, colors.interest.bg);
+          gradient.addColorStop(1, colors.interest.gradient);
+          return gradient;
+        },
+        borderRadius: 4,
+        borderSkipped: false,
         stack: "Stack 0",
+        hoverBackgroundColor: colors.interest.gradient,
+        borderColor: colors.interest.border,
+        borderWidth: 1,
       },
     ],
   };
@@ -286,11 +389,47 @@ export const LoanCharts = () => {
             return label;
           },
         },
+        backgroundColor: isDarkTheme
+          ? "rgba(15, 23, 42, 0.95)"
+          : "rgba(255, 255, 255, 0.98)",
+        titleColor: isDarkTheme
+          ? "rgba(255, 255, 255, 0.95)"
+          : "rgba(15, 23, 42, 0.95)",
+        bodyColor: isDarkTheme
+          ? "rgba(255, 255, 255, 0.85)"
+          : "rgba(15, 23, 42, 0.85)",
+        padding: 12,
+        cornerRadius: 6,
+        bodyFont: {
+          family: "'Geist', sans-serif",
+          size: 13,
+        },
+        titleFont: {
+          family: "'Geist', sans-serif",
+          size: 14,
+          weight: "bold",
+        },
+        caretSize: 6,
+        displayColors: true,
+        boxPadding: 4,
+        titleMarginBottom: 8,
+        multiKeyBackground: "transparent",
       },
       legend: {
         labels: {
           color: colors.text,
+          font: {
+            family: "'Geist', sans-serif",
+            size: 13,
+          },
+          padding: 16,
+          usePointStyle: true,
+          pointStyle: "circle",
+          boxWidth: 8,
+          boxHeight: 8,
         },
+        position: "top",
+        align: "center",
       },
     },
     scales: {
@@ -304,25 +443,86 @@ export const LoanCharts = () => {
               : value;
           },
           color: colors.text,
+          font: {
+            family: "'Geist', sans-serif",
+            size: 12,
+          },
+          padding: 8,
         },
         grid: {
           color: colors.gridLines,
+          tickLength: 0,
         },
-      },
-      x: {
+        border: {
+          display: false,
+        },
+      },      x: {
         ticks: {
           color: colors.text,
+          font: {
+            family: "'Geist', sans-serif",
+            size: 11,
+          },
+          maxRotation: 45,
+          minRotation: 0,
+          autoSkip: true,
+          autoSkipPadding: 15,
+          padding: 5,
+          maxTicksLimit: 15, // Limit the number of ticks to prevent overcrowding
+          callback: function(val, index) {
+            // Skip some labels to avoid crowding with long tenure loans
+            if (index % 2 !== 0 && this.chart) {
+              const labels = this.chart.data.labels || [];
+              if (labels.length > 20) {
+                return '';
+              }
+            }
+            return val;
+          }
         },
         grid: {
-          color: colors.gridLines,
+          display: false,
+        },
+        border: {
+          display: false,
         },
       },
     },
     maintainAspectRatio: false,
     responsive: true,
-  };
-
-  // Specific options for donut chart
+    animation: {
+      duration: 800,
+      easing: "easeOutQuart",
+    },    layout: {
+      padding: {
+        top: 10,
+        bottom: 8,
+        left: 8,
+        right: 8,
+      },
+    },
+    elements: {
+      point: {
+        radius: 0,
+        hitRadius: 8,
+        hoverRadius: 6,
+      },
+      line: {
+        tension: 0.4,
+        borderJoinStyle: "round",
+        capBezierPoints: true,
+      },
+      bar: {
+        borderWidth: 1,
+        borderRadius: 4,
+        borderSkipped: false,
+      },
+    },
+    interaction: {
+      mode: "index",
+      intersect: false,
+    },
+  }; // Specific options for donut chart
   const donutOptions: ChartOptions<"doughnut"> = {
     plugins: {
       tooltip: {
@@ -337,29 +537,77 @@ export const LoanCharts = () => {
             return `${label}: ${value} (${percentage}%)`;
           },
         },
+        backgroundColor: isDarkTheme
+          ? "rgba(15, 23, 42, 0.95)"
+          : "rgba(255, 255, 255, 0.98)",
+        titleColor: isDarkTheme
+          ? "rgba(255, 255, 255, 0.95)"
+          : "rgba(15, 23, 42, 0.95)",
+        bodyColor: isDarkTheme
+          ? "rgba(255, 255, 255, 0.85)"
+          : "rgba(15, 23, 42, 0.85)",
+        padding: 12,
+        cornerRadius: 6,
+        bodyFont: {
+          family: "'Geist', sans-serif",
+          size: 13,
+        },
+        titleFont: {
+          family: "'Geist', sans-serif",
+          size: 14,
+          weight: "bold",
+        },
+        caretSize: 6,
+        displayColors: true,
+        boxPadding: 4,
+        titleMarginBottom: 8,
+        multiKeyBackground: "transparent",
       },
       legend: {
+        position: "bottom",
         labels: {
           color: colors.text,
+          font: {
+            family: "'Geist', sans-serif",
+            size: 13,
+          },
+          padding: 16,
+          usePointStyle: true,
+          pointStyle: "circle",
+          boxWidth: 8,
+          boxHeight: 8,
         },
       },
     },
     maintainAspectRatio: false,
     responsive: true,
+    cutout: "70%",
+    animation: {
+      animateScale: true,
+      animateRotate: true,
+      duration: 1000,
+      easing: "easeOutQuart",
+    },
+    elements: {
+      arc: {
+        borderWidth: 1.5,
+        borderRadius: 4,
+      },
+    },
   };
-
+  // More modern card styling with refined glass effect
   const chartCardClass = isDarkTheme
-    ? "bg-gray-500/10 p-4 rounded-lg shadow"
-    : "bg-gray-200/10 p-4 rounded-lg shadow";
+    ? "bg-gray-900/40 backdrop-blur-sm p-4 md:p-5 rounded-xl shadow-lg border border-gray-800/40 hover:bg-gray-900/50 transition-all duration-300"
+    : "bg-white/80 backdrop-blur-sm p-4 md:p-5 rounded-xl shadow-md border border-gray-100 hover:bg-white/90 transition-all duration-300";
 
   // Function to toggle expanded/collapsed state
   const toggleExpanded = () => setIsExpanded(!isExpanded);
 
   return (
-    <div className="mb-6">
-      {/* Collapsible header with toggle button */}
+    <div className="mb-8">
+      {/* Collapsible header with toggle button - modern styling */}
       <div
-        className="flex items-center justify-between cursor-pointer mb-2"
+        className="flex items-center justify-between cursor-pointer mb-4 group"
         onClick={toggleExpanded}
         role="button"
         tabIndex={0}
@@ -372,72 +620,155 @@ export const LoanCharts = () => {
         aria-expanded={isExpanded}
         aria-controls="chart-content"
       >
-        <h2 className="text-md font-bold">Loan Visualization</h2>
+        <div className="flex items-center">
+          <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
+          <h2 className="text-lg font-bold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            Loan Visualization
+          </h2>
+        </div>
         <button
-          className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          className="p-2 rounded-full hover:bg-gray-200/70 dark:hover:bg-gray-700/70 transition-all duration-300 hover:scale-110"
           aria-label={isExpanded ? "Collapse charts" : "Expand charts"}
         >
           {isExpanded ? (
-            <FaChevronUp aria-hidden="true" />
+            <FaChevronUp
+              className="text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+            />
           ) : (
-            <FaChevronDown aria-hidden="true" />
+            <FaChevronDown
+              className="text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+            />
           )}
         </button>
       </div>
 
-      {/* Collapsible content with transition */}
+      {/* Collapsible content with better transition */}
       <div
         id="chart-content"
-        className={`transition-all duration-300 ease-in-out overflow-hidden ${
-          isExpanded ? "max-h-[3000px] opacity-100" : "max-h-0 opacity-0"
+        className={`transition-all duration-500 ease-in-out overflow-hidden ${
+          isExpanded
+            ? "max-h-[3000px] opacity-100 scale-100"
+            : "max-h-0 opacity-0 scale-95"
         }`}
         aria-hidden={!isExpanded}
         role="region"
         aria-label="Loan charts and visualizations"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Principal vs Interest Donut Chart */}
-          <div className={chartCardClass}>
-            <h3 className="text-md font-semibold mb-2">Payment Breakdown</h3>
-            <div className="h-64">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">          {/* Principal vs Interest Donut Chart */}
+          <div
+            className={`${chartCardClass} transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
+          >
+            <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
+              <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 mr-2.5 shadow-sm"></div>
+              Payment Breakdown
+            </h3>
+            <div className="h-[280px]">
               <Doughnut data={principalVsInterestData} options={donutOptions} />
             </div>
-            <div className="text-center text-sm text-gray-400 dark:text-gray-300 mt-2">
-              Total: {formateCurrency(totalAmountPayable)}
+            <div className="text-center text-sm text-gray-500 dark:text-gray-300 mt-3 font-medium">
+              Total Amount: {formateCurrency(totalAmountPayable)}
             </div>
-          </div>
-
-          {/* Yearly Amortization Bar Chart */}
-          <div className={chartCardClass}>
-            <h3 className="text-md font-semibold mb-2">Yearly Amortization</h3>
-            <div className="h-64">
-              <Bar
-                data={yearlyAmortizationData}
-                options={currencyTooltipOptions}
-              />
+          </div>          {/* Yearly Amortization Bar Chart */}
+          <div
+            className={`${chartCardClass} transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
+          >            <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
+              <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 mr-2.5 shadow-sm"></div>
+              Yearly Amortization
+            </h3>
+            <div className="overflow-x-auto sm:overflow-x-visible overflow-y-hidden relative" style={{ 
+              minWidth: "100%",
+              width: "100%", 
+              scrollbarWidth: "thin",
+              scrollbarColor: isDarkTheme ? "#4B5563 #1F2937" : "#CBD5E1 #F1F5F9",
+            }}>              <div style={{ 
+                minWidth: amortizationData.years.length > 10 
+                  ? `${Math.max(600, Math.min(1200, amortizationData.years.length * 40))}px` 
+                  : "100%",
+                width: "100%", 
+                maxWidth: amortizationData.years.length > 10 ? "none" : "100%",
+                height: "280px",
+              }}>                <Bar
+                  data={yearlyAmortizationData}
+                  options={{
+                    ...currencyTooltipOptions,
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    plugins: {
+                      ...currencyTooltipOptions.plugins,
+                      legend: {
+                        ...currencyTooltipOptions.plugins?.legend,
+                        display: true,
+                      }
+                    },
+                    scales: {
+                      ...currencyTooltipOptions.scales,
+                      x: {
+                        ...currencyTooltipOptions.scales?.x,
+                        ticks: {
+                          ...currencyTooltipOptions.scales?.x?.ticks,
+                          autoSkip: true,
+                          maxTicksLimit: amortizationData.years.length > 15 ? 15 : undefined,
+                        }
+                      }
+                    }
+                  }}
+                />
+              </div>
+            </div>            <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
+              {amortizationData.years.length > 10 && "← Swipe horizontally to see all years →"}
             </div>
-          </div>
-
-          {/* Loan Balance Area Chart */}
-          <div className={`${chartCardClass} lg:col-span-2`}>
-            <h3 className="text-md font-semibold mb-2">
+          </div>          {/* Loan Balance Area Chart */}
+          <div
+            className={`${chartCardClass} mb-2 lg:col-span-2 transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
+          >            <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
+              <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-green-500 to-teal-500 mr-2.5 shadow-sm"></div>
               Loan Balance Over Time
             </h3>
-            <div className="h-64">
-              <Line data={balanceChartData} options={currencyTooltipOptions} />
+            <div className="overflow-x-auto sm:overflow-x-visible overflow-y-hidden relative" style={{ 
+              minWidth: "100%",
+              width: "100%", 
+              scrollbarWidth: "thin",
+              scrollbarColor: isDarkTheme ? "#4B5563 #1F2937" : "#CBD5E1 #F1F5F9",
+            }}>              <div style={{ 
+                minWidth: scheduleChartData.length > 20 
+                  ? `${Math.max(800, Math.min(1600, scheduleChartData.length * 25))}px` 
+                  : "100%",
+                width: "100%",
+                maxWidth: scheduleChartData.length > 20 ? "none" : "100%",
+                height: "280px",
+              }}>                <Line 
+                  data={balanceChartData} 
+                  options={{
+                    ...currencyTooltipOptions,
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    plugins: {
+                      ...currencyTooltipOptions.plugins,
+                      legend: {
+                        ...currencyTooltipOptions.plugins?.legend,
+                        display: true,
+                      }
+                    },
+                    scales: {
+                      ...currencyTooltipOptions.scales,
+                      x: {
+                        ...currencyTooltipOptions.scales?.x,
+                        ticks: {
+                          ...currencyTooltipOptions.scales?.x?.ticks,
+                          autoSkip: true,
+                          maxTicksLimit: scheduleChartData.length > 30 ? 20 : 30,
+                        }
+                      }
+                    }
+                  }}
+                />
+              </div>
+            </div>            <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
+              {scheduleChartData.length > 20 && "← Swipe horizontally to see full timeline →"}
             </div>
           </div>
-
-          {/* Monthly Payment Breakdown Line Chart */}
-          {/* <div className={`${chartCardClass} lg:col-span-2`}>
-            <h3 className="text-md font-semibold mb-2">Monthly Payment Breakdown</h3>
-            <div className="h-64">
-              <Line data={paymentBreakdownData} options={currencyTooltipOptions} />
-            </div>
-            <div className="text-center text-sm text-gray-400 dark:text-gray-300 mt-2">
-              EMI: {formateCurrency(emi)}
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

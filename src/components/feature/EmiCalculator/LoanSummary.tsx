@@ -10,13 +10,35 @@ import { IoMdCalendar } from "react-icons/io";
 import { TbMoneybag } from "react-icons/tb";
 import { CollectiveImpactSummary } from "./CollectiveImpactSummary";
 import { SummaryCard } from "./SummaryCard";
+import { ShareButton } from "./ShareButton";
+import { DownloadButton } from "./DownloadButton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const LoanSummary = () => {
   // Get loanResults from context
-  const { loanResults } = useLoan();
+  const { loanResults, isLoading, isInitialLoad } = useLoan();
 
-  if (!loanResults) {
-    return <></>;
+  // Loading state
+  const LoanSummaryLoadingSkeleton = () => (
+    <div>
+      <div className="flex justify-between items-center">
+        <h2 className="text-lg font-bold">Loan Summary</h2>
+        {/* No share button during loading */}
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-2">
+        {Array(6).fill(0).map((_, i) => (
+          <div key={i} className="bg-card border rounded-lg p-4 space-y-2">
+            <Skeleton className="h-5 w-[80px]" />
+            <Skeleton className="h-8 w-[120px]" />
+            <Skeleton className="h-4 w-[100px]" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  if (!loanResults || isLoading || isInitialLoad) {
+    return <LoanSummaryLoadingSkeleton />;
   }
 
   const {
@@ -30,7 +52,9 @@ export const LoanSummary = () => {
 
   return (
     <div>
-      <h2 className="text-lg font-bold">Loan Summary</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-lg font-bold">Loan Summary</h2>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-2">
         <SummaryCard
           value={formateCurrency(emi)}
@@ -73,6 +97,11 @@ export const LoanSummary = () => {
           color="purple"
           icon={<IoMdCalendar size={28} />}
         />
+      </div>
+
+      <div className="flex justify-center gap-2 mt-4">
+        <ShareButton />
+        <DownloadButton />
       </div>
       
       {/* Collective Impact Summary */}

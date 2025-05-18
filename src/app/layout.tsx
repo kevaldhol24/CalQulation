@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout";
 import { NavigationProgress } from "@/components/layout/NavigationProgress";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -84,6 +85,7 @@ export default function RootLayout({
             <NavigationProgress />
           </Suspense>
           {children}
+          <Toaster position="top-right" />
           <Footer />
         </ThemeProvider>
 

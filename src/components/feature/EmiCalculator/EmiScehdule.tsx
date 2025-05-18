@@ -21,6 +21,7 @@ import {
   TooltipTrigger,
 } from "../../ui/tooltip";
 import { useLoan } from "@/contexts/LoanContext";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface YearSummary {
   year: string;
@@ -37,7 +38,7 @@ interface YearSummary {
 export const EmiSchedule = () => {
   const [expandedYears, setExpandedYears] = useState<string[]>([]);
 
-  const { loanResults } = useLoan();
+  const { loanResults, isLoading, isInitialLoad } = useLoan();
 
   const yearGroupedData = useMemo(() => {
     // Group EMI items by year
@@ -99,6 +100,39 @@ export const EmiSchedule = () => {
     );
   };
 
+  const ScheduleLoadingState = () => (
+    <div className="space-y-4">
+      <h2 className="text-md font-bold mt-6">EMI Schedule</h2>
+      <div className="overflow-x-auto rounded-lg">
+        <div className="rounded-lg border w-full">
+          <div className="flex p-3 bg-muted/30">
+            {Array(8)
+              .fill(0)
+              .map((_, i) => (
+                <Skeleton key={i} className="h-4 w-full mx-2" />
+              ))}
+          </div>
+          {Array(5)
+            .fill(0)
+            .map((_, i) => (
+              <div key={i} className="flex p-4 border-t">
+                {Array(8)
+                  .fill(0)
+                  .map((_, j) => (
+                    <Skeleton key={j} className="h-4 w-full mx-2" />
+                  ))}
+              </div>
+            ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  // If loan is still loading initial calculation or shared data, show loading state
+  if (isLoading || !loanResults || isInitialLoad) {
+    return <ScheduleLoadingState />;
+  }
+  
   return (
     <>
       <h2 className="text-md font-bold mt-6" id="emi-schedule-heading">

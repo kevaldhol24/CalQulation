@@ -110,7 +110,6 @@ export default function EmiCalculatorPage() {
               </span>
             </div>
           </div>
-
           {/* Calculator section with enhanced styling */}
           <div className="relative overflow-hidden">
             <div className="rounded-xl overflow-hidden">
@@ -730,5 +729,3 @@ export default function EmiCalculatorPage() {
     </div>
   );
 }
-
-

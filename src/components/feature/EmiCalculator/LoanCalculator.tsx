@@ -9,18 +9,24 @@ import { AmountInput } from "./loanInputs/AmountInput";
 import { InterestInput } from "./loanInputs/InterestInput";
 import { TenureInput } from "./loanInputs/TenureInput";
 import { LoanSummary } from "./LoanSummary";
+import { LoanCalculatorSkeleton } from "./LoanCalculatorSkeleton";
 
 export const LoanCalculator = () => {
   // Use the loan context instead of local state
-  const { loanDetails, updateLoanDetails } = useLoan();
+  const { loanDetails, updateLoanDetails, isSharedLoading, isInitialLoad } = useLoan();
 
   const handleChange = (value: number, key: string) => {
     if (value === loanDetails[key as keyof typeof loanDetails]) return;
     updateLoanDetails(key, value);
   };
 
+  // Show skeleton during the initial load with shared calculation
+  if (isInitialLoad || isSharedLoading) {
+    return <LoanCalculatorSkeleton />;
+  }
+  
   return (
-    <div>
+    <div>      
       <div className="rounded-xl bg-white/10 backdrop-blur-xl p-1.5">
         <div className="bg-background rounded-lg p-6 shadow-lg">
           <h2 className="text-lg font-bold col-span-2">Loan details</h2>
@@ -28,7 +34,6 @@ export const LoanCalculator = () => {
             <AmountInput
               value={loanDetails.loanAmount}
               onChange={(value) => {
-                console.log("loan amount", value);
                 handleChange(Number(value), "loanAmount");
               }}
             />
