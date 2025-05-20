@@ -382,7 +382,7 @@ export default function AboutUsPage() {
                   Keval Dhol
                 </h3>
                 <p className="text-sm text-blue-600 dark:text-blue-400 mb-4">
-                  Founder & Developer
+                  Co-Founder & Developer
                 </p>
                 <p className="text-gray-600 dark:text-gray-300 text-sm">
                   Developer with a passion for making financial concepts
@@ -416,13 +416,19 @@ export default function AboutUsPage() {
               <div className="h-2 bg-gradient-to-r from-emerald-500 to-green-600"></div>
               <div className="p-6 text-center">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold">
-                  BM
+                  <Image
+                    src="/Images/Bhavya_Mehta.jpg"
+                    alt="Bhavya Mehta"
+                    width={96}
+                    height={96}
+                    className="rounded-full object-none object-top"
+                  />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                   Bhavya Mehta
                 </h3>
                 <p className="text-sm text-emerald-600 dark:text-emerald-400 mb-4">
-                  Web Advisor
+                  Co-Founder & Developer
                 </p>
                 <p className="text-gray-600 dark:text-gray-300 text-sm">
                   Ensures our calculators are built on sound financial and web
