@@ -2,6 +2,7 @@ import { Comments } from "@/components/feature/Comments";
 import { LoanCalculator } from "@/components/feature/EmiCalculator/LoanCalculator";
 import { LoanProvider } from "@/contexts/LoanContext";
 import { Metadata } from "next";
+import Link from "next/link";
 import { Suspense } from "react";
 import { BsBank, BsGraphUp } from "react-icons/bs";
 import {
@@ -10,6 +11,8 @@ import {
   FaLightbulb,
   FaRegClock,
 } from "react-icons/fa";
+import { GrCalculator } from "react-icons/gr";
+import { HiHome } from "react-icons/hi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 
 export const metadata: Metadata = {
@@ -69,51 +72,35 @@ export default function EmiCalculatorPage() {
         }}
       />
       {/* Hero section with enhanced visuals */}
-      <div className="relative overflow-hidden">
+      <div className="relative">
         {/* Enhanced background with modern gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-500 to-blue-800 opacity-90"></div>
+        <div className="absolute inset-0 top-[-68px] bg-gradient-to-t via-purple-800 to-blue-900 max-h-[520px]"></div>
 
-        {/* Animated floating shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-[100px] right-[20px] w-64 h-64 bg-white opacity-10 rounded-full blur-3xl animate-pulse"></div>
-          <div
-            className="absolute top-[100px] right-1/2 translate-x-1/2 w-96 h-96 bg-blue-300 opacity-10 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-          ></div>
-          <div
-            className="absolute top-[100px] left-[20px] w-48 h-48 bg-purple-300 opacity-10 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "2s" }}
-          ></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 z-10">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-3">
-              <span className="inline-block animate-shimmer bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
+        <div className="relative max-w-7xl mx-auto py-8 px-0 sm:px-6 lg:px-8 z-10">
+          <div className="mb-4 px-6">
+            <div className="flex items-center text-gray-300">
+              <Link href="/" className="text-blue-200 flex items-center gap-1"><HiHome/> Home</Link>
+              <span className="text-gray-300 mx-2">/</span>
+              <Link href="/tools" className="text-blue-200">
+                Tools
+              </Link>
+              <span className="text-gray-300 mx-2">/</span>
+              <Link href="/tools/emi-calculator" className="text-blue-200">
+                EMI Calculator
+              </Link>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-2">
+              <span className="inline-block font-bold text-3xl">
                 EMI Calculator
               </span>
             </h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
-              Plan your loan journey with precision. Get accurate EMI
-              calculations with our advanced financial tool.
+            <p className="text-md text-blue-100 max-w-2xl">
+              Get accurate EMI calculations with our advanced financial tool.
             </p>
-
-            {/* Feature badges */}
-            <div className="flex flex-wrap justify-center gap-4 mt-3">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
-                <BsGraphUp className="mr-1" /> Instant Results
-              </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100">
-                <FaChartBar className="mr-1" /> Visual Charts
-              </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
-                <FaRegClock className="mr-1" /> Repayment Schedule
-              </span>
-            </div>
           </div>
           {/* Calculator section with enhanced styling */}
           <div className="relative overflow-hidden">
-            <div className="rounded-xl overflow-hidden">
+            <div className="overflow-hidden">
               <Suspense
                 fallback={
                   <div className="h-1 bg-gray-200 dark:bg-gray-800"></div>

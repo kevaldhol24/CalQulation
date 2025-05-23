@@ -59,7 +59,7 @@ export const LoanSummary = () => {
         <SummaryCard
           value={formateCurrency(emi)}
           title="EMI"
-          helpText="Current EMI amount"
+          helpText="Initial EMI amount"
           color="blue"
           icon={<GrMoney size={28} />}
         />
