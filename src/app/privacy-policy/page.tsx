@@ -322,7 +322,7 @@ export default function PrivacyPolicyPage() {
                   </p>
                 </div>
               </div>
-            </div>{" "}
+            </div>
           </section>
 
           {/* Contact Section */}

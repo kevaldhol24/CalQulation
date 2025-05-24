@@ -63,14 +63,14 @@ export const Footer = () => {
               </li>
               <li className="text-base text-gray-500 dark:text-gray-500 flex items-center gap-2">
                 <FaChartLine size={14} />
-                Compound Interest{" "}
+                Compound Interest
                 <span className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-2 py-0.5 rounded-full ml-1">
                   Soon
                 </span>
               </li>
               <li className="text-base text-gray-500 dark:text-gray-500 flex items-center gap-2">
                 <RiMoneyDollarCircleFill size={14} />
-                Tax Calculator{" "}
+                Tax Calculator
                 <span className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-2 py-0.5 rounded-full ml-1">
                   Soon
                 </span>
@@ -157,7 +157,7 @@ export const Footer = () => {
               &copy; {currentYear} Calqulation. All rights reserved.
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 md:mt-0">
-              Designed and built with <span className="text-red-500">❤</span>{" "}
+              Designed and built with <span className="text-red-500">❤</span>
               for better financial decisions
             </p>
           </div>

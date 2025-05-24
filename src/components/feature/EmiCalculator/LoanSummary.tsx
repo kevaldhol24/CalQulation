@@ -8,11 +8,11 @@ import { GiMoneyStack } from "react-icons/gi";
 import { GrMoney } from "react-icons/gr";
 import { IoMdCalendar } from "react-icons/io";
 import { TbMoneybag } from "react-icons/tb";
-import { CollectiveImpactSummary } from "./CollectiveImpactSummary";
-import { SummaryCard } from "./SummaryCard";
-import { ShareButton } from "./ShareButton";
 import { DownloadButton } from "./DownloadButton";
+import { ShareButton } from "./ShareButton";
+import { SummaryCard } from "./SummaryCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useMemo } from "react";
 
 export const LoanSummary = () => {
   // Get loanResults from context
@@ -22,20 +22,35 @@ export const LoanSummary = () => {
   const LoanSummaryLoadingSkeleton = () => (
     <div>
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-bold">Loan Summary</h2>
+        <h2 className="text-lg font-bold mb-1 lg:mb-6 flex items-center">
+          <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
+          Loan Summary
+        </h2>
         {/* No share button during loading */}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-        {Array(6).fill(0).map((_, i) => (
-          <div key={i} className="bg-card border rounded-lg p-4 space-y-2">
-            <Skeleton className="h-5 w-[80px]" />
-            <Skeleton className="h-8 w-[120px]" />
-            <Skeleton className="h-4 w-[100px]" />
-          </div>
-        ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:gap-4 mt-2">
+        {Array(6)
+          .fill(0)
+          .map((_, i) => (
+            <div
+              key={i}
+              className="flex flex-col items-end bg-card border rounded-lg p-4 space-y-2"
+            >
+              <Skeleton className="h-2 w-[80px]" />
+              <Skeleton className="h-4 w-[120px]" />
+              <Skeleton className="h-2 w-[100px]" />
+            </div>
+          ))}
       </div>
     </div>
   );
+
+  const remainingMonths = useMemo(() => {
+    if (!loanResults?.summary.lastPaymentDate) return 0;
+    const lastDate = moment(loanResults.summary.lastPaymentDate);
+    const endDate = moment().add(-1, "M");
+    return lastDate.diff(endDate, "M");
+  }, [loanResults?.summary.lastPaymentDate]);
 
   if (!loanResults || isLoading || isInitialLoad) {
     return <LoanSummaryLoadingSkeleton />;
@@ -53,9 +68,12 @@ export const LoanSummary = () => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-bold">Loan Summary</h2>
+        <h2 className="text-lg font-bold mb-1 lg:mb-6 flex items-center">
+          <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
+          Loan Summary
+        </h2>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:gap-3 mt-2">
         <SummaryCard
           value={formateCurrency(emi)}
           title="EMI"
@@ -66,7 +84,7 @@ export const LoanSummary = () => {
         <SummaryCard
           value={formateCurrency(loanAmount)}
           title="Loan Amount"
-          helpText="Total loan amount"
+          helpText={`Until ${moment(lastPaymentDate).format("MMM YYYY")}`}
           color="gray"
           icon={<GiMoneyStack size={32} />}
         />
@@ -87,25 +105,28 @@ export const LoanSummary = () => {
         <SummaryCard
           value={formateCurrency(totalPrepayment)}
           title="Prepayment"
-          helpText="Total prepayment amount"
+          helpText="Total prepayment"
           color="green"
         />
         <SummaryCard
-          value={moment(lastPaymentDate).format("MMMM YYYY")}
-          title="Last Payment"
-          helpText="Date of the last payment"
+          value={remainingMonths}
+          title="Remaining Terms"
+          helpText={`${
+            loanResults.schedule.length - remainingMonths
+          } terms paid`}
           color="purple"
           icon={<IoMdCalendar size={28} />}
         />
       </div>
 
+      <p className="text-sm text-muted-foreground mt-1 italic">
+        * Calculator shows estimated results. Actual numbers may differ.
+      </p>
+
       <div className="flex justify-center gap-2 mt-4">
         <ShareButton />
         <DownloadButton />
       </div>
-      
-      {/* Collective Impact Summary */}
-      <CollectiveImpactSummary />
     </div>
   );
 };

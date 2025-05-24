@@ -253,7 +253,7 @@ export default function TermsOfServicePage() {
                   </p>
                   <p className="text-gray-600 dark:text-gray-300">
                     For more details about what information we collect and how
-                    we use it, please see our{" "}
+                    we use it, please see our
                     <Link
                       href="/privacy-policy"
                       className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"

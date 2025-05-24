@@ -29,36 +29,48 @@ export const LoanCalculator = () => {
   return (
     <div className="sm:rounded-xl bg-white/10 backdrop-blur-xl sm:p-1.5">
       <div className="bg-background sm:rounded-t-lg p-6 shadow-lg">
-        <h2 className="text-lg font-bold col-span-2">Loan details</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-2">
-          <AmountInput
-            value={loanDetails.loanAmount}
-            onChange={(value) => {
-              handleChange(Number(value), "loanAmount");
-            }}
-          />
-          <InterestInput
-            value={loanDetails.initialInterestRate}
-            onChange={(value) =>
-              handleChange(Number(value), "initialInterestRate")
-            }
-          />
-          <TenureInput
-            defaultValue={loanDetails.tenureMonths}
-            onChange={(value) => handleChange(Number(value), "tenureMonths")}
-          />
-          <MonthPicker
-            defaultValue={new Date(loanDetails.startDate)}
-            label="Select starting month"
-            placeholder="Select month"
-            onChange={(value) =>
-              updateLoanDetails("startDate", formateDate(value || new Date()))
-            }
-          />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2">
+          <div>
+            <h2 className="text-lg font-bold col-span-2 flex items-center">
+              <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
+              Loan details
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 mt-2">
+              <AmountInput
+                value={loanDetails.loanAmount}
+                onChange={(value) => {
+                  handleChange(Number(value), "loanAmount");
+                }}
+              />
+              <InterestInput
+                value={loanDetails.initialInterestRate}
+                onChange={(value) =>
+                  handleChange(Number(value), "initialInterestRate")
+                }
+              />
+              <TenureInput
+                defaultValue={loanDetails.tenureMonths}
+                onChange={(value) =>
+                  handleChange(Number(value), "tenureMonths")
+                }
+              />
+              <MonthPicker
+                defaultValue={new Date(loanDetails.startDate)}
+                label="Select starting month"
+                placeholder="Select month"
+                onChange={(value) =>
+                  updateLoanDetails(
+                    "startDate",
+                    formateDate(value || new Date())
+                  )
+                }
+              />
+            </div>
+          </div>
+          <div>
+            <LoanSummary />
+          </div>
         </div>
-        <p className="text-sm text-muted-foreground mt-4 italic">
-          * Calculator shows estimated results. Actual numbers may differ.
-        </p>
       </div>
 
       <div className="bg-background p-6 shadow-lg">
@@ -66,8 +78,7 @@ export const LoanCalculator = () => {
       </div>
 
       <div className="bg-background sm:rounded-b-lg p-6 shadow-lg">
-        <LoanSummary />
-        <div className="mt-6">
+        <div>
           <LoanCharts />
         </div>
         <EmiSchedule />

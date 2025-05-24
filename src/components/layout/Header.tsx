@@ -14,27 +14,25 @@ import { HeaderClient } from "./HeaderClient";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
 
-export const Header = () => {
-
-  return (
-    <header className="bg-transparent sticky top-0 z-50 max-h-[68]">
+export const Header = () => {  return (
+    <header className="bg-transparent sticky top-0 z-50">
       <HeaderClient />
-      <div className="container flex justify-between items-center w-full max-w-7xl mx-auto px-4 sm:px-6 py-4">
+      <div className="container flex justify-between items-center w-full max-w-7xl mx-auto px-4 sm:px-6 py-2">
         <Link href="/" className="flex items-center group">
-          <Logo flag/>
+          <Logo flag />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1 text-white">
           <Link
             href="/tool/emi-calculator"
-            className="px-4 py-2 text-gray-200 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-md transition-colors"
+            className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
           >
             EMI Calculator
           </Link>
 
           <Link
             href="/contact"
-            className="px-4 py-2 text-gray-200 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-md transition-colors"
+            className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
           >
             Contact Us
           </Link>

@@ -28,5 +28,5 @@ export const HeaderClient = () => {
     };
   }, []);
 
-  return  null;
+  return null;
 };

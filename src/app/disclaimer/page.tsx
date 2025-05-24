@@ -232,7 +232,7 @@ export default function DisclaimerPage() {
                   </p>
                 </div>
               </div>
-            </div>{" "}
+            </div>
           </section>
 
           {/* Contact Section */}
