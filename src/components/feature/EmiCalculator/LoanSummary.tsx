@@ -52,6 +52,14 @@ export const LoanSummary = () => {
     return lastDate.diff(endDate, "M");
   }, [loanResults?.summary.lastPaymentDate]);
 
+  const nextMonthEmi = useMemo(() => {
+    return (
+      loanResults?.schedule.find((item) => {
+        return moment(item.date).isSame(moment().add(1, "M"), "month");
+      })?.emiAmount || 0
+    );
+  }, [loanResults?.schedule]);
+
   if (!loanResults || isLoading || isInitialLoad) {
     return <LoanSummaryLoadingSkeleton />;
   }
@@ -75,9 +83,9 @@ export const LoanSummary = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:gap-3 mt-2">
         <SummaryCard
-          value={formateCurrency(emi)}
-          title="EMI"
-          helpText="Initial EMI amount"
+          value={formateCurrency(nextMonthEmi)}
+          title="Next month EMI"
+          helpText={`First EMI ${formateCurrency(emi)}`}
           color="blue"
           icon={<GrMoney size={28} />}
         />
@@ -110,10 +118,10 @@ export const LoanSummary = () => {
         />
         <SummaryCard
           value={remainingMonths}
-          title="Remaining Terms"
+          title="Remaining EMIs"
           helpText={`${
             loanResults.schedule.length - remainingMonths
-          } terms paid`}
+          } EMI${loanResults.schedule.length - remainingMonths === 1 ? "" : "s"} paid`}
           color="purple"
           icon={<IoMdCalendar size={28} />}
         />

@@ -1,13 +1,11 @@
+import { PageHero } from "@/components/common/PageHero";
 import ComingSoonClient from "@/components/feature/ComingSoon/ComingSoonClient";
-import { WaveSeparator } from "@/components/layout/WaveSeparator";
-import { CheckCheckIcon } from "lucide-react";
+import { CheckCheckIcon, Clock10Icon } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { GrArticle, GrCurrency } from "react-icons/gr";
 import { MdEmail } from "react-icons/md";
-
-
 
 export const metadata: Metadata = {
   title: "Coming Soon | Calqulation - New Financial Tools",
@@ -39,36 +37,11 @@ export const metadata: Metadata = {
 export default function ComingSoonPage() {
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
-      {/* Hero section with gradient background */}
-      <div className="relative overflow-hidden">
-        {/* Enhanced background with modern gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-500 to-blue-800 opacity-90"></div>
-
-        {/* Animated floating shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl animate-pulse"></div>
-          <div
-            className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-blue-300 opacity-10 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-          ></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 z-10 mb-16">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-              <span className="min-h-14 inline-block bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
-                Something Exciting Is Coming
-              </span>
-            </h1>
-            <p className="text-lg text-blue-100 max-w-2xl mx-auto leading-relaxed">
-              We&apos;re working on new financial tools to help you make better
-              decisions
-            </p>
-          </div>
-        </div>
-
-        <WaveSeparator />
-      </div>
+      <PageHero
+        Icon={Clock10Icon}
+        title="Coming Soon"
+        subtitle="Exciting new financial calculators and tools are on the way!"
+      />
 
       {/* Main content section */}
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">

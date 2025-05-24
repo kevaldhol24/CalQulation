@@ -53,6 +53,11 @@ export function NavigationProgress() {
 
     // Create custom event listener for Next.js App Router
     const handleClick = (e: MouseEvent) => {
+      // Skip if Ctrl key is pressed (new tab navigation)
+      if (e.ctrlKey || e.metaKey) {
+        return;
+      }
+      
       // Check if the click was on an anchor tag or inside one
       const anchor = (e.target as Element).closest("a");
       if (
@@ -95,7 +100,7 @@ export function NavigationProgress() {
   }
 
   return (
-    <div className="fixed top-[64px] left-0 right-0 h-1 z-50 bg-gray-200 dark:bg-gray-800">
+    <div className="fixed top-[0px] left-0 right-0 h-1 z-50 bg-gray-200 dark:bg-gray-800">
       <div
         className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300 ease-out"
         style={{ width: `${progress}%` }}

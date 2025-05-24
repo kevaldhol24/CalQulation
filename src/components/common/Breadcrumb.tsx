@@ -30,7 +30,7 @@ export function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
                 {item.label}
               </span>
             ) : (
-              <Link 
+              <Link
                 href={item.href} 
                 className="text-gray-300 hover:text-white flex items-center gap-1"
               >

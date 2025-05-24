@@ -1,6 +1,7 @@
+import { Breadcrumb } from "@/components/common/Breadcrumb";
+import { ToolPageHero } from "@/components/common/PageHero";
 import { Comments } from "@/components/feature/Comments";
 import { LoanCalculator } from "@/components/feature/EmiCalculator/LoanCalculator";
-import { Breadcrumb } from "@/components/common/Breadcrumb";
 import { LoanProvider } from "@/contexts/LoanContext";
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -13,7 +14,6 @@ import {
 } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
-import { PageHero } from "@/components/common/PageHero";
 
 export const metadata: Metadata = {
   title:
@@ -72,7 +72,7 @@ export default function EmiCalculatorPage() {
         }}
       />
 
-      <PageHero
+      <ToolPageHero
         title="EMI Calculator"
         subtitle="Get accurate EMI calculations with our advanced financial tool."
       >
@@ -84,7 +84,7 @@ export default function EmiCalculatorPage() {
           ]}
           className="text-gray-300"
         />
-      </PageHero>
+      </ToolPageHero>
       <div className="relative max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 z-10 pt-0 pb-0 sm:pb-8">
         <div className="relative overflow-hidden">
           <div className="overflow-hidden">
