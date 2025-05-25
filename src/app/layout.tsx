@@ -66,7 +66,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {" "}
       <head>
         <link rel="canonical" href="https://www.calqulation.com" />
         <meta name="robots" content="index, follow" />

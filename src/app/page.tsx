@@ -1,4 +1,5 @@
-import { WaveSeparator } from "@/components/layout/WaveSeparator";
+import { PageHero } from "@/components/common/PageHero";
+import { Metadata } from "next";
 import Link from "next/link";
 import { BsBank, BsCalculator, BsGraphUp } from "react-icons/bs";
 import {
@@ -10,7 +11,6 @@ import {
 } from "react-icons/fa";
 import { MdCalculate } from "react-icons/md";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Calqulation | Free Online Financial Calculators & Tools",
@@ -37,59 +37,25 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
-      {/* Hero section with enhanced visuals */}
-      <div className="relative overflow-hidden">
-        {/* Enhanced background with modern gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-500 to-blue-800 opacity-90"></div>
-
-        {/* Animated floating shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl animate-pulse"></div>
-          <div
-            className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-blue-300 opacity-10 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-          ></div>
-          <div
-            className="absolute top-1/2 right-1/4 w-48 h-48 bg-purple-300 opacity-10 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "2s" }}
-          ></div>
+      <PageHero
+        title="Welcome to Calqulation"
+        subtitle="Smart financial calculation tools to help you make better
+              decisions for your financial journey."
+        Icon={BsCalculator}
+      >
+        <div className="flex flex-wrap justify-center gap-4 mt-8">
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
+            <BsGraphUp className="mr-1" /> Easy to Use
+          </span>
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100">
+            <FaChartBar className="mr-1" /> Detailed Reports
+          </span>
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
+            <FaRegClock className="mr-1" /> Instant Results
+          </span>
         </div>
+      </PageHero>
 
-        <div className="relative max-w-7xl mx-auto py-24 sm:py-32 px-4 sm:px-6 lg:px-8 z-10">
-          <div className="text-center mb-12">
-            {/* Icon with glow effect */}
-            <div className="inline-flex items-center justify-center p-3 bg-white/10 backdrop-blur-md rounded-full mb-6 shadow-lg shadow-blue-500/20">
-              <BsCalculator className="text-white text-4xl animate-pulse" />
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-4">
-              <span className="inline-block animate-shimmer bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
-                Welcome to Calqulation
-              </span>
-            </h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed mb-8">
-              Smart financial calculation tools to help you make better
-              decisions for your financial journey.
-            </p>
-
-            {/* Feature badges */}
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
-                <BsGraphUp className="mr-1" /> Easy to Use
-              </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100">
-                <FaChartBar className="mr-1" /> Detailed Reports
-              </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
-                <FaRegClock className="mr-1" /> Instant Results
-              </span>
-            </div>
-          </div>
-        </div>
-        <WaveSeparator />
-      </div>
-
-      {/* Main content section with calculators */}
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         {/* Section heading */}
         <div className="text-center mb-16">

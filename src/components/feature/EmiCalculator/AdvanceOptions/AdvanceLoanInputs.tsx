@@ -4,13 +4,15 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useLoan } from "@/contexts/LoanContext";
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertTriangle, ChevronDown, ChevronRight } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import { useMemo, useState } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { TbInfoCircle } from "react-icons/tb";
 import { AdvanceOptionsInfoDialog } from "./AdvanceOptionsInfoDialog";
 import { EmiChange } from "./EmiChange";
 import { InterestChange } from "./InterestChange";
 import { Prepayment } from "./Prepayment";
+import { CollectiveImpactSummary } from "../CollectiveImpactSummary";
 
 export const AdvanceLoanInputs = () => {
   const [showAdvanceOptions, setShowAdvanceOptions] = useState(true);
@@ -52,50 +54,53 @@ export const AdvanceLoanInputs = () => {
 
   return (
     <div className="rounded-xl bg-background/50 ">
-      {" "}
-      <h3 className="text-lg font-bold flex items-center cursor-pointer gap-2 hover:text-accent-foreground transition-colors">
-        <button
-          className="text-primary bg-primary/10 p-1 rounded-full"
-          onClick={() => setShowAdvanceOptions(!showAdvanceOptions)}
-          aria-expanded={showAdvanceOptions}
-          aria-controls="advanced-options-content"
-          aria-label={
-            showAdvanceOptions
-              ? "Collapse advanced options"
-              : "Expand advanced options"
+      <div
+        className="flex items-center justify-between cursor-pointer group"
+        onClick={() => setShowAdvanceOptions(!showAdvanceOptions)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setShowAdvanceOptions(!showAdvanceOptions);
           }
+        }}
+        aria-expanded={showAdvanceOptions}
+        aria-controls="chart-content"
+      >
+        <div className="flex items-center">
+          <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
+          <h2 className="text-lg font-bold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            Advance Loan Options
+            {/* Badge showing the number of advanced options when count > 0 */}
+            {totalAdvancedOptions > 0 && (
+              <span
+                className="ml-2 text-xs font-semibold bg-primary text-white px-2 py-0.5 rounded-full"
+                aria-label={`${totalAdvancedOptions} advanced options configured`}
+              >
+                {totalAdvancedOptions}
+              </span>
+            )}
+          </h2>
+        </div>
+        <button
+          className="p-2 rounded-full hover:bg-gray-200/70 dark:hover:bg-gray-700/70 transition-all duration-300 hover:scale-110"
+          aria-label={showAdvanceOptions ? "Collapse charts" : "Expand charts"}
         >
           {showAdvanceOptions ? (
-            <ChevronDown size={18} aria-hidden="true" />
+            <FaChevronUp
+              className="text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+            />
           ) : (
-            <ChevronRight size={18} aria-hidden="true" />
+            <FaChevronDown
+              className="text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+            />
           )}
         </button>
-        <span
-          className=""
-          role="button"
-          onClick={() => setShowAdvanceOptions(!showAdvanceOptions)}
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              setShowAdvanceOptions(!showAdvanceOptions);
-            }
-          }}
-        >
-          Advance Loan Options
-        </span>
+      </div>
 
-        {/* Badge showing the number of advanced options when count > 0 */}
-        {totalAdvancedOptions > 0 && (
-          <span
-            className="ml-2 text-xs font-semibold bg-primary text-primary-foreground px-2 py-0.5 rounded-full"
-            aria-label={`${totalAdvancedOptions} advanced options configured`}
-          >
-            {totalAdvancedOptions}
-          </span>
-        )}
-      </h3>
       <AnimatePresence>
         {showAdvanceOptions && (
           <motion.div
@@ -109,12 +114,14 @@ export const AdvanceLoanInputs = () => {
             role="region"
             aria-label="Advanced loan options"
           >
+            <CollectiveImpactSummary />
+
             <Alert variant="default" className="bg-info/10 border-info/30">
               <TbInfoCircle className="h-4 w-4" />
               <AlertDescription>
                 <p className="font-medium">Advance input options</p>
                 <p className="text-sm">
-                  Learn more about advance input options before adding{" "}
+                  Learn more about advance input options before adding
                   <AdvanceOptionsInfoDialog
                     trigger={
                       <Button variant="ghost" size="sm" className="h-1 px-1">
@@ -144,11 +151,11 @@ export const AdvanceLoanInputs = () => {
                   <ul className="list-disc pl-5 text-sm mt-1">
                     {conflictingMonths.map((conflict, index) => (
                       <li key={index}>
-                        <strong>{conflict.month}</strong>:{" "}
+                        <strong>{conflict.month}</strong>:
                         {conflict.types.join(", ")}
                         {conflict.types.length > 1 && (
                           <span className="italic text-xs ml-1">
-                            (applied in the order:{" "}
+                            (applied in the order:
                             {conflict.types
                               .sort((a, b) => {
                                 const order = {

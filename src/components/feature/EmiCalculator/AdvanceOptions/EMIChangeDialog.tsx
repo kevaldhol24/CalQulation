@@ -218,7 +218,7 @@ export const EMIChangeDialog = () => {
             />
             {getSelectedMonthEMI && (
               <p className="text-xs text-muted-foreground mt-1">
-                Current EMI for selected month:{" "}
+                Current EMI for selected month:
                 {getSelectedMonthEMI.toLocaleString()}
               </p>
             )}

@@ -1,14 +1,14 @@
-import { WaveSeparator } from "@/components/layout/WaveSeparator";
-import {
-  FaShieldAlt,
-  FaInfoCircle,
-  FaBalanceScale,
-  FaUserShield,
-  FaExclamationTriangle,
-} from "react-icons/fa";
-import { MdCalculate, MdEmail } from "react-icons/md";
+import { PageHero } from "@/components/common/PageHero";
 import { Metadata } from "next";
 import Link from "next/link";
+import {
+  FaBalanceScale,
+  FaExclamationTriangle,
+  FaInfoCircle,
+  FaShieldAlt,
+  FaUserShield,
+} from "react-icons/fa";
+import { MdCalculate, MdEmail } from "react-icons/md";
 
 export const metadata: Metadata = {
   title: "Disclaimer | Calqulation - Financial Tools",
@@ -32,40 +32,11 @@ export const metadata: Metadata = {
 export default function DisclaimerPage() {
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
-      {/* Hero section with gradient background */}
-      <div className="relative overflow-hidden">
-        {/* Enhanced background with modern gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-500 to-blue-800 opacity-90"></div>
-
-        {/* Animated floating shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl animate-pulse"></div>
-          <div
-            className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-blue-300 opacity-10 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-          ></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 z-10">
-          <div className="text-center mb-8">
-            {/* Icon with glow effect */}
-            <div className="inline-flex items-center justify-center p-3 bg-white/10 backdrop-blur-md rounded-full mb-4 shadow-lg shadow-blue-500/20">
-              <FaShieldAlt className="text-white text-3xl" />
-            </div>
-
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
-              <span className="inline-block bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
-                Disclaimer
-              </span>
-            </h1>
-            <p className="text-lg text-blue-100 max-w-2xl mx-auto leading-relaxed">
-              Important information about the use of our financial calculation
-              tools
-            </p>
-          </div>
-        </div>
-        <WaveSeparator />
-      </div>
+      <PageHero
+        title="Disclaimer"
+        subtitle="Important information about the use of our financial calculation tools"
+        Icon={FaShieldAlt}
+      />
 
       {/* Main content section */}
       <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -232,7 +203,7 @@ export default function DisclaimerPage() {
                   </p>
                 </div>
               </div>
-            </div>{" "}
+            </div>
           </section>
 
           {/* Contact Section */}
