@@ -408,7 +408,7 @@ export const AdvanceOptionsInfoDialog = ({ trigger }: InfoDialogProps) => {
                       <FaChevronRight className="h-4 w-4" />
                     </div>
                     <p className="text-sm">
-                      <span className="font-medium">Important:</span>{" "}
+                      <span className="font-medium">Important:</span>
                       There&apos;s always a minimum EMI amount that covers at
                       least the interest. You can&apos;t go below this number.
                     </p>

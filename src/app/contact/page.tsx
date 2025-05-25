@@ -1,6 +1,6 @@
+import { PageHero } from "@/components/common/PageHero";
 import { ContactForm, ContactInfo } from "@/components/feature/Contact";
-import { WaveSeparator } from "@/components/layout/WaveSeparator";
-import { MailIcon } from "lucide-react";
+import { MailIcon, PhoneCallIcon } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,36 +12,11 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
-      {/* Hero section with gradient background */}
-      <div className="relative overflow-hidden">
-        {/* Enhanced background with modern gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-500 to-blue-800 opacity-90"></div>
-
-        {/* Animated floating shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl animate-pulse"></div>
-          <div
-            className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-blue-300 opacity-10 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-          ></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 z-10 mb-5">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
-              <span className="inline-block bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
-                Contact Us
-              </span>
-            </h1>
-            <p className="text-lg text-blue-100 max-w-2xl mx-auto leading-relaxed">
-              Have questions or need assistance? We&apos;re here to help you
-              with any inquiries about our financial calculation tools.
-            </p>
-          </div>
-        </div>
-
-        <WaveSeparator />
-      </div>
+      <PageHero
+        title="Contact Us"
+        subtitle=" Have questions or need assistance? We're here to help you with any inquiries about our financial calculation tools."
+        Icon={PhoneCallIcon}
+      />
 
       <div className="container max-w-6xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-5">

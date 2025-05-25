@@ -160,7 +160,7 @@ export const PrepaymentDialog = () => {
             <DialogDescription className="mt-1">
               Prepayments help you pay off your loan faster.
             </DialogDescription>
-          </div>{" "}
+          </div>
           <Button
             variant="ghost"
             className="p-1 h-6 w-6"
@@ -192,7 +192,7 @@ export const PrepaymentDialog = () => {
 
           <div className="grid  grid-cols-1 sm:grid-cols-2 gap-2">
             <div>
-              {" "}
+              
               <label className="text-sm" id="prepayment-type-label">
                 Type <span className="text-destructive">*</span>
               </label>
@@ -286,7 +286,7 @@ export const PrepaymentDialog = () => {
           </div>
         </div>
         <DialogFooter>
-          {" "}
+          
           <DialogClose asChild>
             <Button variant="outline" onClick={() => setIsOpen(false)}>
               Cancel

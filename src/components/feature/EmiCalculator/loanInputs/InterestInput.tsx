@@ -81,7 +81,7 @@ export const InterestInput: FC<InterestInputProps> = ({
       />
       <span id="interest-hint" className="sr-only">
         Enter annual interest rate in percentage
-      </span>{" "}
+      </span>
       {!hideSlider && (
         <div className="mt-1">
           <Slider

@@ -140,4 +140,8 @@
     height: 12px !important;
     width: 12px !important;
   }
+  .header-transparent{
+    transition: 0.5s;
+    backdrop-filter: blur(5px);
+  }
 }

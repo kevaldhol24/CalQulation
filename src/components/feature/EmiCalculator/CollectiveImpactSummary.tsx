@@ -66,10 +66,7 @@ export const CollectiveImpactSummary = () => {
   if (!collectiveImpact || !collectiveImpact.hasPositiveImpact) return null;
 
   return (
-    <div className="mt-6">
-      <h3 className="text-md font-semibold mb-2">
-        Collective Impact of Changes
-      </h3>
+    <div>
       <div
         className={`
           relative overflow-hidden rounded-xl border p-4
