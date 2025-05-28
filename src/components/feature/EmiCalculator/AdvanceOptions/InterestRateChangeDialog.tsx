@@ -25,7 +25,7 @@ import { ImpactType, InterestRateChange } from "loanwise";
 import { AlertTriangle, Percent, Plus, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
-import { InterestInput } from "../loanInputs/InterestInput";
+import { InterestInput } from "../../../common/InterestInput";
 
 export const InterestRateChangeDialog = () => {
   const { loanDetails, loanResults, updateLoanDetails } = useLoan();
@@ -172,6 +172,12 @@ export const InterestRateChangeDialog = () => {
         <div className="grid gap-2">
           <div>
             <InterestInput
+              label="New Interest Rate"
+              id="interest-rate"
+              title="Enter the new interest rate in percentage"
+              placeholder="Enter interest rate"
+              name="interestRate"
+              required
               hideSlider
               value={newRateChange.rate}
               onChange={(value) =>

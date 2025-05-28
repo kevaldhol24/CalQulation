@@ -2,6 +2,7 @@ import { Breadcrumb } from "@/components/common/Breadcrumb";
 import { ToolPageHero } from "@/components/common/PageHero";
 import { Comments } from "@/components/feature/Comments";
 import { LoanCalculator } from "@/components/feature/EmiCalculator/LoanCalculator";
+import { LoanCalculatorSkeleton } from "@/components/feature/EmiCalculator/LoanCalculatorSkeleton";
 import { LoanProvider } from "@/contexts/LoanContext";
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -90,7 +91,9 @@ export default function EmiCalculatorPage() {
           <div className="overflow-hidden">
             <Suspense
               fallback={
-                <div className="h-1 bg-gray-200 dark:bg-gray-800"></div>
+                <div className="h-1 bg-gray-200 dark:bg-gray-800">
+                  <LoanCalculatorSkeleton />
+                </div>
               }
             >
               <LoanProvider>

@@ -95,7 +95,7 @@ export const CommentList = ({ comments }: CommentListProps) => {
           </div>
         </>
       ) : (
-        <div className="text-center py-8 text-gray-500 dark:text-gray-400 italic">
+        <div className="text-center pt-8 text-gray-500 dark:text-gray-400 italic">
           No comments yet. Be the first to comment!
         </div>
       )}

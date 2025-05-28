@@ -17,7 +17,7 @@ import { EMIChange } from "loanwise";
 import { AlertTriangle, CreditCard, Plus, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
-import { AmountInput } from "../loanInputs/AmountInput";
+import { AmountInput } from "../../../common/AmountInput";
 
 export const EMIChangeDialog = () => {
   const { loanDetails, loanResults, updateLoanDetails, getMinimumEMIForMonth } =
@@ -209,6 +209,12 @@ export const EMIChangeDialog = () => {
         <div className="grid gap-2">
           <div>
             <AmountInput
+              label="New EMI Amount"
+              id="new-emi-amount"
+              title="Enter the new EMI amount"
+              placeholder="Enter new EMI"
+              name="newEmiAmount"
+              required
               hideSlider
               value={newEmiChange.emi}
               onChange={(value) =>

@@ -1,10 +1,14 @@
 "use client";
 
+import { CollapsibleWrapper } from "@/components/common/CollapsibleWrapper";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useLoan } from "@/contexts/LoanContext";
 import { MONTHS } from "@/lib/constants";
 import { formateCurrency } from "@/lib/utils";
 import { EMIScheduleItem } from "loanwise";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import React, { useMemo, useState } from "react";
+import { BiInfoCircle } from "react-icons/bi";
 import {
   Table,
   TableBody,
@@ -13,16 +17,12 @@ import {
   TableHeader,
   TableRow,
 } from "../../ui/table";
-import { BiInfoCircle } from "react-icons/bi";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../../ui/tooltip";
-import { useLoan } from "@/contexts/LoanContext";
-import { Skeleton } from "@/components/ui/skeleton";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 interface YearSummary {
   year: string;
@@ -102,57 +102,13 @@ export const EmiSchedule = () => {
     );
   };
 
-  const toggleExpanded = () => setIsExpanded(!isExpanded);
-
   const ScheduleLoadingState = () => (
     <div className="space-y-4">
-      <div
-        className="flex items-center justify-between cursor-pointer mb-4 group"
-        onClick={toggleExpanded}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            toggleExpanded();
-          }
-        }}
-        aria-expanded={isExpanded}
-        aria-controls="chart-content"
-      >
-        <div className="flex items-center">
-          <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
-          <h2 className="text-lg font-bold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-            EMI Schedule
-          </h2>
-        </div>
-        <button
-          className="p-2 rounded-full hover:bg-gray-200/70 dark:hover:bg-gray-700/70 transition-all duration-300 hover:scale-110"
-          aria-label={isExpanded ? "Collapse charts" : "Expand charts"}
-        >
-          {isExpanded ? (
-            <FaChevronUp
-              className="text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-            />
-          ) : (
-            <FaChevronDown
-              className="text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-            />
-          )}
-        </button>
-      </div>
-      <div
-        id="chart-content"
-        className={`transition-all duration-500 ease-in-out overflow-hidden ${
-          isExpanded
-            ? "max-h-[3000px] opacity-100 scale-100"
-            : "max-h-0 opacity-0 scale-95"
-        }`}
-        aria-hidden={!isExpanded}
-        role="region"
-        aria-label="Loan charts and visualizations"
+      <CollapsibleWrapper
+        id="emi-schedule"
+        title="EMI Schedule"
+        isExpanded={isExpanded}
+        onToggle={(opened) => setIsExpanded(opened)}
       >
         <div className="overflow-x-auto rounded-lg">
           <div className="rounded-lg border w-full">
@@ -176,7 +132,7 @@ export const EmiSchedule = () => {
               ))}
           </div>
         </div>
-      </div>
+      </CollapsibleWrapper>
     </div>
   );
 
@@ -186,300 +142,253 @@ export const EmiSchedule = () => {
   }
 
   return (
-    <>
-      <div
-        className="flex items-center justify-between cursor-pointer mb-4 group"
-        onClick={toggleExpanded}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            toggleExpanded();
-          }
-        }}
-        aria-expanded={isExpanded}
-        aria-controls="chart-content"
-      >
-        <div className="flex items-center">
-          <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
-          <h2 className="text-lg font-bold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-            EMI Schedule
-          </h2>
-        </div>
-        <button
-          className="p-2 rounded-full hover:bg-gray-200/70 dark:hover:bg-gray-700/70 transition-all duration-300 hover:scale-110"
-          aria-label={isExpanded ? "Collapse charts" : "Expand charts"}
-        >
-          {isExpanded ? (
-            <FaChevronUp
-              className="text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-            />
-          ) : (
-            <FaChevronDown
-              className="text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-            />
-          )}
-        </button>
-      </div>
-      <div
-        id="chart-content"
-        className={`transition-all duration-500 ease-in-out overflow-hidden ${
-          isExpanded
-            ? "max-h-[3000px] opacity-100 scale-100"
-            : "max-h-0 opacity-0 scale-95"
-        }`}
-        aria-hidden={!isExpanded}
-        role="region"
-        aria-label="Loan charts and visualizations"
-      >
-        <div className="overflow-x-auto rounded-lg mt-2">
-          <TooltipProvider>
-            <Table
-              className="w-full shadow-md rounded-lg border-collapse text-sm border"
-              aria-labelledby="emi-schedule-heading"
-              aria-describedby="emi-schedule-desc"
-            >
-              <caption id="emi-schedule-desc" className="sr-only">
-                Year-wise EMI schedule showing monthly installments, interest,
-                principal payments, and remaining balance
-              </caption>
-              <colgroup>
-                <col className="text-nowrap w-4" />
-                <col className="text-nowrap w-1/12" />
-                <col className="text-nowrap" />
-                <col className="text-nowrap" />
-                <col className="text-nowrap" />
-                <col className="text-nowrap" />
-                <col className="text-nowrap" />
-                <col className="text-nowrap" />
-                <col className="text-nowrap" />
-              </colgroup>
-              <TableHeader className="bg-black/8 dark:bg-gray-900 text-xs hover:bg-dark">
-                <TableRow className="text-dark">
-                  <TableHead className="text-dark font-bold whitespace-nowrap"></TableHead>
-                  <TableHead className="text-dark font-bold whitespace-nowrap">
-                    Date
-                  </TableHead>
-                  <TableHead className="text-dark font-bold whitespace-nowrap">
-                    <div className="flex gap-1 items-center justify-center">
-                      EMI Amount
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <span className="cursor-help">
-                            <BiInfoCircle size={14} aria-hidden="true" />
-                            <span className="sr-only">
-                              Information about EMI amount
-                            </span>
+    <CollapsibleWrapper
+      id="emi-schedule"
+      title="EMI Schedule"
+      isExpanded={isExpanded}
+      onToggle={(opened) => setIsExpanded(opened)}
+    >
+      <div className="overflow-x-auto rounded-lg mt-2">
+        <TooltipProvider>
+          <Table
+            className="w-full shadow-md rounded-lg border-collapse text-sm border"
+            aria-labelledby="emi-schedule-heading"
+            aria-describedby="emi-schedule-desc"
+          >
+            <caption id="emi-schedule-desc" className="sr-only">
+              Year-wise EMI schedule showing monthly installments, interest,
+              principal payments, and remaining balance
+            </caption>
+            <colgroup>
+              <col className="text-nowrap w-4" />
+              <col className="text-nowrap w-1/12" />
+              <col className="text-nowrap" />
+              <col className="text-nowrap" />
+              <col className="text-nowrap" />
+              <col className="text-nowrap" />
+              <col className="text-nowrap" />
+              <col className="text-nowrap" />
+              <col className="text-nowrap" />
+            </colgroup>
+            <TableHeader className="bg-black/8 dark:bg-gray-900 text-xs hover:bg-dark">
+              <TableRow className="text-dark">
+                <TableHead className="text-dark font-bold whitespace-nowrap"></TableHead>
+                <TableHead className="text-dark font-bold whitespace-nowrap">
+                  Date
+                </TableHead>
+                <TableHead className="text-dark font-bold whitespace-nowrap">
+                  <div className="flex gap-1 items-center justify-center">
+                    EMI Amount
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="cursor-help">
+                          <BiInfoCircle size={14} aria-hidden="true" />
+                          <span className="sr-only">
+                            Information about EMI amount
                           </span>
-                        </TooltipTrigger>
-                        <TooltipContent side="top">
-                          Monthly installment amount that you pay to the lender
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                  </TableHead>
-                  <TableHead className="text-dark font-bold whitespace-nowrap">
-                    <div className="flex gap-1 items-center justify-center">
-                      Interest
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <span className="cursor-help">
-                            <BiInfoCircle size={14} aria-hidden="true" />
-                            <span className="sr-only">
-                              Information about interest
-                            </span>
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        Monthly installment amount that you pay to the lender
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </TableHead>
+                <TableHead className="text-dark font-bold whitespace-nowrap">
+                  <div className="flex gap-1 items-center justify-center">
+                    Interest
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="cursor-help">
+                          <BiInfoCircle size={14} aria-hidden="true" />
+                          <span className="sr-only">
+                            Information about interest
                           </span>
-                        </TooltipTrigger>
-                        <TooltipContent side="top">
-                          Portion of EMI that goes towards interest payment
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                  </TableHead>
-                  <TableHead className="text-dark font-bold whitespace-nowrap">
-                    <div className="flex gap-1 items-center justify-center">
-                      Principal
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <span>
-                            <BiInfoCircle size={14} />
-                          </span>
-                        </TooltipTrigger>
-                        <TooltipContent side="top">
-                          Portion of EMI that goes towards reducing loan
-                          principal
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                  </TableHead>
-                  <TableHead className="text-dark font-bold whitespace-nowrap">
-                    <div className="flex gap-1 items-center justify-center">
-                      Prepayment
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <span>
-                            <BiInfoCircle size={14} />
-                          </span>
-                        </TooltipTrigger>
-                        <TooltipContent side="top">
-                          Any additional amount paid towards loan principal
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                  </TableHead>
-                  <TableHead className="text-dark font-bold whitespace-nowrap">
-                    <div className="flex gap-1 items-center justify-center">
-                      Total Payment
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <span>
-                            <BiInfoCircle size={14} />
-                          </span>
-                        </TooltipTrigger>
-                        <TooltipContent side="top">
-                          Sum of EMI amount and prepayment for the month
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                  </TableHead>
-                  <TableHead className="text-dark font-bold whitespace-nowrap">
-                    <div className="flex gap-1 items-center justify-center">
-                      Principal Paid
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <span>
-                            <BiInfoCircle size={14} />
-                          </span>
-                        </TooltipTrigger>
-                        <TooltipContent side="top">
-                          Total principal amount paid till date
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                  </TableHead>
-                  <TableHead className="text-dark font-bold whitespace-nowrap">
-                    <div className="flex gap-1 items-center justify-end">
-                      Balance
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <span>
-                            <BiInfoCircle size={14} />
-                          </span>
-                        </TooltipTrigger>
-                        <TooltipContent side="top">
-                          Remaining loan amount to be paid
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {yearGroupedData.map((yearData) => (
-                  <React.Fragment key={yearData.year}>
-                    {/* Year Summary Row - Clickable to expand/collapse */}
-                    <TableRow
-                      className="bg-gray-100 dark:bg-muted/40 cursor-pointer hover:bg-muted text-xs"
-                      onClick={() => toggleYearExpansion(yearData.year)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          toggleYearExpansion(yearData.year);
-                        }
-                      }}
-                      tabIndex={0}
-                      role="button"
-                      aria-expanded={expandedYears.includes(yearData.year)}
-                      aria-controls={`year-details-${yearData.year}`}
-                      aria-label={`Year ${yearData.year} summary, click to ${
-                        expandedYears.includes(yearData.year)
-                          ? "collapse"
-                          : "expand"
-                      }`}
-                    >
-                      <TableCell className="font-medium flex items-center whitespace-nowrap">
-                        {expandedYears.includes(yearData.year) ? (
-                          <ChevronDown size={18} aria-hidden="true" />
-                        ) : (
-                          <ChevronRight size={18} aria-hidden="true" />
-                        )}
-                      </TableCell>
-                      <TableCell className="font-medium whitespace-nowrap">
-                        {yearData.year}
-                      </TableCell>
-                      <TableCell className="text-center font-medium whitespace-nowrap">
-                        {formateCurrency(yearData.totalEmi)}
-                      </TableCell>
-                      <TableCell className="text-center font-medium whitespace-nowrap">
-                        {formateCurrency(yearData.totalInterest)}
-                      </TableCell>
-                      <TableCell className="text-center font-medium whitespace-nowrap">
-                        {formateCurrency(yearData.totalPrincipal)}
-                      </TableCell>
-                      <TableCell className="text-center font-medium whitespace-nowrap">
-                        {formateCurrency(yearData.totalPrepayment)}
-                      </TableCell>
-                      <TableCell className="text-center font-medium whitespace-nowrap">
-                        {formateCurrency(yearData.totalPayment)}
-                      </TableCell>
-                      <TableCell className="text-center font-medium whitespace-nowrap">
-                        {formateCurrency(yearData.principalPaidTillDate)}
-                      </TableCell>
-                      <TableCell className="text-end font-medium whitespace-nowrap">
-                        {formateCurrency(yearData.endingBalance)}
-                      </TableCell>
-                    </TableRow>
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        Portion of EMI that goes towards interest payment
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </TableHead>
+                <TableHead className="text-dark font-bold whitespace-nowrap">
+                  <div className="flex gap-1 items-center justify-center">
+                    Principal
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span>
+                          <BiInfoCircle size={14} />
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        Portion of EMI that goes towards reducing loan principal
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </TableHead>
+                <TableHead className="text-dark font-bold whitespace-nowrap">
+                  <div className="flex gap-1 items-center justify-center">
+                    Prepayment
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span>
+                          <BiInfoCircle size={14} />
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        Any additional amount paid towards loan principal
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </TableHead>
+                <TableHead className="text-dark font-bold whitespace-nowrap">
+                  <div className="flex gap-1 items-center justify-center">
+                    Total Payment
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span>
+                          <BiInfoCircle size={14} />
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        Sum of EMI amount and prepayment for the month
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </TableHead>
+                <TableHead className="text-dark font-bold whitespace-nowrap">
+                  <div className="flex gap-1 items-center justify-center">
+                    Principal Paid
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span>
+                          <BiInfoCircle size={14} />
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        Total principal amount paid till date
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </TableHead>
+                <TableHead className="text-dark font-bold whitespace-nowrap">
+                  <div className="flex gap-1 items-center justify-end">
+                    Balance
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span>
+                          <BiInfoCircle size={14} />
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        Remaining loan amount to be paid
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {yearGroupedData.map((yearData) => (
+                <React.Fragment key={yearData.year}>
+                  {/* Year Summary Row - Clickable to expand/collapse */}
+                  <TableRow
+                    className="bg-gray-100 dark:bg-muted/40 cursor-pointer hover:bg-muted text-xs"
+                    onClick={() => toggleYearExpansion(yearData.year)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        toggleYearExpansion(yearData.year);
+                      }
+                    }}
+                    tabIndex={0}
+                    role="button"
+                    aria-expanded={expandedYears.includes(yearData.year)}
+                    aria-controls={`year-details-${yearData.year}`}
+                    aria-label={`Year ${yearData.year} summary, click to ${
+                      expandedYears.includes(yearData.year)
+                        ? "collapse"
+                        : "expand"
+                    }`}
+                  >
+                    <TableCell className="font-medium flex items-center whitespace-nowrap">
+                      {expandedYears.includes(yearData.year) ? (
+                        <ChevronDown size={18} aria-hidden="true" />
+                      ) : (
+                        <ChevronRight size={18} aria-hidden="true" />
+                      )}
+                    </TableCell>
+                    <TableCell className="font-medium whitespace-nowrap">
+                      {yearData.year}
+                    </TableCell>
+                    <TableCell className="text-center font-medium whitespace-nowrap">
+                      {formateCurrency(yearData.totalEmi)}
+                    </TableCell>
+                    <TableCell className="text-center font-medium whitespace-nowrap">
+                      {formateCurrency(yearData.totalInterest)}
+                    </TableCell>
+                    <TableCell className="text-center font-medium whitespace-nowrap">
+                      {formateCurrency(yearData.totalPrincipal)}
+                    </TableCell>
+                    <TableCell className="text-center font-medium whitespace-nowrap">
+                      {formateCurrency(yearData.totalPrepayment)}
+                    </TableCell>
+                    <TableCell className="text-center font-medium whitespace-nowrap">
+                      {formateCurrency(yearData.totalPayment)}
+                    </TableCell>
+                    <TableCell className="text-center font-medium whitespace-nowrap">
+                      {formateCurrency(yearData.principalPaidTillDate)}
+                    </TableCell>
+                    <TableCell className="text-end font-medium whitespace-nowrap">
+                      {formateCurrency(yearData.endingBalance)}
+                    </TableCell>
+                  </TableRow>
 
-                    {/* Monthly Details - Shown when expanded */}
-                    {expandedYears.includes(yearData.year) &&
-                      yearData.emiItems.map((item) => (
-                        <TableRow
-                          key={`${yearData.year}-${item.emiNumber}`}
-                          className="bg-background/50 text-xs"
-                          role="row"
-                          id={`year-details-${yearData.year}-row-${item.emiNumber}`}
-                        >
-                          <TableCell className="font-normal items-center whitespace-nowrap text-center">
-                            {item.emiNumber}
-                          </TableCell>
-                          <TableCell className="font-normal whitespace-nowrap">
-                            {MONTHS[item.month]}
-                          </TableCell>
-                          <TableCell className="text-center font-normal whitespace-nowrap">
-                            {formateCurrency(Number(item.emiAmount))}
-                          </TableCell>
-                          <TableCell className="text-center font-normal whitespace-nowrap">
-                            {formateCurrency(Number(item.interestPaid))}
-                          </TableCell>
-                          <TableCell className="text-center font-normal whitespace-nowrap">
-                            {formateCurrency(Number(item.principalPaid))}
-                          </TableCell>
-                          <TableCell className="text-center font-normal whitespace-nowrap">
-                            {formateCurrency(Number(item.prepayment))}
-                          </TableCell>
-                          <TableCell className="text-center font-normal whitespace-nowrap">
-                            {formateCurrency(Number(item.totalMonthlyPayment))}
-                          </TableCell>
-                          <TableCell className="text-center font-normal whitespace-nowrap">
-                            {formateCurrency(
-                              Number(item.principalPaidTillDate)
-                            )}
-                          </TableCell>
-                          <TableCell className="text-end font-normal whitespace-nowrap">
-                            {formateCurrency(Number(item.remainingBalance))}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                  </React.Fragment>
-                ))}
-              </TableBody>
-            </Table>
-          </TooltipProvider>
-        </div>
+                  {/* Monthly Details - Shown when expanded */}
+                  {expandedYears.includes(yearData.year) &&
+                    yearData.emiItems.map((item) => (
+                      <TableRow
+                        key={`${yearData.year}-${item.emiNumber}`}
+                        className="bg-background/50 text-xs"
+                        role="row"
+                        id={`year-details-${yearData.year}-row-${item.emiNumber}`}
+                      >
+                        <TableCell className="font-normal items-center whitespace-nowrap text-center">
+                          {item.emiNumber}
+                        </TableCell>
+                        <TableCell className="font-normal whitespace-nowrap">
+                          {MONTHS[item.month]}
+                        </TableCell>
+                        <TableCell className="text-center font-normal whitespace-nowrap">
+                          {formateCurrency(Number(item.emiAmount))}
+                        </TableCell>
+                        <TableCell className="text-center font-normal whitespace-nowrap">
+                          {formateCurrency(Number(item.interestPaid))}
+                        </TableCell>
+                        <TableCell className="text-center font-normal whitespace-nowrap">
+                          {formateCurrency(Number(item.principalPaid))}
+                        </TableCell>
+                        <TableCell className="text-center font-normal whitespace-nowrap">
+                          {formateCurrency(Number(item.prepayment))}
+                        </TableCell>
+                        <TableCell className="text-center font-normal whitespace-nowrap">
+                          {formateCurrency(Number(item.totalMonthlyPayment))}
+                        </TableCell>
+                        <TableCell className="text-center font-normal whitespace-nowrap">
+                          {formateCurrency(Number(item.principalPaidTillDate))}
+                        </TableCell>
+                        <TableCell className="text-end font-normal whitespace-nowrap">
+                          {formateCurrency(Number(item.remainingBalance))}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        </TooltipProvider>
       </div>
-    </>
+    </CollapsibleWrapper>
   );
 };
