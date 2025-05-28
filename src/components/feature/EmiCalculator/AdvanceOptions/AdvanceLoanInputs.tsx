@@ -4,7 +4,6 @@ import { CollapsibleWrapper } from "@/components/common/CollapsibleWrapper";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useLoan } from "@/contexts/LoanContext";
-import { AlertTriangle } from "lucide-react";
 import { useMemo, useState } from "react";
 import { TbInfoCircle } from "react-icons/tb";
 import { CollectiveImpactSummary } from "../CollectiveImpactSummary";
@@ -15,7 +14,11 @@ import { Prepayment } from "./Prepayment";
 
 export const AdvanceLoanInputs = () => {
   const [showAdvanceOptions, setShowAdvanceOptions] = useState(true);
-  const { loanDetails, conflictsExist, conflictingMonths } = useLoan();
+  const {
+    loanDetails,
+    // conflictsExist,
+    // conflictingMonths
+  } = useLoan();
 
   // Calculate the total number of advanced options
   const totalAdvancedOptions = useMemo(() => {
@@ -36,7 +39,7 @@ export const AdvanceLoanInputs = () => {
       <CollapsibleWrapper
         title={
           <>
-            Advance Loan Options
+            Advance Options
             {/* Badge showing the number of advanced options when count > 0 */}
             {totalAdvancedOptions > 0 && (
               <span
@@ -56,26 +59,26 @@ export const AdvanceLoanInputs = () => {
           <CollectiveImpactSummary />
         </div>
 
-        <Alert variant="default" className="bg-info/10 border-info/30 mb-3">
+        <Alert variant="default" className="bg-info/10 border-info/30 mb-3 items-center">
           <TbInfoCircle className="h-4 w-4" />
-          <AlertDescription>
-            <p className="font-medium">Advance input options</p>
-            <p className="text-sm">
+          <AlertDescription className="flex items-center gap-1">
+            {/* <p className="font-medium">Advance input options</p> */}
+            <div className="text-sm flex items-center gap-2">
               Learn more about advance input options before adding
               <AdvanceOptionsInfoDialog
                 trigger={
-                  <Button variant="ghost" size="sm" className="h-1 px-1">
-                    Learn more...
+                  <Button variant="secondary" size="sm" className="">
+                    Learn more
                   </Button>
                 }
               />
-            </p>
+            </div>
             <div className="flex justify-end"></div>
           </AlertDescription>
         </Alert>
 
         {/* Dynamic conflict alert */}
-        {conflictsExist && (
+        {/* {conflictsExist && (
           <Alert
             variant="destructive"
             className="bg-destructive/10 border-destructive/30 mb-3"
@@ -117,7 +120,7 @@ export const AdvanceLoanInputs = () => {
               </ul>
             </AlertDescription>
           </Alert>
-        )}
+        )} */}
 
         <div className="grid grid-cols-1 gap-3">
           <Prepayment />

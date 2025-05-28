@@ -61,173 +61,174 @@ export const CollectiveImpactSummary = () => {
       maximumFractionDigits: 0,
     }).format(value);
   };
-
   // No need to render if no impact data or not significant changes
   if (!collectiveImpact || !collectiveImpact.hasPositiveImpact) return null;
-
   return (
-    <div>
+    <div className="relative">
       <div
         className={`
-          relative overflow-hidden rounded-xl border p-4
+          relative overflow-hidden rounded-xl border 
           ${
             collectiveImpact.hasSavings
-              ? "bg-gradient-to-r from-green-50/60 to-emerald-50/60 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-emerald-800/40"
-              : "bg-gradient-to-r from-amber-50/60 to-orange-50/60 dark:from-amber-900/20 dark:to-orange-900/20 border-amber-200 dark:border-orange-800/40"
+              ? "bg-gradient-to-br from-green-50/40 to-white dark:from-green-900/10 dark:to-transparent border-green-200/70 dark:border-emerald-800/30"
+              : "bg-gradient-to-br from-amber-50/40 to-white dark:from-amber-900/10 dark:to-transparent border-amber-200/70 dark:border-amber-800/30"
           }
-          transition-all shadow-sm
+          shadow-sm
         `}
       >
-        {/* Header section */}
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center gap-4">
+        {/* Top section with card design */}
+        <div className="flex items-center justify-between px-3 py-2.5 border-b border-gray-100 dark:border-gray-800/40">
+          <div className="flex items-center gap-2.5">
             <div
-              className={`rounded-full p-3 ${
+              className={`rounded-md p-1 ${
                 collectiveImpact.hasSavings
                   ? "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
                   : "bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
               }`}
             >
               {collectiveImpact.hasSavings ? (
-                <TrendingDown size={24} />
+                <TrendingDown size={16} />
               ) : (
-                <TrendingUp size={24} />
+                <TrendingUp size={16} />
               )}
             </div>
             <div>
-              <h3 className="text-lg font-semibold">
+              <h3 className="text-sm font-medium leading-tight">
                 {collectiveImpact.hasSavings
                   ? "Positive Impact"
                   : "Overall Changes"}
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 {collectiveImpact.hasSavings
                   ? "Your changes result in savings"
-                  : "Summary of all loan adjustments"}
+                  : "Summary of adjustments"}
               </p>
             </div>
           </div>
         </div>
+        
+        {/* Impact Metrics - Sleek horizontal layout */}
+        <div className="px-3 py-3 flex flex-wrap items-center justify-between">
+          <div className="space-y-2 w-full">
+            {/* EMI Impact */}
+            {collectiveImpact.emiImpact !== 0 && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span 
+                    className={`inline-block w-1.5 h-1.5 rounded-full ${
+                      collectiveImpact.emiImpact <= 0
+                        ? "bg-green-500 dark:bg-green-400"
+                        : "bg-red-500 dark:bg-red-400"
+                    }`}
+                  />
+                  <span className="text-xs font-medium">EMI:</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span
+                    className={`text-xs font-medium ${
+                      collectiveImpact.emiImpact <= 0
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-red-600 dark:text-red-400"
+                    }`}
+                  >
+                    {formatValue(Math.abs(collectiveImpact.emiImpact))}
+                  </span>
+                  <span
+                    className={`p-0.5 rounded-full ${
+                      collectiveImpact.emiImpact <= 0
+                        ? "text-green-500 dark:text-green-400"
+                        : "text-red-500 dark:text-red-400"
+                    }`}
+                  >
+                    {collectiveImpact.emiImpact <= 0 ? (
+                      <ArrowDown size={10} />
+                    ) : (
+                      <ArrowDown size={10} className="transform rotate-180" />
+                    )}
+                  </span>
+                </div>
+              </div>
+            )}
 
-        {/* Divider */}
-        <div className="h-px bg-gray-200 dark:bg-gray-700 my-3"></div>
+            {/* Interest Impact */}
+            {collectiveImpact.interestImpact !== 0 && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span 
+                    className={`inline-block w-1.5 h-1.5 rounded-full ${
+                      collectiveImpact.interestImpact <= 0
+                        ? "bg-green-500 dark:bg-green-400"
+                        : "bg-red-500 dark:bg-red-400"
+                    }`}
+                  />
+                  <span className="text-xs font-medium">Interest:</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span
+                    className={`text-xs font-medium ${
+                      collectiveImpact.interestImpact <= 0
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-red-600 dark:text-red-400"
+                    }`}
+                  >
+                    {formatValue(Math.abs(collectiveImpact.interestImpact))}
+                  </span>
+                  <span
+                    className={`p-0.5 rounded-full ${
+                      collectiveImpact.interestImpact <= 0
+                        ? "text-green-500 dark:text-green-400"
+                        : "text-red-500 dark:text-red-400"
+                    }`}
+                  >
+                    {collectiveImpact.interestImpact <= 0 ? (
+                      <ArrowDown size={10} />
+                    ) : (
+                      <ArrowDown size={10} className="transform rotate-180" />
+                    )}
+                  </span>
+                </div>
+              </div>
+            )}
 
-        {/* Detailed impact section */}
-        <div className="space-y-3 mt-2">
-          {collectiveImpact.emiImpact !== 0 && (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span
-                  className={`p-1 rounded-full ${
-                    collectiveImpact.emiImpact <= 0
-                      ? "bg-green-100 dark:bg-green-900/30"
-                      : "bg-red-100 dark:bg-red-900/30"
-                  }`}
-                >
-                  {collectiveImpact.emiImpact <= 0 ? (
-                    <ArrowDown
-                      size={14}
-                      className="text-green-500 dark:text-green-400"
-                    />
-                  ) : (
-                    <ArrowDown
-                      size={14}
-                      className="text-red-500 dark:text-red-400 transform rotate-180"
-                    />
-                  )}
-                </span>
-                <span className="text-sm font-medium">EMI Impact:</span>
+            {/* Tenure Impact */}
+            {collectiveImpact.tenureImpact !== 0 && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span 
+                    className={`inline-block w-1.5 h-1.5 rounded-full ${
+                      collectiveImpact.tenureImpact <= 0
+                        ? "bg-green-500 dark:bg-green-400"
+                        : "bg-red-500 dark:bg-red-400"
+                    }`}
+                  />
+                  <span className="text-xs font-medium">Tenure:</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span
+                    className={`text-xs font-medium ${
+                      collectiveImpact.tenureImpact <= 0
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-red-600 dark:text-red-400"
+                    }`}
+                  >
+                    {Math.abs(collectiveImpact.tenureImpact)} months
+                  </span>
+                  <span
+                    className={`p-0.5 rounded-full ${
+                      collectiveImpact.tenureImpact <= 0
+                        ? "text-green-500 dark:text-green-400"
+                        : "text-red-500 dark:text-red-400"
+                    }`}
+                  >
+                    {collectiveImpact.tenureImpact <= 0 ? (
+                      <ArrowDown size={10} />
+                    ) : (
+                      <ArrowDown size={10} className="transform rotate-180" />
+                    )}
+                  </span>
+                </div>
               </div>
-              <div
-                className={`text-sm font-semibold ${
-                  collectiveImpact.emiImpact <= 0
-                    ? "text-green-600 dark:text-green-400"
-                    : "text-red-600 dark:text-red-400"
-                }`}
-              >
-                {formatValue(Math.abs(collectiveImpact.emiImpact))}
-              </div>
-            </div>
-          )}
-
-          {collectiveImpact.interestImpact !== 0 && (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span
-                  className={`p-1 rounded-full ${
-                    collectiveImpact.interestImpact <= 0
-                      ? "bg-green-100 dark:bg-green-900/30"
-                      : "bg-red-100 dark:bg-red-900/30"
-                  }`}
-                >
-                  {collectiveImpact.interestImpact <= 0 ? (
-                    <ArrowDown
-                      size={14}
-                      className="text-green-500 dark:text-green-400"
-                    />
-                  ) : (
-                    <ArrowDown
-                      size={14}
-                      className="text-red-500 dark:text-red-400 transform rotate-180"
-                    />
-                  )}
-                </span>
-                <span className="text-sm font-medium">Interest Impact:</span>
-              </div>
-              <div
-                className={`text-sm font-semibold ${
-                  collectiveImpact.interestImpact <= 0
-                    ? "text-green-600 dark:text-green-400"
-                    : "text-red-600 dark:text-red-400"
-                }`}
-              >
-                {formatValue(Math.abs(collectiveImpact.interestImpact))}
-              </div>
-            </div>
-          )}
-
-          {collectiveImpact.tenureImpact !== 0 && (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span
-                  className={`p-1 rounded-full ${
-                    collectiveImpact.tenureImpact <= 0
-                      ? "bg-green-100 dark:bg-green-900/30"
-                      : "bg-red-100 dark:bg-red-900/30"
-                  }`}
-                >
-                  {collectiveImpact.tenureImpact <= 0 ? (
-                    <ArrowDown
-                      size={14}
-                      className="text-green-500 dark:text-green-400"
-                    />
-                  ) : (
-                    <ArrowDown
-                      size={14}
-                      className="text-red-500 dark:text-red-400 transform rotate-180"
-                    />
-                  )}
-                </span>
-                <span className="text-sm font-medium">Tenure Impact:</span>
-              </div>
-              <div
-                className={`text-sm font-semibold ${
-                  collectiveImpact.tenureImpact <= 0
-                    ? "text-green-600 dark:text-green-400"
-                    : "text-red-600 dark:text-red-400"
-                }`}
-              >
-                {Math.abs(collectiveImpact.tenureImpact)} months
-              </div>
-            </div>
-          )}
-
-          <div className="mt-1 pt-2 border-t border-gray-200 dark:border-gray-700">
-            <div className="text-xs text-center text-muted-foreground">
-              {collectiveImpact.hasSavings
-                ? "Your changes have a positive impact on your loan."
-                : "Consider adjustments to optimize your loan terms."}
-            </div>
+            )}
           </div>
         </div>
       </div>
