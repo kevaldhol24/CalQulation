@@ -2,53 +2,76 @@ import { PageHero } from "@/components/common/PageHero";
 import { Metadata } from "next";
 import Link from "next/link";
 import { BsBank, BsCalculator, BsGraphUp } from "react-icons/bs";
-import {
-  FaArrowRight,
-  FaChartBar,
-  FaChartLine,
-  FaLightbulb,
-  FaRegClock,
-} from "react-icons/fa";
+import { FaArrowRight, FaChartLine, FaLightbulb, FaRegClock, FaTools } from "react-icons/fa";
 import { MdCalculate } from "react-icons/md";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 
 export const metadata: Metadata = {
-  title: "Calqulation | Free Online Financial Calculators & Tools",
-  description:
-    "Comprehensive collection of free financial calculators for loans, investments, and retirement planning. Make informed financial decisions with our easy-to-use tools.",
-  keywords:
-    "financial calculator, loan calculator, EMI calculator, investment calculator, retirement planning, financial tools, financial planning",
+  title: "Financial Tools | Calqulation - Smart Financial Calculators",
+  description: "Explore our comprehensive suite of financial calculators and tools. Calculate EMIs, SIPs, and more with our powerful and easy-to-use financial tools.",
+  keywords: "financial tools, financial calculators, EMI calculator, SIP calculator, loan calculator, investment calculator, financial planning tools",
   openGraph: {
-    title: "Calqulation | Free Online Financial Calculators & Tools",
-    description:
-      "Comprehensive collection of free financial calculators for loans, investments, and retirement planning. Make informed financial decisions with our easy-to-use tools.",
-    url: "https://www.calqulation.com",
+    title: "Financial Tools | Calqulation - Smart Financial Calculators",
+    description: "Explore our comprehensive suite of financial calculators and tools. Calculate EMIs, SIPs, and more with our powerful and easy-to-use financial tools.",
+    url: "https://www.calqulation.com/tool",
     images: [
       {
-        url: "/Calqulation.png",
+        url: "/Financial-planning.svg",
         width: 1200,
         height: 630,
-        alt: "Calqulation - Financial Calculator Tools",
+        alt: "Calqulation Financial Tools",
       },
     ],
   },
 };
 
-export default function Home() {
+export default function ToolsPage() {
+  // Schema.org structured data for the tools page
+  const toolsPageSchemaJson = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Financial Tools & Calculators",
+    description: "A comprehensive collection of financial tools and calculators for loans, investments, and financial planning.",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "EMI Calculator",
+          url: "https://www.calqulation.com/tool/emi-calculator"
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "SIP Calculator",
+          url: "https://www.calqulation.com/tool/sip-calculator"
+        }
+      ]
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(toolsPageSchemaJson),
+        }}
+      />
+
       <PageHero
-        title="Welcome to Calqulation"
-        subtitle="Smart financial calculation tools to help you make better
-              decisions for your financial journey."
-        Icon={BsCalculator}
+        title="Financial Tools"
+        subtitle="Explore our suite of powerful financial calculators to help make informed financial decisions."
+        Icon={FaTools}
       >
         <div className="flex flex-wrap justify-center gap-4 mt-8">
           <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
             <BsGraphUp className="mr-1" /> Easy to Use
           </span>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100">
-            <FaChartBar className="mr-1" /> Detailed Reports
+            <FaChartLine className="mr-1" /> Detailed Reports
           </span>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
             <FaRegClock className="mr-1" /> Instant Results
@@ -60,15 +83,14 @@ export default function Home() {
         {/* Section heading */}
         <div className="text-center mb-16">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
-            <span className="block">Financial Calculators</span>
+            <span className="block">Our Financial Calculators</span>
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400">
-            Powerful tools to help you plan your financial future with
-            confidence
+            Powerful tools to help you plan your financial future with confidence
           </p>
         </div>
 
-        {/* Calculator cards */}
+        {/* Tools grid with available and coming soon options */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* EMI Calculator Card - Available */}
           <Link href="/tool/emi-calculator" className="group">
@@ -107,7 +129,7 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Compound Interest Calculator Card - Coming Soon */}
+          {/* SIP Calculator Card - Available */}
           <Link href="/tool/sip-calculator" className="group">
             <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
               <div className="h-3 bg-gradient-to-r from-emerald-500 to-green-600"></div>
@@ -144,7 +166,7 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Tax Calculator Card - Coming Soon */}
+          {/* FD Calculator Card - Coming Soon */}
           <div className="h-full relative">
             <div className="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-sm rounded-2xl overflow-hidden bg-black/20 dark:bg-black/60">
               <span className="bg-white/80 dark:bg-gray-800/80 text-gray-800 dark:text-white px-4 py-2 rounded-full font-bold shadow-lg">
@@ -158,19 +180,19 @@ export default function Home() {
                   <RiMoneyDollarCircleFill className="text-white text-2xl" />
                 </div>
                 <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
-                  Tax Calculator
+                  FD Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Estimate your income tax liability and plan your taxes
-                  efficiently with our tax calculator.
+                  Calculate maturity amount, interest earned and plan your fixed 
+                  deposits effectively.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
                   <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs px-3 py-1 rounded-full">
-                    Income Tax
+                    Fixed Deposits
                   </span>
                   <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs px-3 py-1 rounded-full">
-                    Tax Saving
+                    Interest Calculations
                   </span>
                   <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs px-3 py-1 rounded-full">
                     Tax Planning
@@ -179,17 +201,88 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          {/* CAGR Calculator Card - Coming Soon */}
+          <div className="h-full relative">
+            <div className="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-sm rounded-2xl overflow-hidden bg-black/20 dark:bg-black/60">
+              <span className="bg-white/80 dark:bg-gray-800/80 text-gray-800 dark:text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                Coming Soon
+              </span>
+            </div>
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-700 opacity-75">
+              <div className="h-3 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
+              <div className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <FaChartLine className="text-white text-2xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                  CAGR Calculator
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                  Calculate Compound Annual Growth Rate for your investments and 
+                  compare investment performance.
+                </p>
+
+                <div className="flex flex-wrap gap-2 justify-center mb-6">
+                  <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs px-3 py-1 rounded-full">
+                    Investment Growth
+                  </span>
+                  <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs px-3 py-1 rounded-full">
+                    Portfolio Analysis
+                  </span>
+                  <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs px-3 py-1 rounded-full">
+                    Performance Metrics
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Income Tax Calculator - Coming Soon */}
+          <div className="h-full relative">
+            <div className="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-sm rounded-2xl overflow-hidden bg-black/20 dark:bg-black/60">
+              <span className="bg-white/80 dark:bg-gray-800/80 text-gray-800 dark:text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                Coming Soon
+              </span>
+            </div>
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-700 opacity-75">
+              <div className="h-3 bg-gradient-to-r from-blue-400 to-cyan-500"></div>
+              <div className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <BsBank className="text-white text-2xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                  Income Tax Calculator
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                  Calculate your income tax liability and plan your taxes efficiently 
+                  with detailed tax breakdown.
+                </p>
+
+                <div className="flex flex-wrap gap-2 justify-center mb-6">
+                  <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs px-3 py-1 rounded-full">
+                    Tax Calculation
+                  </span>
+                  <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs px-3 py-1 rounded-full">
+                    Tax Saving
+                  </span>
+                  <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs px-3 py-1 rounded-full">
+                    Tax Planning
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Benefits section */}
+        {/* Features section */}
         <div className="mt-32 mb-20">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
-              Why Use Our Calculators?
+              Why Use Our Financial Tools?
             </h2>
             <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400">
-              Make smarter financial decisions with our powerful calculation
-              tools
+              Smart features designed to enhance your financial planning experience
             </p>
           </div>
 
@@ -199,61 +292,62 @@ export default function Home() {
                 <FaChartLine className="text-white text-2xl" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                Accurate Forecasting
+                Accurate Calculations
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                Our calculators use precise mathematical formulas to give you
-                the most accurate projections for your financial plans.
+                Our tools use precise financial algorithms to provide you with 
+                accurate results and forecasts for your financial decisions.
               </p>
             </div>
 
             <div className="flex flex-col items-center text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-5 shadow-lg">
-                <FaLightbulb className="text-white text-2xl" />
+                <BsCalculator className="text-white text-2xl" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                Informed Decisions
+                Interactive Visualizations
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                Get comprehensive insights with detailed breakdowns, charts, and
-                reports to help you make better financial choices.
+                Visual charts and graphs help you understand complex financial data 
+                at a glance and make informed decisions.
               </p>
             </div>
 
             <div className="flex flex-col items-center text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center mb-5 shadow-lg">
-                <BsBank className="text-white text-2xl" />
+                <FaLightbulb className="text-white text-2xl" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                Financial Planning
+                Advanced Options
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                Whether it&apos;s loans, investments, or taxes, our tools help
-                you plan your finances with confidence and clarity.
+                Customize calculations with advanced features like step-up investments, 
+                prepayments, floating rates, and inflation adjustments.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Call to action section */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl overflow-hidden shadow-xl">
-          <div className="px-6 py-12 md:p-12 md:flex md:items-center md:justify-between">
-            <div>
-              <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                Ready to calculate your financial future?
-              </h2>
-              <p className="mt-3 text-lg text-blue-100 max-w-3xl">
-                Our calculators are designed to help you make informed financial
-                decisions. Start using them for free today!
-              </p>
-            </div>
-            <div className="mt-8 md:mt-0 md:shrink-0">
-              <Link
-                href="/tool/emi-calculator"
-                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-blue-600 bg-white hover:bg-blue-50 transition duration-300"
-              >
-                Try EMI Calculator
-                <FaArrowRight className="ml-2" />
+        {/* Call to Action */}
+        <div className="mt-20 text-center">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl p-8 md:p-12 shadow-lg border border-blue-100 dark:border-blue-800/30">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6">
+              Start Planning Your Financial Future Today
+            </h3>
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+              Explore our powerful financial tools and get started on your journey 
+              towards financial freedom and security.
+            </p>
+            <div className="flex justify-center gap-4 flex-wrap">
+              <Link href="/tool/emi-calculator" className="group">
+                <span className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-medium text-lg group-hover:from-blue-700 group-hover:to-purple-700 transition-all duration-300 shadow-md">
+                  Try EMI Calculator <FaArrowRight className="ml-2" />
+                </span>
+              </Link>
+              <Link href="/tool/sip-calculator" className="group">
+                <span className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-green-600 rounded-full text-white font-medium text-lg group-hover:from-emerald-700 group-hover:to-green-700 transition-all duration-300 shadow-md">
+                  Try SIP Calculator <FaArrowRight className="ml-2" />
+                </span>
               </Link>
             </div>
           </div>

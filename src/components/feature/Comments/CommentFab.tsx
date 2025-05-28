@@ -22,8 +22,9 @@ export const CommentFab = () => {
   return (
     <button
       onClick={scrollToCommentForm}
-      className="flex gap-2 p-2 px-4 cursor-pointer items-center fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-50"
+      className="h-[40px] flex gap-2 p-2 px-4 cursor-pointer items-center fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-all duration-300 hover:scale-105 z-50 text-md"
       aria-label="Leave a comment"
+      id="comment-fab"
     >
       <MessageSquarePlus className="h-6 w-6 mt-[3px]" /> Comments
     </button>

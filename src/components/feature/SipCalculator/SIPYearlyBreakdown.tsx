@@ -183,7 +183,7 @@ export const SIPYearlyBreakdown = () => {
               <TableBody>
                 {sipResults.yearlyBreakdown.map((yearData) => (
                   <React.Fragment key={yearData.year}>
-                    <TableRow className="bg-gray-100 dark:bg-muted/40 cursor-pointer hover:bg-muted text-xs">
+                    <TableRow className="bg-background dark:bg-muted/40 cursor-pointer hover:bg-muted text-xs">
                       <TableCell className="font-medium whitespace-nowrap text-center">
                         {yearData.year}
                       </TableCell>
