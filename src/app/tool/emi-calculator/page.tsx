@@ -2,6 +2,7 @@ import { Breadcrumb } from "@/components/common/Breadcrumb";
 import { ToolPageHero } from "@/components/common/PageHero";
 import { Comments } from "@/components/feature/Comments";
 import { LoanCalculator } from "@/components/feature/EmiCalculator/LoanCalculator";
+import { LoanCalculatorSkeleton } from "@/components/feature/EmiCalculator/LoanCalculatorSkeleton";
 import { LoanProvider } from "@/contexts/LoanContext";
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -22,6 +23,9 @@ export const metadata: Metadata = {
     "Calculate your loan EMI, total interest payable, and view detailed amortization schedule. Plan home loans, car loans & personal loans with advanced options like prepayments.",
   keywords:
     "EMI calculator, loan calculator with floating rate, loan EMI calculation, home loan EMI, car loan EMI, personal loan calculator, loan amortization schedule, prepayment calculator, interest rates",
+  alternates: {
+    canonical: "https://www.calqulation.com/tool/emi-calculator",
+  },
   openGraph: {
     title:
       "EMI Calculator | Calculate - Loan EMI, Interest & Amortization Schedule",
@@ -90,7 +94,9 @@ export default function EmiCalculatorPage() {
           <div className="overflow-hidden">
             <Suspense
               fallback={
-                <div className="h-1 bg-gray-200 dark:bg-gray-800"></div>
+                <div className="h-1 bg-gray-200 dark:bg-gray-800">
+                  <LoanCalculatorSkeleton />
+                </div>
               }
             >
               <LoanProvider>

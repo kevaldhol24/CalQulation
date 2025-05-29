@@ -1,16 +1,26 @@
 "use client";
 
-import { FC, useCallback, useEffect, useState } from "react";
-import { Slider } from "../../../common/Slider";
-import { TextField } from "../../../common/TextField";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { Slider } from "./Slider";
+import { TextField } from "./TextField";
 import { Button } from "@/components/ui/button";
 
 interface TenureInputProps
-  extends Omit<React.ComponentProps<"input">, "value" | "onChange" | "onBlur"> {
+  extends Omit<
+    React.ComponentProps<"input">,
+    "value" | "onChange" | "onBlur" | "label"
+  > {
+  label: string;
   value?: number;
   defaultValue?: number;
   hideSlider?: boolean;
   onChange?: (value: number | null) => void;
+  minValue?: number;
+  maxValue?: number;
+  step?: number;
+  getMarks?: (tenureUnit: "Yr" | "Mo") => { value: number; label: string }[];
+  sliderMax?: number;
+  sliderMin?: number;
 }
 
 const MAX_VALUE = 360; // 30 years in months
@@ -18,15 +28,25 @@ const MIN_VALUE = 6; // 1 year in months
 
 export const TenureInput: FC<TenureInputProps> = ({
   value,
+  label,
   defaultValue,
   hideSlider,
   onChange,
+  minValue = MIN_VALUE,
+  maxValue = MAX_VALUE,
+  step = 6,
+  sliderMax = MAX_VALUE,
+  sliderMin = MIN_VALUE,
+  getMarks,
   ...props
 }) => {
   const [localValue, setLocalValue] = useState<number | null>(
     value || defaultValue || null
   );
   const [tenureUnit, setTenureUnit] = useState<"Yr" | "Mo">("Yr");
+  const [markList, setMarkList] = useState<{ value: number; label: string }[]>(
+    []
+  );
 
   const handleTenureUnitChange = (unit: "Yr" | "Mo") => {
     setTenureUnit(unit);
@@ -56,12 +76,12 @@ export const TenureInput: FC<TenureInputProps> = ({
   const handleBlur = useCallback(() => {
     let numericValue: number | null = null;
     if (localValue) {
-      numericValue = Math.max(MIN_VALUE, Math.min(MAX_VALUE, localValue));
+      numericValue = Math.max(minValue, Math.min(maxValue, localValue));
       setLocalValue(numericValue);
     }
     setLocalValue(numericValue);
     onChange?.(numericValue);
-  }, [localValue, onChange]);
+  }, [localValue, maxValue, minValue, onChange]);
 
   const handleSliderChange = (newValue: number, isDragging?: boolean) => {
     setLocalValue(newValue);
@@ -71,15 +91,31 @@ export const TenureInput: FC<TenureInputProps> = ({
     }
   };
 
+  const defaultMarks = useMemo(() => {
+    return [
+      { value: 24, label: tenureUnit === "Mo" ? "24 Mo" : "2 Yr" },
+      { value: 60, label: tenureUnit === "Mo" ? "60 Mo" : "5 Yr" },
+      { value: 120, label: tenureUnit === "Mo" ? "120 Mo" : "10 Yr" },
+      { value: 180, label: tenureUnit === "Mo" ? "180 Mo" : "15 Yr" },
+      { value: 240, label: tenureUnit === "Mo" ? "240 Mo" : "20 Yr" },
+      { value: 300, label: tenureUnit === "Mo" ? "300 Mo" : "25 Yr" },
+      { value: 360, label: tenureUnit === "Mo" ? "360 Mo" : "30 Yr" },
+    ];
+  }, [tenureUnit]);
+
+  useEffect(() => {
+    if (getMarks) {
+      setMarkList(getMarks(tenureUnit));
+    } else {
+      setMarkList(defaultMarks);
+    }
+  }, [defaultMarks, getMarks, tenureUnit]);
+
   return (
     <div>
       <TextField
         {...props}
-        label="Tenure"
-        required
-        id="loanTenure"
-        name="tenure"
-        title="tenure"
+        label={label}
         endAdornment={
           <div>
             <Button
@@ -109,7 +145,6 @@ export const TenureInput: FC<TenureInputProps> = ({
           </div>
         }
         adornmentClassName="!right-0 !px-0 !top-[24px] !border-none"
-        placeholder="Enter tenure"
         className="w-full pr-11"
         value={
           tenureUnit === "Yr" && localValue
@@ -127,24 +162,16 @@ export const TenureInput: FC<TenureInputProps> = ({
       {!hideSlider && (
         <div className="mt-1">
           <Slider
-            min={12}
-            max={360}
-            step={6}
-            marks={[
-              { value: 24, label: tenureUnit === "Mo" ? "24 Mo" : "2 Yr" },
-              { value: 60, label: tenureUnit === "Mo" ? "60 Mo" : "5 Yr" },
-              { value: 120, label: tenureUnit === "Mo" ? "120 Mo" : "10 Yr" },
-              { value: 180, label: tenureUnit === "Mo" ? "180 Mo" : "15 Yr" },
-              { value: 240, label: tenureUnit === "Mo" ? "240 Mo" : "20 Yr" },
-              { value: 300, label: tenureUnit === "Mo" ? "300 Mo" : "25 Yr" },
-              { value: 360, label: tenureUnit === "Mo" ? "360 Mo" : "30 Yr" },
-            ]}
+            min={sliderMin}
+            max={sliderMax}
+            step={step}
+            marks={markList || defaultMarks}
             value={localValue !== null ? localValue : undefined}
             onChange={handleSliderChange}
             aria-label="Loan tenure slider"
-            aria-valuemin={12}
-            aria-valuemax={360}
-            aria-valuenow={localValue || 12}
+            aria-valuemin={sliderMin}
+            aria-valuemax={sliderMax}
+            aria-valuenow={localValue || sliderMin}
             aria-valuetext={`${
               tenureUnit === "Yr" ? (localValue || 12) / 12 : localValue || 12
             } ${tenureUnit === "Yr" ? "years" : "months"}`}

@@ -1,17 +1,34 @@
 "use client";
 
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { Slider } from "../../../common/Slider";
-import { TextField } from "../../../common/TextField";
+import { Slider } from "./Slider";
+import { TextField } from "./TextField";
 
 interface AmountInputProps
-  extends Omit<React.ComponentProps<"input">, "value" | "onChange" | "onBlur"> {
+  extends Omit<
+    React.ComponentProps<"input">,
+    "value" | "onChange" | "onBlur" | "label"
+  > {
   value?: number;
+  label: string;
   hideSlider?: boolean;
   minValue?: number;
   maxValue?: number;
+  sliderMax?: number;
+  sliderMin?: number;
   onChange?: (value: number | null) => void;
+  step?: number;
+  marks?: { value: number; label: string }[];
 }
+
+const defaultMarks = [
+  { value: 100000, label: "1 L" },
+  { value: 1000000, label: "10 L" },
+  { value: 3000000, label: "30 L" },
+  { value: 5000000, label: "50 L" },
+  { value: 7000000, label: "70 L" },
+  { value: 10000000, label: "1 Cr" },
+];
 
 export const AmountInput: FC<AmountInputProps> = ({
   value,
@@ -19,6 +36,10 @@ export const AmountInput: FC<AmountInputProps> = ({
   onChange,
   minValue = 100000,
   maxValue = 100000000,
+  step = 50000,
+  marks = defaultMarks,
+  sliderMax = 10000000,
+  sliderMin = 100000,
   ...props
 }) => {
   const [localValue, setLocalValue] = useState<number | null>(value || null);
@@ -59,13 +80,8 @@ export const AmountInput: FC<AmountInputProps> = ({
     <div>
       <TextField
         {...props}
-        label="Amount"
-        required
-        id="loanAmount"
-        name="amount"
-        title="amount"
+        label={props.label}
         endAdornment={"₹"}
-        placeholder="Enter amount"
         className="w-full pr-11"
         value={localValue ? localValue.toLocaleString() : ""}
         onChange={handleInputChange}
@@ -79,23 +95,16 @@ export const AmountInput: FC<AmountInputProps> = ({
       {!hideSlider && (
         <div className="mt-1">
           <Slider
-            min={100000}
-            max={10000000}
-            step={50000}
-            marks={[
-              { value: 100000, label: "1 L" },
-              { value: 1000000, label: "10 L" },
-              { value: 3000000, label: "30 L" },
-              { value: 5000000, label: "50 L" },
-              { value: 7000000, label: "70 L" },
-              { value: 10000000, label: "1 Cr" },
-            ]}
+            min={sliderMin}
+            max={sliderMax}
+            step={step}
+            marks={marks}
             value={localValue !== null ? localValue : undefined}
             onChange={handleSliderChange}
             aria-label="Loan amount slider"
-            aria-valuemin={100000}
-            aria-valuemax={10000000}
-            aria-valuenow={localValue || 100000}
+            aria-valuemin={sliderMin}
+            aria-valuemax={sliderMax}
+            aria-valuenow={localValue || sliderMin}
           />
         </div>
       )}

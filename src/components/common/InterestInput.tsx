@@ -1,24 +1,45 @@
 "use client";
 
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
-import { TextField } from "../../../common/TextField";
+import { TextField } from "./TextField";
 import { Slider } from "@/components/common/Slider";
 
 interface InterestInputProps
-  extends Omit<React.ComponentProps<"input">, "value" | "onChange" | "onBlur"> {
+  extends Omit<
+    React.ComponentProps<"input">,
+    "value" | "onChange" | "onBlur" | "label"
+  > {
+  label: string;
   value?: number;
   hideSlider?: boolean;
   minValue?: number;
   maxValue?: number;
   onChange?: (value: number | null) => void;
+  sliderMax?: number;
+  sliderMin?: number;
+  step?: number;
+  marks?: { value: number; label: string }[];
 }
+
+const defaultMarks = [
+  { value: 7, label: "7%" },
+  { value: 10, label: "10%" },
+  { value: 15, label: "15%" },
+  { value: 20, label: "20%" },
+  { value: 25, label: "25%" },
+];
 
 export const InterestInput: FC<InterestInputProps> = ({
   value,
+  label,
   hideSlider,
   minValue = 1,
   maxValue = 30,
   onChange,
+  sliderMax = 30,
+  sliderMin = 1,
+  step = 0.5,
+  marks = defaultMarks,
   ...props
 }) => {
   const [localValue, setLocalValue] = useState<string | null>(
@@ -65,13 +86,8 @@ export const InterestInput: FC<InterestInputProps> = ({
     <div>
       <TextField
         {...props}
-        label="Interest Rate"
-        required
-        id="interestRate"
-        name="interest"
-        title="interest"
+        label={label}
         endAdornment={"%"}
-        placeholder="Enter interest rate"
         className="w-full pr-11"
         value={localValue?.toLocaleString() || ""}
         onChange={handleInputChange}
@@ -85,24 +101,18 @@ export const InterestInput: FC<InterestInputProps> = ({
       {!hideSlider && (
         <div className="mt-1">
           <Slider
-            min={3}
-            max={30}
-            step={0.5}
+            min={sliderMin}
+            max={sliderMax}
+            step={step}
             value={
               (localValue ? parseFloat(localValue) : undefined) || undefined
             }
             onChange={handleSliderChange}
-            marks={[
-              { value: 7, label: "7%" },
-              { value: 10, label: "10%" },
-              { value: 15, label: "15%" },
-              { value: 20, label: "20%" },
-              { value: 25, label: "25%" },
-            ]}
+            marks={marks}
             aria-label="Interest rate slider"
-            aria-valuemin={3}
-            aria-valuemax={30}
-            aria-valuenow={localValue ? parseFloat(localValue) : 3}
+            aria-valuemin={sliderMin}
+            aria-valuemax={sliderMax}
+            aria-valuenow={localValue ? parseFloat(localValue) : sliderMin}
           />
         </div>
       )}

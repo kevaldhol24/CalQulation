@@ -17,6 +17,14 @@ export const formateCurrency = (amount: number) => {
   );
 };
 
+export const isInterestRateRealistic = (loanAmount: number, emi: number, interestRate: number): boolean => {
+  // Calculate maximum interest rate based on loan amount and EMI
+  if (emi <= 0 || loanAmount <= 0 || interestRate <= 0) return false;
+  const monthlyRate = interestRate / 1200;
+  const monthlyInterest = loanAmount * monthlyRate;
+  return (monthlyInterest * (1.1) < emi);
+};
+
 /**
  * Checks if two dates represent the same month and year
  */

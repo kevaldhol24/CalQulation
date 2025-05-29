@@ -16,7 +16,7 @@ export async function Comments({ postId }: CommentsProps) {
   const comments = await getComments(postId);
 
   return (
-    <div className="my-10" id="comments">
+    <div className="mt-8" id="comments">
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Join the discussion</h2>
         <p className="text-gray-600 dark:text-gray-400">

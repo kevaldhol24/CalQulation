@@ -26,7 +26,7 @@ import { AlertTriangle, Plus, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { TbMoneybag } from "react-icons/tb";
 import { v4 as uuid } from "uuid";
-import { AmountInput } from "../loanInputs/AmountInput";
+import { AmountInput } from "../../../common/AmountInput";
 
 export const PrepaymentDialog = () => {
   const { loanDetails, loanResults, updateLoanDetails } = useLoan();
@@ -181,6 +181,12 @@ export const PrepaymentDialog = () => {
 
         <div className="grid gap-2">
           <AmountInput
+            label="Prepayment Amount"
+            id="prepayment-amount"
+            title="Enter the prepayment amount"
+            placeholder="Enter amount"
+            name="prepaymentAmount"
+            required
             hideSlider
             value={newPrepayment.amount || undefined}
             onChange={(value) =>
