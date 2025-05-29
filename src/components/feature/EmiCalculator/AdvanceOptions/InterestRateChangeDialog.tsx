@@ -20,10 +20,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useLoan } from "@/contexts/LoanContext";
-import { formateDate, formatMonthYear, isSameMonth } from "@/lib/utils";
+import {
+  formateDate,
+  formatMonthYear,
+  isInterestRateRealistic,
+  isSameMonth,
+} from "@/lib/utils";
 import { ImpactType, InterestRateChange } from "loanwise";
 import { AlertTriangle, Percent, Plus, XIcon } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { InterestInput } from "../../../common/InterestInput";
 
@@ -31,6 +36,9 @@ export const InterestRateChangeDialog = () => {
   const { loanDetails, loanResults, updateLoanDetails } = useLoan();
   const [isOpen, setIsOpen] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [realisticInterestError, setRealisticInterestError] = useState<
+    string | null
+  >(null);
 
   const minStartDate = useMemo(() => {
     const startDate = loanResults?.schedule
@@ -111,6 +119,10 @@ export const InterestRateChangeDialog = () => {
       return;
     }
 
+    if (!hasRealisticInterest()) {
+      return;
+    }
+
     // Prevent submission if validation error exists
     if (validationError) return;
 
@@ -127,6 +139,40 @@ export const InterestRateChangeDialog = () => {
     setIsOpen(false);
   };
 
+  const hasRealisticInterest = useCallback(() => {
+    if (!loanDetails.interestRateChanges || !newRateChange.effectiveDate)
+      return false;
+
+    const { emiAmount, remainingBalance } = loanResults?.schedule.find(
+      (item) => {
+        return item.date === newRateChange.effectiveDate;
+      }
+    ) || { emiAmount: 0, remainingBalance: 0 };
+
+    const isRealistic = isInterestRateRealistic(
+      remainingBalance,
+      emiAmount,
+      newRateChange.rate
+    );
+    if (!isRealistic) {
+      setRealisticInterestError(
+        "The newly proposed interest rate is not sustainable, as it would result in the loan never being fully repaid. To proceed with this rate, the EMI amount must be increased accordingly to ensure the loan is paid off within a reasonable timeframe."
+      );
+    } else {
+      setRealisticInterestError(null);
+    }
+    return isRealistic;
+  }, [
+    loanDetails.interestRateChanges,
+    loanResults?.schedule,
+    newRateChange.effectiveDate,
+    newRateChange.rate,
+  ]);
+
+  useEffect(() => {
+    hasRealisticInterest();
+  }, [hasRealisticInterest]);
+
   return (
     <Dialog open={isOpen}>
       <DialogTrigger asChild>
@@ -139,9 +185,7 @@ export const InterestRateChangeDialog = () => {
           Add
         </Button>
       </DialogTrigger>
-      <DialogContent
-        className="sm:max-w-[475px]"
-      >
+      <DialogContent className="sm:max-w-[475px]">
         <DialogHeader className="flex flex-row items-start justify-between">
           <div>
             <DialogTitle className="flex items-center">
@@ -162,10 +206,12 @@ export const InterestRateChangeDialog = () => {
           </Button>
         </DialogHeader>
 
-        {validationError && (
+        {(validationError || realisticInterestError) && (
           <Alert variant="destructive" className="mt-2 border-destructive/65">
             <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>{validationError}</AlertDescription>
+            <AlertDescription>
+              {validationError || realisticInterestError}
+            </AlertDescription>
           </Alert>
         )}
 
