@@ -8,6 +8,7 @@ import { NavigationProgress } from "@/components/layout/NavigationProgress";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
+import { BackToTop } from "@/components/common/BackToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -72,7 +73,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
         <Analytics />
         <ThemeProvider
@@ -90,6 +91,7 @@ export default function RootLayout({
           {children}
           <Toaster position="top-right" />
           <Footer />
+          <BackToTop />
         </ThemeProvider>
 
         {/* Structured data for rich results */}

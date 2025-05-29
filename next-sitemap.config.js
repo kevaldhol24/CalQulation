@@ -11,6 +11,12 @@ module.exports = {
         priority: 0.9,
         lastmod: new Date().toISOString(),
       },
+      {
+        loc: '/tool/sip-calculator',
+        changefreq: 'weekly',
+        priority: 0.9,
+        lastmod: new Date().toISOString(),
+      },
     ];
   },
   // Include all routes, including dynamic ones

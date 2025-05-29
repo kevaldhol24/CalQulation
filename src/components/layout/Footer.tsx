@@ -3,6 +3,7 @@ import { FaChartLine, FaChevronRight } from "react-icons/fa";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { FaToolbox } from "react-icons/fa6";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -100,13 +101,16 @@ export const Footer = () => {
                 </Link>
               </li>
               <li className="text-base text-gray-500 dark:text-gray-500 flex items-center gap-2">
-                <span className="bg-gray-50 dark:bg-gray-800 text-gray-400 p-1 rounded-md">
-                  <FaChartLine size={14} />
-                </span>
-                <span>Compound Interest</span>
-                <span className="bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-600 dark:to-purple-600 text-white text-xs px-2 py-0.5 rounded-full ml-1 whitespace-nowrap">
-                  Soon
-                </span>
+                <Link
+                  href="/tool/sip-calculator"
+                  prefetch={true}
+                  className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors flex items-center gap-2 group"
+                >
+                  <span className="bg-gray-50 dark:bg-gray-800 text-gray-400 p-1 rounded-md">
+                    <FaChartLine size={14} />
+                  </span>
+                  <span>SIP Calculator</span>
+                </Link>
               </li>
               <li className="text-base text-gray-500 dark:text-gray-500 flex items-center gap-2">
                 <span className="bg-gray-50 dark:bg-gray-800 text-gray-400 p-1 rounded-md">
@@ -116,6 +120,18 @@ export const Footer = () => {
                 <span className="bg-gradient-to-r from-blue-500 to-purple-500 dark:from-blue-600 dark:to-purple-600 text-white text-xs px-2 py-0.5 rounded-full ml-1 whitespace-nowrap">
                   Soon
                 </span>
+              </li>
+              <li className="text-base text-gray-500 dark:text-gray-500 flex items-center gap-2">
+                <Link
+                  href="/tools"
+                  prefetch={true}
+                  className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors flex items-center gap-2 group"
+                >
+                  <span className="bg-gray-50 dark:bg-gray-800 text-gray-400 p-1 rounded-md">
+                    <FaToolbox size={14} />
+                  </span>
+                  <span>All Tools</span>
+                </Link>
               </li>
             </ul>
           </div>

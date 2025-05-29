@@ -1,9 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { CURRENCY_ISO } from "@/lib/constants";
 import { formateCurrency } from "@/lib/utils";
 import {
@@ -117,7 +113,7 @@ export const ExtraItemCard = ({
   }; // Calculate impact based on the type of change
   const refinedImpact: CollectedImpact | null = useMemo(() => {
     if (!impactData || !impact) return null;
-
+    
     switch (impact) {
       case "emi": {
         const data = impactData as EMIChangeImpact;
@@ -147,176 +143,186 @@ export const ExtraItemCard = ({
         return null;
     }
   }, [impact, impactData]);
-
   return (
-    <HoverCard openDelay={50} closeDelay={50}>
-      <div className="border rounded-xl p-2">
-        <div className="flex items-center gap-3">
-          <HoverCardTrigger className="flex items-center gap-3 w-full">
-            <div className={`${theme.iconBg} p-2 rounded-lg ${theme.iconText}`}>
-              <Icon size={18} />
+    <div className="border rounded-xl p-2">
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full">
+          <div className={`${theme.iconBg} p-2 rounded-lg ${theme.iconText}`}>
+            <Icon size={18} />
+          </div>
+          <div className="flex flex-col">
+            <div className="font-medium text-sm flex justify-start flex-wrap gap-1.5 items-center">
+              {formatValue(amount)}
+              {showBadge && (
+                <div
+                  className={`${badgeTheme.badgeBg} ${badgeTheme.badgeText} capitalize rounded-full px-3 py-1 text-xs flex items-center gap-1.5 font-normal`}
+                >
+                  <BadgeIcon size={14} />
+                  {badgeText}
+                </div>
+              )}
             </div>
-            <div className="flex flex-col">
-              <div className="font-medium text-sm flex justify-start flex-wrap gap-1.5 items-center">
-                {formatValue(amount)}
-                {showBadge && (
-                  <div
-                    className={`${badgeTheme.badgeBg} ${badgeTheme.badgeText} capitalize rounded-full px-3 py-1 text-xs flex items-center gap-1.5 font-normal`}
-                  >
-                    <BadgeIcon size={14} />
-                    {badgeText}
-                  </div>
-                )}
-              </div>
-              <span className="text-xs text-muted-foreground mt-1">
-                {dateRange}
-              </span>
-            </div>
-          </HoverCardTrigger>
-
-          <div className="ml-auto mr-0 flex relative">
-            <Button
-              variant="ghost"
-              className="text-destructive hover:bg-destructive/10 hover:text-destructive"
-              onClick={onDelete}
-            >
-              <Trash2 size={18} />
-            </Button>
+            <span className="text-xs text-muted-foreground mt-1">
+              {dateRange}
+            </span>
           </div>
         </div>
+
+        <div className="ml-auto mr-0 flex relative">
+          <Button
+            variant="ghost"
+            className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+            onClick={onDelete}
+          >
+            <Trash2 size={18} />
+          </Button>
+        </div>
       </div>
-      <HoverCardContent
-        className="w-80 p-0 border-none shadow-lg"
-        align="center"
-      >
-        <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800/90 dark:to-gray-900/90 rounded-md overflow-hidden">
-          <div className="p-3 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-            <h4 className="text-sm font-semibold flex items-center justify-center">
-              Loan Impact Summary
-            </h4>
-          </div>
 
-          <div className="px-4 py-3">
-            {refinedImpact ? (
-              <div className="space-y-3">
-                {!!refinedImpact.emiImpact && (
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`p-1 rounded-full ${
-                          refinedImpact.emiImpact <= 0
-                            ? "bg-green-100 dark:bg-green-900/30"
-                            : "bg-red-100 dark:bg-red-900/30"
-                        }`}
-                      >
-                        {refinedImpact.emiImpact <= 0 ? (
-                          <ArrowDown
-                            size={14}
-                            className="text-green-500 dark:text-green-400"
-                          />
-                        ) : (
-                          <ArrowDown
-                            size={14}
-                            className="text-red-500 dark:text-red-400 transform rotate-180"
-                          />
-                        )}
-                      </span>
-                      <span className="text-sm font-medium">EMI Impact:</span>
-                    </div>
-                    <div
-                      className={`text-sm font-semibold ${
+      {refinedImpact ? (
+        <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-800">
+          <div
+            className={`grid gap-1.5 ${
+              refinedImpact.emiImpact &&
+              refinedImpact.interestImpact &&
+              refinedImpact.tenureImpact
+                ? "grid-cols-3"
+                : "grid-cols-2"
+            }`}
+          >
+            {!!refinedImpact.emiImpact && (
+              <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center">
+                  <span className="text-xs text-muted-foreground mb-0.5 flex gap-1">
+                    <span
+                      className={`p-0.5 rounded-full ${
                         refinedImpact.emiImpact <= 0
-                          ? "text-green-600 dark:text-green-400"
-                          : "text-red-600 dark:text-red-400"
+                          ? "bg-green-100 dark:bg-green-900/30"
+                          : "bg-red-100 dark:bg-red-900/30"
                       }`}
                     >
-                      {formateCurrency(Math.abs(refinedImpact.emiImpact))}
-                      
-                    </div>
-                  </div>
-                )}
-
-                {!!refinedImpact.interestImpact && (
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`p-1 rounded-full ${
-                          refinedImpact.interestImpact <= 0
-                            ? "bg-green-100 dark:bg-green-900/30"
-                            : "bg-red-100 dark:bg-red-900/30"
-                        }`}
-                      >
-                        {refinedImpact.interestImpact <= 0 ? (
-                          <ArrowDown
-                            size={14}
-                            className="text-green-500 dark:text-green-400"
-                          />
-                        ) : (
-                          <ArrowDown
-                            size={14}
-                            className="text-red-500 dark:text-red-400 transform rotate-180"
-                          />
-                        )}
-                      </span>
-                      <span className="text-sm font-medium">Interest:</span>
-                    </div>
-                    <div
-                      className={`text-sm font-semibold ${
-                        refinedImpact.interestImpact <= 0
-                          ? "text-green-600 dark:text-green-400"
-                          : "text-red-600 dark:text-red-400"
-                      }`}
-                    >
-                      {formateCurrency(Math.abs(refinedImpact.interestImpact))}
-                    </div>
-                  </div>
-                )}
-
-                {!!refinedImpact.tenureImpact && (
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`p-1 rounded-full ${
-                          refinedImpact.tenureImpact <= 0
-                            ? "bg-green-100 dark:bg-green-900/30"
-                            : "bg-red-100 dark:bg-red-900/30"
-                        }`}
-                      >
-                        {refinedImpact.tenureImpact <= 0 ? (
-                          <ArrowDown
-                            size={14}
-                            className="text-green-500 dark:text-green-400"
-                          />
-                        ) : (
-                          <ArrowDown
-                            size={14}
-                            className="text-red-500 dark:text-red-400 transform rotate-180"
-                          />
-                        )}
-                      </span>
-                      <span className="text-sm font-medium">Tenure:</span>
-                    </div>
-                    <div
-                      className={`text-sm font-semibold ${
-                        refinedImpact.tenureImpact <= 0
-                          ? "text-green-600 dark:text-green-400"
-                          : "text-red-600 dark:text-red-400"
-                      }`}
-                    >
-                      {Math.abs(refinedImpact.tenureImpact)} months
-                     
-                    </div>
-                  </div>
-                )}
+                      {refinedImpact.emiImpact <= 0 ? (
+                        <ArrowDown
+                          size={12}
+                          className="text-green-500 dark:text-green-400"
+                        />
+                      ) : (
+                        <ArrowDown
+                          size={12}
+                          className="text-red-500 dark:text-red-400 transform rotate-180"
+                        />
+                      )}
+                    </span>
+                    EMI
+                  </span>
+                  <span
+                    className={`text-xs font-medium ${
+                      refinedImpact.emiImpact <= 0
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-red-600 dark:text-red-400"
+                    }`}
+                  >
+                    {formateCurrency(Math.abs(refinedImpact.emiImpact))}
+                  </span>
+                </div>
               </div>
-            ) : (
-              <div className="flex items-center justify-center py-2 text-sm text-muted-foreground">
-                <span>No impact data available</span>
+            )}
+
+            {!!refinedImpact.interestImpact && (
+              <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center">
+                  <span className="flex gap-1 text-xs text-muted-foreground mb-0.5">
+                    <span
+                      className={`p-0.5 rounded-full ${
+                        refinedImpact.interestImpact <= 0
+                          ? "bg-green-100 dark:bg-green-900/30"
+                          : "bg-red-100 dark:bg-red-900/30"
+                      }`}
+                    >
+                      {refinedImpact.interestImpact <= 0 ? (
+                        <ArrowDown
+                          size={12}
+                          className="text-green-500 dark:text-green-400"
+                        />
+                      ) : (
+                        <ArrowDown
+                          size={12}
+                          className="text-red-500 dark:text-red-400 transform rotate-180"
+                        />
+                      )}
+                    </span>
+                    Interest
+                  </span>
+                  <span
+                    className={`text-xs font-medium ${
+                      refinedImpact.interestImpact <= 0
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-red-600 dark:text-red-400"
+                    }`}
+                  >
+                    {formateCurrency(Math.abs(refinedImpact.interestImpact))}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {!!refinedImpact.tenureImpact && (
+              <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center">
+                  <span className="flex gap-1 text-xs text-muted-foreground mb-0.5">
+                    <span
+                      className={`p-0.5 rounded-full ${
+                        refinedImpact.tenureImpact <= 0
+                          ? "bg-green-100 dark:bg-green-900/30"
+                          : "bg-red-100 dark:bg-red-900/30"
+                      }`}
+                    >
+                      {refinedImpact.tenureImpact <= 0 ? (
+                        <ArrowDown
+                          size={12}
+                          className="text-green-500 dark:text-green-400"
+                        />
+                      ) : (
+                        <ArrowDown
+                          size={12}
+                          className="text-red-500 dark:text-red-400 transform rotate-180"
+                        />
+                      )}
+                    </span>
+                    Tenure
+                  </span>
+                  <span
+                    className={`text-xs font-medium ${
+                      refinedImpact.tenureImpact <= 0
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-red-600 dark:text-red-400"
+                    }`}
+                  >
+                    {Math.abs(refinedImpact.tenureImpact)} mo
+                  </span>
+                </div>
               </div>
             )}
           </div>
         </div>
-      </HoverCardContent>
-    </HoverCard>
+      ) : (
+        <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-800">
+          <div className="grid grid-cols-3 gap-1.5">
+            <div className="flex flex-col gap-0.5 items-center">
+              <Skeleton className="h-3 w-1/2" />
+              <Skeleton className="h-4 w-full" />
+            </div>
+            <div className="flex flex-col gap-0.5 items-center">
+              <Skeleton className="h-3 w-1/2" />
+              <Skeleton className="h-4 w-full" />
+            </div>
+            <div className="flex flex-col gap-0.5 items-center">
+              <Skeleton className="h-3 w-1/2" />
+              <Skeleton className="h-4 w-full" />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };

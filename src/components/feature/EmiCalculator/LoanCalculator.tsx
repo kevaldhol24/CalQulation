@@ -5,9 +5,9 @@ import { MonthPicker } from "../../common/MonthPicker";
 import { AdvanceLoanInputs } from "./AdvanceOptions/AdvanceLoanInputs";
 import { EmiSchedule } from "./EmiScehdule";
 import { LoanCharts } from "./LoanCharts";
-import { AmountInput } from "./loanInputs/AmountInput";
-import { InterestInput } from "./loanInputs/InterestInput";
-import { TenureInput } from "./loanInputs/TenureInput";
+import { AmountInput } from "../../common/AmountInput";
+import { InterestInput } from "../../common/InterestInput";
+import { TenureInput } from "../../common/TenureInput";
 import { LoanSummary } from "./LoanSummary";
 import { LoanCalculatorSkeleton } from "./LoanCalculatorSkeleton";
 
@@ -37,18 +37,36 @@ export const LoanCalculator = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 mt-2">
               <AmountInput
+                label="Loan Amount"
+                id="loan-amount"
+                title="Enter the total loan amount"
+                placeholder="Enter amount"
+                name="loanAmount"
+                required
                 value={loanDetails.loanAmount}
                 onChange={(value) => {
                   handleChange(Number(value), "loanAmount");
                 }}
               />
               <InterestInput
+                label="Interest Rate"
+                id="interest-rate"
+                title="Enter the annual interest rate in percentage"
+                placeholder="Enter interest rate"
+                name="initialInterestRate"
+                required
                 value={loanDetails.initialInterestRate}
                 onChange={(value) =>
                   handleChange(Number(value), "initialInterestRate")
                 }
               />
               <TenureInput
+                label="Tenure"
+                id="loan-tenure"
+                title="Enter the loan tenure in months"
+                placeholder="Enter tenure"
+                name="tenureMonths"
+                required
                 defaultValue={loanDetails.tenureMonths}
                 onChange={(value) =>
                   handleChange(Number(value), "tenureMonths")
@@ -73,7 +91,7 @@ export const LoanCalculator = () => {
         </div>
       </div>
 
-      <div className="bg-background p-6 shadow-lg">
+      <div className="bg-background p-6 pb-0 shadow-lg">
         <AdvanceLoanInputs />
       </div>
 

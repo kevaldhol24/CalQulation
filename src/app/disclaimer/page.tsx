@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: "https://www.calqulation.com/disclaimer",
+  },
   openGraph: {
     title: "Disclaimer | Calqulation - Financial Tools",
     description:

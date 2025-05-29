@@ -1,28 +1,28 @@
 "use client";
 
+import { CollapsibleWrapper } from "@/components/common/CollapsibleWrapper";
 import { useLoan } from "@/contexts/LoanContext";
 import { formateCurrency } from "@/lib/utils";
-import { EMIScheduleItem } from "loanwise";
-import { useMemo, useState } from "react";
-import { useTheme } from "next-themes";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
   ArcElement,
-  Title,
-  Tooltip as ChartTooltip,
-  Legend,
-  Filler,
-  TooltipItem,
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
   ChartOptions,
+  Tooltip as ChartTooltip,
+  Filler,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
   ScriptableContext,
+  Title,
+  TooltipItem,
 } from "chart.js";
-import { Line, Bar, Doughnut } from "react-chartjs-2";
+import { EMIScheduleItem } from "loanwise";
+import { useTheme } from "next-themes";
+import { useMemo, useState } from "react";
+import { Bar, Doughnut, Line } from "react-chartjs-2";
 
 // Register Chart.js components
 ChartJS.register(
@@ -115,9 +115,11 @@ export const LoanCharts = () => {
     const totalEMIs = loanResults.schedule.length;
     let samplingInterval = 3; // Default quarterly
 
-    if (totalEMIs > 120) { // For loans > 10 years (120 months)
+    if (totalEMIs > 120) {
+      // For loans > 10 years (120 months)
       samplingInterval = 6; // Every 6 months
-    } else if (totalEMIs > 240) { // For loans > 20 years
+    } else if (totalEMIs > 240) {
+      // For loans > 20 years
       samplingInterval = 12; // Yearly
     }
 
@@ -125,7 +127,10 @@ export const LoanCharts = () => {
     const sampledData = loanResults.schedule.reduce(
       (acc: ScheduleChartItem[], item: EMIScheduleItem, index: number) => {
         // Sample data based on interval, always include first and last point
-        if (index % samplingInterval === 0 || index === loanResults.schedule.length - 1) {
+        if (
+          index % samplingInterval === 0 ||
+          index === loanResults.schedule.length - 1
+        ) {
           acc.push({
             emiNumber: item.emiNumber,
             date: `${item.emiNumber}`,
@@ -456,7 +461,8 @@ export const LoanCharts = () => {
         border: {
           display: false,
         },
-      },      x: {
+      },
+      x: {
         ticks: {
           color: colors.text,
           font: {
@@ -469,16 +475,16 @@ export const LoanCharts = () => {
           autoSkipPadding: 15,
           padding: 5,
           maxTicksLimit: 15, // Limit the number of ticks to prevent overcrowding
-          callback: function(val, index) {
+          callback: function (val, index) {
             // Skip some labels to avoid crowding with long tenure loans
             if (index % 2 !== 0 && this.chart) {
               const labels = this.chart.data.labels || [];
               if (labels.length > 20) {
-                return '';
+                return "";
               }
             }
             return val;
-          }
+          },
         },
         grid: {
           display: false,
@@ -493,7 +499,8 @@ export const LoanCharts = () => {
     animation: {
       duration: 800,
       easing: "easeOutQuart",
-    },    layout: {
+    },
+    layout: {
       padding: {
         top: 10,
         bottom: 8,
@@ -600,63 +607,17 @@ export const LoanCharts = () => {
     ? "bg-gray-900/40 backdrop-blur-sm p-4 md:p-5 rounded-xl shadow-lg border border-gray-800/40 hover:bg-gray-900/50 transition-all duration-300"
     : "bg-white/80 backdrop-blur-sm p-4 md:p-5 rounded-xl shadow-md border border-gray-100 hover:bg-white/90 transition-all duration-300";
 
-  // Function to toggle expanded/collapsed state
-  const toggleExpanded = () => setIsExpanded(!isExpanded);
-
   return (
     <div className="mb-8">
       {/* Collapsible header with toggle button - modern styling */}
-      <div
-        className="flex items-center justify-between cursor-pointer mb-4 group"
-        onClick={toggleExpanded}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            toggleExpanded();
-          }
-        }}
-        aria-expanded={isExpanded}
-        aria-controls="chart-content"
+      <CollapsibleWrapper
+        title="Loan Visualization"
+        id="loan-charts"
+        isExpanded={isExpanded}
+        onToggle={(opened) => setIsExpanded(opened)}
       >
-        <div className="flex items-center">
-          <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
-          <h2 className="text-lg font-bold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-            Loan Visualization
-          </h2>
-        </div>
-        <button
-          className="p-2 rounded-full hover:bg-gray-200/70 dark:hover:bg-gray-700/70 transition-all duration-300 hover:scale-110"
-          aria-label={isExpanded ? "Collapse charts" : "Expand charts"}
-        >
-          {isExpanded ? (
-            <FaChevronUp
-              className="text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-            />
-          ) : (
-            <FaChevronDown
-              className="text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-            />
-          )}
-        </button>
-      </div>
-
-      {/* Collapsible content with better transition */}
-      <div
-        id="chart-content"
-        className={`transition-all duration-500 ease-in-out overflow-hidden ${
-          isExpanded
-            ? "max-h-[3000px] opacity-100 scale-100"
-            : "max-h-0 opacity-0 scale-95"
-        }`}
-        aria-hidden={!isExpanded}
-        role="region"
-        aria-label="Loan charts and visualizations"
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">          {/* Principal vs Interest Donut Chart */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Principal vs Interest Donut Chart */}
           <div
             className={`${chartCardClass} transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
           >
@@ -670,26 +631,45 @@ export const LoanCharts = () => {
             <div className="text-center text-sm text-gray-500 dark:text-gray-300 mt-3 font-medium">
               Total Amount: {formateCurrency(totalAmountPayable)}
             </div>
-          </div>          {/* Yearly Amortization Bar Chart */}
+          </div>{" "}
+          {/* Yearly Amortization Bar Chart */}
           <div
             className={`${chartCardClass} transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
-          >            <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
+          >
+            {" "}
+            <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
               <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 mr-2.5 shadow-sm"></div>
               Yearly Amortization
             </h3>
-            <div className="overflow-x-auto sm:overflow-x-visible overflow-y-hidden relative" style={{ 
-              minWidth: "100%",
-              width: "100%", 
-              scrollbarWidth: "thin",
-              scrollbarColor: isDarkTheme ? "#4B5563 #1F2937" : "#CBD5E1 #F1F5F9",
-            }}>              <div style={{ 
-                minWidth: amortizationData.years.length > 10 
-                  ? `${Math.max(600, Math.min(1200, amortizationData.years.length * 40))}px` 
-                  : "100%",
-                width: "100%", 
-                maxWidth: amortizationData.years.length > 10 ? "none" : "100%",
-                height: "280px",
-              }}>                <Bar
+            <div
+              className="overflow-x-auto sm:overflow-x-visible overflow-y-hidden relative"
+              style={{
+                minWidth: "100%",
+                width: "100%",
+                scrollbarWidth: "thin",
+                scrollbarColor: isDarkTheme
+                  ? "#4B5563 #1F2937"
+                  : "#CBD5E1 #F1F5F9",
+              }}
+            >
+              {" "}
+              <div
+                style={{
+                  minWidth:
+                    amortizationData.years.length > 10
+                      ? `${Math.max(
+                          600,
+                          Math.min(1200, amortizationData.years.length * 40)
+                        )}px`
+                      : "100%",
+                  width: "100%",
+                  maxWidth:
+                    amortizationData.years.length > 10 ? "none" : "100%",
+                  height: "280px",
+                }}
+              >
+                {" "}
+                <Bar
                   data={yearlyAmortizationData}
                   options={{
                     ...currencyTooltipOptions,
@@ -700,7 +680,7 @@ export const LoanCharts = () => {
                       legend: {
                         ...currencyTooltipOptions.plugins?.legend,
                         display: true,
-                      }
+                      },
                     },
                     scales: {
                       ...currencyTooltipOptions.scales,
@@ -709,37 +689,58 @@ export const LoanCharts = () => {
                         ticks: {
                           ...currencyTooltipOptions.scales?.x?.ticks,
                           autoSkip: true,
-                          maxTicksLimit: amortizationData.years.length > 15 ? 15 : undefined,
-                        }
-                      }
-                    }
+                          maxTicksLimit:
+                            amortizationData.years.length > 15 ? 15 : undefined,
+                        },
+                      },
+                    },
                   }}
                 />
               </div>
-            </div>            <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
-              {amortizationData.years.length > 10 && "← Swipe horizontally to see all years →"}
+            </div>{" "}
+            <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
+              {amortizationData.years.length > 10 &&
+                "← Swipe horizontally to see all years →"}
             </div>
-          </div>          {/* Loan Balance Area Chart */}
+          </div>{" "}
+          {/* Loan Balance Area Chart */}
           <div
             className={`${chartCardClass} mb-2 lg:col-span-2 transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
-          >            <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
+          >
+            {" "}
+            <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
               <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-green-500 to-teal-500 mr-2.5 shadow-sm"></div>
               Loan Balance Over Time
             </h3>
-            <div className="overflow-x-auto sm:overflow-x-visible overflow-y-hidden relative" style={{ 
-              minWidth: "100%",
-              width: "100%", 
-              scrollbarWidth: "thin",
-              scrollbarColor: isDarkTheme ? "#4B5563 #1F2937" : "#CBD5E1 #F1F5F9",
-            }}>              <div style={{ 
-                minWidth: scheduleChartData.length > 20 
-                  ? `${Math.max(800, Math.min(1600, scheduleChartData.length * 25))}px` 
-                  : "100%",
+            <div
+              className="overflow-x-auto sm:overflow-x-visible overflow-y-hidden relative"
+              style={{
+                minWidth: "100%",
                 width: "100%",
-                maxWidth: scheduleChartData.length > 20 ? "none" : "100%",
-                height: "280px",
-              }}>                <Line 
-                  data={balanceChartData} 
+                scrollbarWidth: "thin",
+                scrollbarColor: isDarkTheme
+                  ? "#4B5563 #1F2937"
+                  : "#CBD5E1 #F1F5F9",
+              }}
+            >
+              {" "}
+              <div
+                style={{
+                  minWidth:
+                    scheduleChartData.length > 20
+                      ? `${Math.max(
+                          800,
+                          Math.min(1600, scheduleChartData.length * 25)
+                        )}px`
+                      : "100%",
+                  width: "100%",
+                  maxWidth: scheduleChartData.length > 20 ? "none" : "100%",
+                  height: "280px",
+                }}
+              >
+                {" "}
+                <Line
+                  data={balanceChartData}
                   options={{
                     ...currencyTooltipOptions,
                     maintainAspectRatio: false,
@@ -749,7 +750,7 @@ export const LoanCharts = () => {
                       legend: {
                         ...currencyTooltipOptions.plugins?.legend,
                         display: true,
-                      }
+                      },
                     },
                     scales: {
                       ...currencyTooltipOptions.scales,
@@ -758,19 +759,22 @@ export const LoanCharts = () => {
                         ticks: {
                           ...currencyTooltipOptions.scales?.x?.ticks,
                           autoSkip: true,
-                          maxTicksLimit: scheduleChartData.length > 30 ? 20 : 30,
-                        }
-                      }
-                    }
+                          maxTicksLimit:
+                            scheduleChartData.length > 30 ? 20 : 30,
+                        },
+                      },
+                    },
                   }}
                 />
               </div>
-            </div>            <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
-              {scheduleChartData.length > 20 && "← Swipe horizontally to see full timeline →"}
+            </div>{" "}
+            <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
+              {scheduleChartData.length > 20 &&
+                "← Swipe horizontally to see full timeline →"}
             </div>
           </div>
         </div>
-      </div>
+      </CollapsibleWrapper>
     </div>
   );
 };

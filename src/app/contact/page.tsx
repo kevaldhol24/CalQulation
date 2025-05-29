@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   title: "Contact Us | Calqulation",
   description:
     "Get in touch with the Calqulation team. We're here to answer your questions and help you make the most of our financial calculation tools.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://www.calqulation.com/contact",
+  },
 };
 
 export default function ContactPage() {

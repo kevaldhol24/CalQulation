@@ -17,11 +17,14 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: "https://www.calqulation.com/coming-soon",
+  },
   openGraph: {
     title: "Coming Soon | Calqulation - New Financial Tools",
     description:
       "Exciting new financial calculators and tools are coming soon to Calqulation. Subscribe to be notified when we launch these new features.",
-    url: "https://calqulation.com/coming-soon",
+    url: "https://www.calqulation.com/coming-soon",
     type: "website",
     images: [
       {
