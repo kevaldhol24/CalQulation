@@ -23,6 +23,9 @@ export const metadata: Metadata = {
     "Calculate your loan EMI, total interest payable, and view detailed amortization schedule. Plan home loans, car loans & personal loans with advanced options like prepayments.",
   keywords:
     "EMI calculator, loan calculator with floating rate, loan EMI calculation, home loan EMI, car loan EMI, personal loan calculator, loan amortization schedule, prepayment calculator, interest rates",
+  alternates: {
+    canonical: "https://www.calqulation.com/tool/emi-calculator",
+  },
   openGraph: {
     title:
       "EMI Calculator | Calculate - Loan EMI, Interest & Amortization Schedule",
