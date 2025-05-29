@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */  poweredByHeader: false, // Remove X-Powered-By header for security
+  /* config options here */
+  poweredByHeader: false, // Remove X-Powered-By header for security
   reactStrictMode: true,
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   images: {
     domains: ['calqulation.com', 'www.calqulation.com'],
     formats: ['image/avif', 'image/webp'],
