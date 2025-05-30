@@ -36,93 +36,108 @@ export async function generateMetadata({
     const { slug } = await params;
     const post = getPostBySlug(slug);
     const frontmatter = post.frontmatter;
-    
+
     // Construct canonical URL
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://calqulation.com";
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL || "https://calqulation.com";
     const canonicalUrl = frontmatter.canonical || `${baseUrl}/blog/${slug}`;
-    
+
     // Calculate reading time if not provided
-    const readingTime = frontmatter.readingTime || 
+    const readingTime =
+      frontmatter.readingTime ||
       Math.ceil(post.content.split(/\s+/).length / 200); // Estimate based on word count
-    
+
     // Prepare structured data for JSON-LD
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
-      "headline": frontmatter.title,
-      "description": frontmatter.excerpt || frontmatter.description,
-      "image": frontmatter.ogImage || frontmatter.thumbnailUrl || `${baseUrl}/images/default-og.jpg`,
-      "datePublished": frontmatter.date,
-      "dateModified": frontmatter.lastModified || frontmatter.date,
-      "author": {
+      headline: frontmatter.title,
+      description: frontmatter.excerpt || frontmatter.description,
+      image:
+        frontmatter.ogImage ||
+        frontmatter.thumbnailUrl ||
+        `${baseUrl}/images/default-og.jpg`,
+      datePublished: frontmatter.date,
+      dateModified: frontmatter.lastModified || frontmatter.date,
+      author: {
         "@type": "Person",
-        "name": frontmatter.structuredData?.authorName || frontmatter.author || "Calqulation Team",
-        "url": frontmatter.structuredData?.authorUrl || `${baseUrl}/about-us`
+        name:
+          frontmatter.structuredData?.authorName ||
+          frontmatter.author ||
+          "Calqulation Team",
+        url: frontmatter.structuredData?.authorUrl || `${baseUrl}/about-us`,
       },
-      "publisher": {
+      publisher: {
         "@type": "Organization",
-        "name": frontmatter.structuredData?.publisherName || "Calqulation",
-        "logo": {
+        name: frontmatter.structuredData?.publisherName || "Calqulation",
+        logo: {
           "@type": "ImageObject",
-          "url": frontmatter.structuredData?.publisherLogo || `${baseUrl}/Calqulation.png`
-        }
+          url:
+            frontmatter.structuredData?.publisherLogo ||
+            `${baseUrl}/Calqulation.png`,
+        },
       },
-      "mainEntityOfPage": canonicalUrl
+      mainEntityOfPage: canonicalUrl,
     };
 
     return {
       title: `${frontmatter.title} | Calqulation`,
       description: frontmatter.excerpt || frontmatter.description,
       keywords: frontmatter.keywords || frontmatter.tags?.join(", "),
-      
+
       // Canonical URL
       alternates: {
         canonical: canonicalUrl,
-        languages: frontmatter.alternateLanguages?.reduce(
-          (acc, alt) => ({ ...acc, [alt.locale]: alt.url }),
-          {}
-        ) || {},
+        languages:
+          frontmatter.alternateLanguages?.reduce(
+            (acc, alt) => ({ ...acc, [alt.locale]: alt.url }),
+            {}
+          ) || {},
       },
-        // Open Graph metadata
+      // Open Graph metadata
       openGraph: {
         title: frontmatter.title,
         description: frontmatter.excerpt || frontmatter.description,
         url: canonicalUrl,
         siteName: "Calqulation",
-        images: frontmatter.ogImage 
-          ? [{ url: frontmatter.ogImage, alt: frontmatter.title }] 
+        images: frontmatter.ogImage
+          ? [{ url: frontmatter.ogImage, alt: frontmatter.title }]
           : frontmatter.thumbnailUrl
           ? [{ url: frontmatter.thumbnailUrl, alt: frontmatter.title }]
           : [],
         type: (frontmatter.ogType as "article" | "website") || "article",
         publishedTime: frontmatter.date,
         modifiedTime: frontmatter.lastModified,
-        authors: frontmatter.author ? [frontmatter.author] : ["Calqulation Team"],
+        authors: frontmatter.author
+          ? [frontmatter.author]
+          : ["Calqulation Team"],
         tags: frontmatter.tags || [],
       },
-      
+
       // Twitter metadata
       twitter: {
         card: frontmatter.twitterCard || "summary_large_image",
         title: frontmatter.title,
         description: frontmatter.excerpt || frontmatter.description,
-        images: frontmatter.ogImage 
-          ? [frontmatter.ogImage] 
+        images: frontmatter.ogImage
+          ? [frontmatter.ogImage]
           : frontmatter.thumbnailUrl
           ? [frontmatter.thumbnailUrl]
           : undefined,
         creator: frontmatter.twitterCreator || "@calqulation",
       },
-      
+
       // Robots control
-      robots: frontmatter.noIndex ? {
-        index: false,
-        follow: false,
-      } : {
-        index: true,
-        follow: true,
-      },
-      
+      robots: frontmatter.noIndex
+        ? {
+            index: false,
+            follow: false,
+          }
+        : {
+            index: true,
+            follow: true,
+          },
+
       // Structured data
       other: {
         "reading-time": String(readingTime),
@@ -133,7 +148,8 @@ export async function generateMetadata({
         "article:tag": frontmatter.tags?.join(",") || "",
         "structured-data": JSON.stringify(structuredData),
       },
-    };  } catch (error) {
+    };
+  } catch (error) {
     console.error("Error generating metadata:", error);
     return {
       title: "Blog Post | Calqulation",
@@ -154,57 +170,70 @@ export default async function BlogPost({
     const { content } = await compileMDXContent(post.content);
 
     const postFrontmatter = post.frontmatter;
-    
+
     // Create JSON-LD structured data
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://calqulation.com";
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL || "https://calqulation.com";
     const canonicalUrl = postFrontmatter.canonical || `${baseUrl}/blog/${slug}`;
-    const readingTime = postFrontmatter.readingTime || 
+    const readingTime =
+      postFrontmatter.readingTime ||
       Math.ceil(post.content.split(/\s+/).length / 200);
-    
+
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
-      "headline": postFrontmatter.title,
-      "description": postFrontmatter.excerpt || postFrontmatter.description,
-      "image": postFrontmatter.ogImage || postFrontmatter.thumbnailUrl || `${baseUrl}/images/default-og.jpg`,
-      "datePublished": postFrontmatter.date,
-      "dateModified": postFrontmatter.lastModified || postFrontmatter.date,
-      "author": {
+      headline: postFrontmatter.title,
+      description: postFrontmatter.excerpt || postFrontmatter.description,
+      image:
+        postFrontmatter.ogImage ||
+        postFrontmatter.thumbnailUrl ||
+        `${baseUrl}/images/default-og.jpg`,
+      datePublished: postFrontmatter.date,
+      dateModified: postFrontmatter.lastModified || postFrontmatter.date,
+      author: {
         "@type": "Person",
-        "name": postFrontmatter.structuredData?.authorName || postFrontmatter.author || "Calqulation Team",
-        "url": postFrontmatter.structuredData?.authorUrl || `${baseUrl}/about-us`
+        name:
+          postFrontmatter.structuredData?.authorName ||
+          postFrontmatter.author ||
+          "Calqulation Team",
+        url: postFrontmatter.structuredData?.authorUrl || `${baseUrl}/about-us`,
       },
-      "publisher": {
+      publisher: {
         "@type": "Organization",
-        "name": postFrontmatter.structuredData?.publisherName || "Calqulation",
-        "logo": {
+        name: postFrontmatter.structuredData?.publisherName || "Calqulation",
+        logo: {
           "@type": "ImageObject",
-          "url": postFrontmatter.structuredData?.publisherLogo || `${baseUrl}/Calqulation.png`
-        }
+          url:
+            postFrontmatter.structuredData?.publisherLogo ||
+            `${baseUrl}/Calqulation.png`,
+        },
       },
-      "mainEntityOfPage": canonicalUrl,
-      "wordCount": post.content.split(/\s+/).length,
-      "timeRequired": `PT${readingTime}M`,
-      "keywords": postFrontmatter.keywords || postFrontmatter.tags?.join(", ") || "",
-      "articleSection": postFrontmatter.category || "Finance",
-    };    return (
+      mainEntityOfPage: canonicalUrl,
+      wordCount: post.content.split(/\s+/).length,
+      timeRequired: `PT${readingTime}M`,
+      keywords:
+        postFrontmatter.keywords || postFrontmatter.tags?.join(", ") || "",
+      articleSection: postFrontmatter.category || "Finance",
+    };
+    return (
       <BlogCustomLayout slug={slug}>
         {/* JSON-LD structured data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        
+
         <div className="blog-post-container">
           <div className="container mx-auto">
             <div className="">
               <div className="mb-5 flex flex-col md:flex-row justify-between items-center gap-3">
-                <h2 className="text-xl font-bold text-foreground relative">
+                <h2 className="text-2xl font-bold text-foreground relative">
                   {postFrontmatter.title}
-                  <span className="absolute -bottom-1 left-0 w-10 h-0.5 bg-primary rounded-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-20 h-0.5 bg-primary rounded-full"></span>
                 </h2>
               </div>
-              {/* Post metadata */}              <div className="mb-6 text-sm text-gray-500">
+              {/* Post metadata */}{" "}
+              <div className="mb-6 text-sm text-gray-500">
                 {postFrontmatter.date && (
                   <time dateTime={postFrontmatter.date} className="mr-2">
                     {moment(postFrontmatter.date).format("MMMM d, yyyy")}
@@ -212,20 +241,26 @@ export default async function BlogPost({
                 )}
 
                 {/* Show last modified date if available */}
-                {postFrontmatter.lastModified && postFrontmatter.lastModified !== postFrontmatter.date && (
-                  <>
-                    <span className="mx-1">•</span>
-                    <span className="mr-2" title="Last updated">
-                      Updated: {moment(postFrontmatter.lastModified).format("MMMM d, yyyy")}
-                    </span>
-                  </>
-                )}
+                {postFrontmatter.lastModified &&
+                  postFrontmatter.lastModified !== postFrontmatter.date && (
+                    <>
+                      <span className="mx-1">•</span>
+                      <span className="mr-2" title="Last updated">
+                        Updated:{" "}
+                        {moment(postFrontmatter.lastModified).format(
+                          "MMMM d, yyyy"
+                        )}
+                      </span>
+                    </>
+                  )}
 
                 {postFrontmatter.category && <span className="mx-2">·</span>}
 
                 {postFrontmatter.category && (
                   <Link
-                    href={`/blog/category/${generateSlug(postFrontmatter.category)}`}
+                    href={`/blog/category/${generateSlug(
+                      postFrontmatter.category
+                    )}`}
                     className="text-primary hover:underline"
                   >
                     {postFrontmatter.category}
@@ -237,14 +272,15 @@ export default async function BlogPost({
                 {postFrontmatter.author && (
                   <span>By {postFrontmatter.author}</span>
                 )}
-                
+
                 {/* Display estimated reading time */}
                 <span className="mx-2">·</span>
                 <span title="Estimated reading time">
-                  {postFrontmatter.readingTime || Math.ceil(post.content.split(/\s+/).length / 200)} min read
+                  {postFrontmatter.readingTime ||
+                    Math.ceil(post.content.split(/\s+/).length / 200)}{" "}
+                  min read
                 </span>
               </div>
-
               {/* Featured image */}
               {postFrontmatter.thumbnailUrl && (
                 <div className="mb-8">
@@ -257,13 +293,11 @@ export default async function BlogPost({
                   />
                 </div>
               )}
-
               {/* MDX content */}
               <article className="prose prose-lg max-w-none">{content}</article>
-
               {/* Tags */}
               {postFrontmatter.tags && postFrontmatter.tags.length > 0 && (
-                <div className="mt-8 pt-4 border-t border-gray-100 dark:border-gray-700">
+                <div className="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
                   <h3 className="text-sm font-medium text-gray-500 mb-3">
                     Tags
                   </h3>
@@ -283,7 +317,6 @@ export default async function BlogPost({
                   </div>
                 </div>
               )}
-
               {!!postFrontmatter.relatedPosts?.length && (
                 <h3 className="text-xs uppercase tracking-wider text-primary font-semibold mb-4 mt-12 flex items-center">
                   <span className="mr-2">✦</span>

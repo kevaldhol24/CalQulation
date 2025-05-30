@@ -3,6 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Enable smooth scrolling for the whole page */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Adjust this value based on your header height */
+}
+
 @keyframes loading-bar {
   0% {
     width: 0%;
