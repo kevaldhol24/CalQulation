@@ -169,7 +169,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/coming-soon"
+                  href="/blog"
                   prefetch={true}
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors group flex items-center gap-2"
                 >
