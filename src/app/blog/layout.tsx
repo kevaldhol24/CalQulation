@@ -1,6 +1,5 @@
-import CategoryNav from "@/components/feature/Blog/CategoryNav";
-import { Sidebar } from "@/components/feature/Blog/Sidebar";
 import { BlogHero } from "@/components/feature/Blog/BlogLayoutWrapper";
+import CategoryNav from "@/components/feature/Blog/CategoryNav";
 
 export default function BlogLayout({
   children,
@@ -22,14 +21,7 @@ export default function BlogLayout({
           {/* Compact Search and Filter Bar */}
 
           {/* Two column layout with featured post taking more space - optimized height */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10">
-            <div className="lg:col-span-8">{children}</div>
-
-            {/* Trending sidebar or Newsletter signup - optimized height */}
-            <div className="lg:col-span-4">
-              <Sidebar />
-            </div>
-          </div>
+          {children}
         </div>
       </div>
     </div>

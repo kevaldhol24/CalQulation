@@ -1,11 +1,17 @@
 import { BlogSearch } from "./BlogSearch";
+import CategoriesCard from "./CategoriesCard";
+import EmiCalculatorPromo from "./EmiCalculatorPromo";
+import SipCalculatorPromo from "./SipCalculatorPromo";
 import Subscribe from "./Subscribe";
 import TagsCard from "./TagsCard";
 
 export const Sidebar = () => {
   return (
     <>
-      <BlogSearch />
+      <div className="hidden lg:block">
+        <BlogSearch />
+      </div>
+
       <h3 className="text-xs uppercase tracking-wider text-primary font-semibold mb-4 flex items-center">
         <span className="mr-2">✦</span>
         <span>Weekly Newsletter</span>
@@ -13,8 +19,28 @@ export const Sidebar = () => {
       </h3>
       <Subscribe />
 
-      {/* Popular tags - more compact */}
+      <h3 className="text-xs uppercase tracking-wider text-primary font-semibold mb-4 mt-6 flex items-center">
+        <span className="mr-2">✦</span>
+        <span>Popular Categories</span>
+        <span className="flex-grow border-b border-gray-200 dark:border-gray-800 ml-4"></span>
+      </h3>
+      <CategoriesCard />
+
+      {/* Popular tags */}
+      <h3 className="text-xs uppercase tracking-wider text-primary font-semibold mb-4 mt-6 flex items-center">
+        <span className="mr-2">✦</span>
+        <span>Popular Tags</span>
+        <span className="flex-grow border-b border-gray-200 dark:border-gray-800 ml-4"></span>
+      </h3>
       <TagsCard />
+
+      <h3 className="text-xs uppercase tracking-wider text-primary font-semibold mb-4 mt-6 flex items-center">
+        <span className="mr-2">✦</span>
+        <span>Trending Tools</span>
+        <span className="flex-grow border-b border-gray-200 dark:border-gray-800 ml-4"></span>
+      </h3>
+      <EmiCalculatorPromo />
+      <SipCalculatorPromo />
     </>
   );
 };

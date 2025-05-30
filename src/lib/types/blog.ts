@@ -8,6 +8,7 @@ export interface PostFrontmatter {
   author?: string;
   featured?: boolean;
   status?: 'draft' | 'published';
+  relatedPosts?: string[];
 }
 
 export interface Post {

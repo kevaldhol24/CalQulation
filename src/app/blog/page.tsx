@@ -1,3 +1,4 @@
+import { BlogCustomLayout } from "@/components/feature/Blog/BlogCustomLayout";
 import BlogPostCard from "@/components/feature/Blog/BlogPostCard";
 import FeaturedPost from "@/components/feature/Blog/FeaturedPost";
 import { Button } from "@/components/ui/button";
@@ -36,7 +37,7 @@ export default function BlogIndex({ searchParams }: BlogIndexProps) {
   const regularPosts = publishedPosts.slice(1);
 
   return (
-    <>
+    <BlogCustomLayout>
       <div className="mb-5 flex flex-col md:flex-row justify-between items-center gap-3">
         <h2 className="text-xl font-bold text-foreground relative">
           {search ? `Search Results of "${search}"` : "Latest Articles"}
@@ -94,6 +95,6 @@ export default function BlogIndex({ searchParams }: BlogIndexProps) {
           </Button>
         </div>
       )}
-    </>
+    </BlogCustomLayout>
   );
 }
