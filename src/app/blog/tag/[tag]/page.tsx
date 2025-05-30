@@ -1,7 +1,7 @@
 import { BlogCustomLayout } from "@/components/feature/Blog/BlogCustomLayout";
 import BlogPostCard from "@/components/feature/Blog/BlogPostCard";
 import FeaturedPost from "@/components/feature/Blog/FeaturedPost";
-import { getAllPosts, getNameFromSlug, getPostsByTag } from "@/lib/mdx";
+import { generateSlug, getAllPosts, getNameFromSlug, getPostsByTag } from "@/lib/mdx";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -12,7 +12,7 @@ export async function generateStaticParams() {
   posts.forEach((post) => {
     if (post.frontmatter.tags) {
       post.frontmatter.tags.forEach((tag) => {
-        tags.add(tag.toLowerCase());
+        tags.add(generateSlug(tag));
       });
     }
   });
@@ -25,7 +25,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { tag: string };
+  params: Promise<{ tag: string }>;
 }): Promise<Metadata> {
   const { tag } = await params;
   const tagName = getNameFromSlug(tag);
@@ -35,7 +35,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function TagPage({ params }: { params: { tag: string } }) {
+export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag } = await params;
   const tagName = getNameFromSlug(tag);
 

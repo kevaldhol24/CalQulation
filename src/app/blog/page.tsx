@@ -11,14 +11,12 @@ export const metadata: Metadata = {
   description: "Explore financial tips, guides, and insights on our blog.",
 };
 
-interface BlogIndexProps {
-  searchParams: {
-    search?: string;
-  };
-}
-
-export default async function BlogIndex({ searchParams }: BlogIndexProps) {
-  const search = await searchParams?.search || null;
+export default async function BlogIndex({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string }>;
+}) {
+  const search = (await searchParams)?.search || null;
   const posts = getAllPosts();
 
   let publishedPosts = posts;

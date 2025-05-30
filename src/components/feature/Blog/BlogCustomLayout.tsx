@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, Suspense } from "react";
 import { Comments } from "../Comments";
 import { Sidebar } from "./Sidebar";
 import { BlogSearch } from "./BlogSearch";
@@ -15,7 +15,11 @@ export const BlogCustomLayout: FC<BlogCustomLayoutProps> = ({
   return (
     <>
       <div className="lg:hidden mb-6">
-        <BlogSearch />
+        <Suspense
+          fallback={<div className="h-1 bg-gray-200 dark:bg-gray-800"></div>}
+        >
+          <BlogSearch />
+        </Suspense>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10">
         <div className="lg:col-span-8">{children}</div>

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { BlogSearch } from "./BlogSearch";
 import CategoriesCard from "./CategoriesCard";
 import EmiCalculatorPromo from "./EmiCalculatorPromo";
@@ -9,7 +10,11 @@ export const Sidebar = () => {
   return (
     <>
       <div className="hidden lg:block">
-        <BlogSearch />
+        <Suspense
+          fallback={<div className="h-1 bg-gray-200 dark:bg-gray-800"></div>}
+        >
+          <BlogSearch />
+        </Suspense>
       </div>
 
       <h3 className="text-xs uppercase tracking-wider text-primary font-semibold mb-4 flex items-center">

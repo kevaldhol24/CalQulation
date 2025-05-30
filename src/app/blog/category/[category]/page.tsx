@@ -1,7 +1,7 @@
 import { BlogCustomLayout } from "@/components/feature/Blog/BlogCustomLayout";
 import BlogPostCard from "@/components/feature/Blog/BlogPostCard";
 import FeaturedPost from "@/components/feature/Blog/FeaturedPost";
-import { getAllPosts, getNameFromSlug, getPostsByCategory } from "@/lib/mdx";
+import { generateSlug, getAllPosts, getNameFromSlug, getPostsByCategory } from "@/lib/mdx";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -11,7 +11,7 @@ export async function generateStaticParams() {
 
   posts.forEach((post) => {
     if (post.frontmatter.category) {
-      categories.add(post.frontmatter.category.toLowerCase());
+      categories.add(generateSlug(post.frontmatter.category));
     }
   });
 
@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }): Promise<Metadata> {
   const { category } = await params;
 
@@ -37,7 +37,7 @@ export async function generateMetadata({
 export default async function CategoryPage({
   params,
 }: {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }) {
   const { category } = await params;
   const categoryName = getNameFromSlug(category);
