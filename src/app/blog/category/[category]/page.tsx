@@ -1,11 +1,8 @@
-import { getAllPosts } from "@/lib/mdx";
+import BlogPostCard from "@/components/feature/Blog/BlogPostCard";
+import FeaturedPost from "@/components/feature/Blog/FeaturedPost";
+import { getAllPosts, getNameFromSlug, getPostsByCategory } from "@/lib/mdx";
 import { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
-import { PageHero } from "@/components/common/PageHero";
-import { Post } from "@/lib/types/blog";
-import moment from "moment";
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -29,11 +26,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { category } = await params;
 
+  const categoryName = getNameFromSlug(category);
   return {
-    title: `${
-      category.charAt(0).toUpperCase() + category.slice(1)
-    } | Blog | Calqulation`,
-    description: `Browse all articles in the ${category} category`,
+    title: `${categoryName} | Blog | Calqulation`,
+    description: `Browse all articles in the ${categoryName} category`,
   };
 }
 
@@ -43,14 +39,9 @@ export default async function CategoryPage({
   params: { category: string };
 }) {
   const { category } = await params;
-  const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
-  const allPosts = getAllPosts();
+  const categoryName = getNameFromSlug(category);
 
-  // Filter posts by category
-  const categoryPosts = allPosts.filter(
-    (post) =>
-      post.frontmatter.category?.toLowerCase() === category.toLowerCase()
-  );
+  const categoryPosts = getPostsByCategory(category);
 
   if (categoryPosts.length === 0) {
     notFound();
@@ -58,70 +49,22 @@ export default async function CategoryPage({
 
   return (
     <div>
-      <PageHero
-        title={`${categoryName} Posts`}
-        subtitle={`Browse all our articles in the ${categoryName} category`}
-      />
-
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="mb-5 flex flex-col md:flex-row justify-between items-center gap-3">
+        <h2 className="text-xl font-bold text-foreground relative">
+          {categoryName} Articles
+          <span className="absolute -bottom-1 left-0 w-10 h-0.5 bg-primary rounded-full"></span>
+        </h2>
+      </div>
+      <FeaturedPost post={categoryPosts[0]} />
+      <div className="flex items-center mb-5 mt-5">
+        <h3 className="text-base font-bold text-foreground">Recent Articles</h3>
+        <div className="ml-3 flex-grow h-px bg-gray-200 dark:bg-gray-800"></div>
+      </div>
+      <div className="container ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {categoryPosts.map((post) => (
             <BlogPostCard key={post.slug} post={post} />
           ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function BlogPostCard({ post }: { post: Post }) {
-  const { slug, frontmatter } = post;
-
-  return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <Link href={`/blog/${slug}`}>
-        <div className="relative h-48 w-full">
-          <Image
-            src={frontmatter.thumbnailUrl || "/Calqulation.png"}
-            alt={frontmatter.title}
-            fill
-            className="object-cover"
-          />
-        </div>
-      </Link>
-
-      <div className="p-5">
-        {frontmatter.category && (
-          <Link
-            href={`/blog/category/${frontmatter.category.toLowerCase()}`}
-            className="text-xs font-medium text-primary uppercase tracking-wider hover:underline"
-          >
-            {frontmatter.category}
-          </Link>
-        )}
-
-        <Link href={`/blog/${slug}`}>
-          <h2 className="mt-2 text-xl font-bold text-gray-900 hover:text-primary transition-colors duration-200">
-            {frontmatter.title}
-          </h2>
-        </Link>
-
-        <p className="mt-2 text-gray-600 line-clamp-2">
-          {frontmatter.description}
-        </p>
-
-        <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-gray-500">
-            {frontmatter.date &&
-              moment(new Date(frontmatter.date)).format("MMM d, yyyy")}
-          </div>
-
-          <Link
-            href={`/blog/${slug}`}
-            className="text-sm font-medium text-primary hover:underline"
-          >
-            Read more →
-          </Link>
         </div>
       </div>
     </div>

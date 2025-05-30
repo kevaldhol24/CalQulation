@@ -1,5 +1,4 @@
-import { PageHero } from "@/components/common/PageHero";
-import { compileMDXContent, getAllPosts, getPostBySlug } from "@/lib/mdx";
+import { compileMDXContent, generateSlug, getAllPosts, getPostBySlug } from "@/lib/mdx";
 import moment from "moment";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -65,14 +64,16 @@ export default async function BlogPost({
 
     return (
       <div className="blog-post-container">
-        <PageHero
-          title={postFrontmatter.title}
-          subtitle={postFrontmatter.description}
-        />
-
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-3xl mx-auto">
+        <div className="container mx-auto">
+          <div className="">
+            <div className="mb-5 flex flex-col md:flex-row justify-between items-center gap-3">
+              <h2 className="text-xl font-bold text-foreground relative">
+                {postFrontmatter.title}
+                <span className="absolute -bottom-1 left-0 w-10 h-0.5 bg-primary rounded-full"></span>
+              </h2>
+            </div>
             {/* Post metadata */}
+
             <div className="mb-6 text-sm text-gray-500">
               {postFrontmatter.date && (
                 <time dateTime={postFrontmatter.date}>
@@ -124,7 +125,7 @@ export default async function BlogPost({
                   {postFrontmatter.tags.map((tag) => (
                     <Link
                       key={tag}
-                      href={`/blog/tag/${tag.toLowerCase()}`}
+                      href={`/blog/tag/${generateSlug(tag)}`}
                       className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary hover:text-white transition"
                     >
                       {tag}

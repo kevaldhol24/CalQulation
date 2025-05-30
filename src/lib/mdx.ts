@@ -67,7 +67,69 @@ export function getAllPosts(): Post[] {
             return date2.getTime() - date1.getTime();
         });
 
-    return posts;
+    return process.env.NODE_ENV === "production"
+        ? posts.filter((post) => post.frontmatter.status !== "draft")
+        : posts
+
+}
+
+export const getAllCategories = (): Record<string, number> => {
+    const posts = getAllPosts();
+    const categoriesSet: Record<string, number> = {};
+
+    posts.forEach((post) => {
+        if (post.frontmatter.category) {
+            categoriesSet[post.frontmatter.category] = (categoriesSet[post.frontmatter.category] || 0) + 1;
+        }
+    });
+
+    return categoriesSet;
+}
+
+export const getAllTags = (): Record<string, number> => {
+    const posts = getAllPosts();
+    const tagsSet: Record<string, number> = {};
+
+    posts.forEach((post) => {
+        if (post.frontmatter.tags) {
+            post.frontmatter.tags.forEach((tag) => {
+                tagsSet[tag] = (tagsSet[tag] || 0) + 1;
+            });
+        }
+    });
+
+    return tagsSet;
+}
+
+export const getNameFromSlug = (slug: string): string => {
+    return slug.split('-').map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
+}
+
+export const generateSlug = (name: string): string => {
+    return name
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '') // Remove non-alphanumeric characters except spaces and hyphens
+        .trim()
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/-+/g, '-') // Replace multiple hyphens with a single hyphen
+}
+
+export const getPostsByCategory = (categorySlug: string): Post[] => {
+    const category = getNameFromSlug(categorySlug);
+    const allPosts = getAllPosts();
+    return allPosts.filter(
+        (post) => post.frontmatter.category?.toLowerCase() === category.toLowerCase()
+    );
+}
+
+export const getPostsByTag = (tagSlug: string): Post[] => {
+    const tag = getNameFromSlug(tagSlug);
+    const allPosts = getAllPosts();
+    return allPosts.filter(
+        (post) => post.frontmatter.tags?.map(getNameFromSlug).includes(tag)
+    );
 }
 
 // Compile MDX content with all plugins
