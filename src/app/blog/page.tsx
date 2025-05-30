@@ -17,8 +17,8 @@ interface BlogIndexProps {
   };
 }
 
-export default function BlogIndex({ searchParams }: BlogIndexProps) {
-  const search = searchParams?.search || null;
+export default async function BlogIndex({ searchParams }: BlogIndexProps) {
+  const search = await searchParams?.search || null;
   const posts = getAllPosts();
 
   let publishedPosts = posts;
