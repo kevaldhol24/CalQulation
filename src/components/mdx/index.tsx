@@ -14,6 +14,7 @@ import {
   FiCheckCircle,
   FiDollarSign,
   FiShield,
+  FiTrendingUp,
 } from "react-icons/fi";
 import BlogHero from "./BlogHero";
 
@@ -131,6 +132,7 @@ const MDXComponents = {
   FiCheckCircle,
   FiDollarSign,
   FiShield,
+  FiTrendingUp,
 
   // Next.js components
   Link,
