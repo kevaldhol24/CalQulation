@@ -13,6 +13,7 @@ import {
 import { HeaderClient } from "./HeaderClient";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
+import { NewspaperIcon } from "lucide-react";
 
 export const Header = () => {
   return (
@@ -24,6 +25,13 @@ export const Header = () => {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1 text-white">
+          <Link
+            href="/blog"
+            className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
+          >
+            Blog
+          </Link>
+
           <Link
             href="/tool/emi-calculator"
             className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
@@ -77,6 +85,14 @@ export const Header = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[200px] md:hidden">
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/blog"
+                  className="flex items-center gap-2"
+                >
+                  <NewspaperIcon size={14} /> Blog
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
                   href="/tool/emi-calculator"

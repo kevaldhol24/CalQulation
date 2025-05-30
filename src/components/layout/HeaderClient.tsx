@@ -6,7 +6,7 @@ export const HeaderClient = () => {
     const handleScroll = () => {
       const header = document.querySelector("header");
       if (header) {
-        if (window.scrollY > 50) {
+        if (window.scrollY > 1) {
           header.classList.add("bg-blue-900/85", "header-transparent");
           header.classList.remove("bg-transparent");
         } else {

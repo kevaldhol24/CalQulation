@@ -221,7 +221,7 @@ export default function ComingSoonPage() {
             publisher: {
               "@type": "Organization",
               name: "Calqulation",
-              logo: "https://calqulation.com/Logo.png",
+              logo: "https://www.calqulation.com/Logo.png",
             },
             datePublished: "2025-05-11",
             dateModified: "2025-05-11",
