@@ -124,9 +124,9 @@ noIndex: false
 # Structured data
 structuredData:
   authorName: "Finance Expert Team"
-  authorUrl: "https://calqulation.com/about-us/team"
+  authorUrl: "https://www.calqulation.com/about-us/team"
   publisherName: "Calqulation Finance"
-  publisherLogo: "https://calqulation.com/Calqulation.png"
+  publisherLogo: "https://www.calqulation.com/Calqulation.png"
 ---
 ```
 

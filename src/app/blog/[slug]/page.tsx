@@ -39,7 +39,7 @@ export async function generateMetadata({
 
     // Construct canonical URL
     const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || "https://calqulation.com";
+      process.env.NEXT_PUBLIC_SITE_URL || "https://www.calqulation.com";
     const canonicalUrl = frontmatter.canonical || `${baseUrl}/blog/${slug}`;
 
     // Calculate reading time if not provided
@@ -173,7 +173,7 @@ export default async function BlogPost({
 
     // Create JSON-LD structured data
     const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || "https://calqulation.com";
+      process.env.NEXT_PUBLIC_SITE_URL || "https://www.calqulation.com";
     const canonicalUrl = postFrontmatter.canonical || `${baseUrl}/blog/${slug}`;
     const readingTime =
       postFrontmatter.readingTime ||
