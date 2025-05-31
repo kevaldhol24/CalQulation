@@ -5,6 +5,7 @@ import FeaturedPost from "@/components/feature/Blog/FeaturedPost";
 import { DEFAULT_BLOG_PAGINATION_SIZE } from "@/lib/constants";
 import { getAllPosts, getNameFromSlug } from "@/lib/mdx";
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { FaSearch } from "react-icons/fa";
 
 export const metadata: Metadata = {
@@ -139,7 +140,11 @@ export default async function BlogIndex({ searchParams }: BlogIndexProps) {
         )}
       </div>
 
-      <BlogPagination hasMore={publishedPosts.length > pageSize} />
+      <Suspense
+        fallback={<div className="h-1 bg-gray-200 dark:bg-gray-800"></div>}
+      >
+        <BlogPagination hasMore={publishedPosts.length > pageSize} />
+      </Suspense>
     </BlogCustomLayout>
   );
 }

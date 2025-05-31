@@ -25,7 +25,7 @@ export default function BlogPagination({ hasMore }: BlogPaginationProps) {
 
   const loadMoreArticles = useCallback(() => {
     setIsLoading(true);
-    router.push(`/blog?size=${currentSize + 1}`, { scroll: false });
+    router.push(`/blog?size=${currentSize + 2}`, { scroll: false });
   }, [currentSize, router]);
 
   if (!hasMore) return null;

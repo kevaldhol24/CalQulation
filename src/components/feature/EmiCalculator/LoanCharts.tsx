@@ -631,12 +631,12 @@ export const LoanCharts = () => {
             <div className="text-center text-sm text-gray-500 dark:text-gray-300 mt-3 font-medium">
               Total Amount: {formateCurrency(totalAmountPayable)}
             </div>
-          </div>{" "}
+          </div>
           {/* Yearly Amortization Bar Chart */}
           <div
             className={`${chartCardClass} transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
           >
-            {" "}
+            
             <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
               <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 mr-2.5 shadow-sm"></div>
               Yearly Amortization
@@ -652,7 +652,7 @@ export const LoanCharts = () => {
                   : "#CBD5E1 #F1F5F9",
               }}
             >
-              {" "}
+              
               <div
                 style={{
                   minWidth:
@@ -668,7 +668,7 @@ export const LoanCharts = () => {
                   height: "280px",
                 }}
               >
-                {" "}
+                
                 <Bar
                   data={yearlyAmortizationData}
                   options={{
@@ -697,17 +697,17 @@ export const LoanCharts = () => {
                   }}
                 />
               </div>
-            </div>{" "}
+            </div>
             <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
               {amortizationData.years.length > 10 &&
                 "← Swipe horizontally to see all years →"}
             </div>
-          </div>{" "}
+          </div>
           {/* Loan Balance Area Chart */}
           <div
             className={`${chartCardClass} mb-2 lg:col-span-2 transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
           >
-            {" "}
+            
             <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
               <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-green-500 to-teal-500 mr-2.5 shadow-sm"></div>
               Loan Balance Over Time
@@ -723,7 +723,7 @@ export const LoanCharts = () => {
                   : "#CBD5E1 #F1F5F9",
               }}
             >
-              {" "}
+              
               <div
                 style={{
                   minWidth:
@@ -738,7 +738,7 @@ export const LoanCharts = () => {
                   height: "280px",
                 }}
               >
-                {" "}
+                
                 <Line
                   data={balanceChartData}
                   options={{
@@ -767,7 +767,7 @@ export const LoanCharts = () => {
                   }}
                 />
               </div>
-            </div>{" "}
+            </div>
             <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
               {scheduleChartData.length > 20 &&
                 "← Swipe horizontally to see full timeline →"}
