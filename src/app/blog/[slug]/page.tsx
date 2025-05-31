@@ -232,7 +232,7 @@ export default async function BlogPost({
                   <span className="absolute -bottom-1 left-0 w-20 h-0.5 bg-primary rounded-full"></span>
                 </h2>
               </div>
-              {/* Post metadata */}{" "}
+              {/* Post metadata */}
               <div className="mb-6 text-sm text-gray-500">
                 {postFrontmatter.date && (
                   <time dateTime={postFrontmatter.date} className="mr-2">

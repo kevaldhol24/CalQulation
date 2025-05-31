@@ -230,7 +230,7 @@ export default function Home() {
                 Whether it&apos;s loans, investments, or taxes, our tools help
                 you plan your finances with confidence and clarity.
               </p>
-            </div>{" "}
+            </div>
           </div>
         </div>
 
