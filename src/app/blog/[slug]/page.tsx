@@ -246,7 +246,7 @@ export default async function BlogPost({
                     <>
                       <span className="mx-1">•</span>
                       <span className="mr-2" title="Last updated">
-                        Updated:{" "}
+                        Updated:&nbsp;
                         {moment(postFrontmatter.lastModified).format(
                           "MMMM d, yyyy"
                         )}
@@ -277,7 +277,7 @@ export default async function BlogPost({
                 <span className="mx-2">·</span>
                 <span title="Estimated reading time">
                   {postFrontmatter.readingTime ||
-                    Math.ceil(post.content.split(/\s+/).length / 200)}{" "}
+                    Math.ceil(post.content.split(/\s+/).length / 200)}&nbsp;
                   min read
                 </span>
               </div>

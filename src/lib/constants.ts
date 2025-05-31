@@ -36,4 +36,4 @@ export const CURRENCY_FORMAT_DECIMAL = {
   maximumFractionDigits: 2,
 };
 
-export const DEFAULT_BLOG_PAGINATION_SIZE = 2;
+export const DEFAULT_BLOG_PAGINATION_SIZE = 3;
