@@ -1,8 +1,9 @@
 import { BlogCustomLayout } from "@/components/feature/Blog/BlogCustomLayout";
+import BlogPagination from "@/components/feature/Blog/BlogPagination";
 import BlogPostCard from "@/components/feature/Blog/BlogPostCard";
 import FeaturedPost from "@/components/feature/Blog/FeaturedPost";
-import { Button } from "@/components/ui/button";
-import { getAllPosts } from "@/lib/mdx";
+import { DEFAULT_BLOG_PAGINATION_SIZE } from "@/lib/constants";
+import { getAllPosts, getNameFromSlug } from "@/lib/mdx";
 import { Metadata } from "next";
 import { FaSearch } from "react-icons/fa";
 
@@ -11,34 +12,90 @@ export const metadata: Metadata = {
   description: "Explore financial tips, guides, and insights on our blog.",
 };
 
-export default async function BlogIndex({
-  searchParams,
-}: {
-  searchParams: Promise<{ search?: string }>;
-}) {
-  const search = (await searchParams)?.search || null;
-  const posts = getAllPosts();
+interface BlogIndexProps {
+  searchParams: Promise<{
+    search?: string;
+    category?: string;
+    tag?: string;
+    size?: string;
+  }>;
+}
 
-  let publishedPosts = posts;
-  if (search) {
-    publishedPosts = posts.filter(
-      (post) =>
-        post.frontmatter.title.toLowerCase().includes(search.toLowerCase()) ||
-        post.frontmatter.description
-          .toLowerCase()
-          .includes(search.toLowerCase())
-    );
-  }
+export default async function BlogIndex({ searchParams }: BlogIndexProps) {
+  const {
+    category,
+    tag,
+    size = DEFAULT_BLOG_PAGINATION_SIZE.toString(),
+    search,
+  } = await searchParams;
+  const posts = getAllPosts();
+  const pageSize = parseInt(size, 10);
+
+  // Filter posts based on search parameters
+  const publishedPosts = posts.filter((post) => {
+    // If no filters are provided, include all posts
+    if (!category && !tag && !search) return true;
+
+    // Filter by category
+    if (
+      category &&
+      (!post.frontmatter.category ||
+        post.frontmatter.category.toLowerCase() !==
+          getNameFromSlug(category).toLowerCase())
+    ) {
+      return false;
+    }
+
+    // Filter by tag
+    if (
+      tag &&
+      (!post.frontmatter.tags ||
+        !post.frontmatter.tags.some(
+          (t) => t.toLowerCase() === getNameFromSlug(tag).toLowerCase()
+        ))
+    ) {
+      return false;
+    }
+
+    // Filter by search query
+    if (search) {
+      const searchLower = search.toLowerCase();
+      return (
+        (post.frontmatter.title &&
+          post.frontmatter.title.toLowerCase().includes(searchLower)) ||
+        (post.frontmatter.description &&
+          post.frontmatter.description.toLowerCase().includes(searchLower))
+      );
+    }
+
+    return true;
+  });
+
+  const getLabel = () => {
+    if (category) {
+      return `${getNameFromSlug(category)} Articles`;
+    }
+    if (tag) {
+      return `${getNameFromSlug(tag)} Articles`;
+    }
+    if (search) {
+      return `Search Results for: "${search}"`;
+    }
+    return "Latest Articles";
+  };
+
+  // Limit the number of posts based on size parameter
+  const filteredPosts = [...publishedPosts].slice(0, pageSize);
 
   // Get featured post and categorize remaining posts
-  const featuredPost = publishedPosts[0];
-  const regularPosts = publishedPosts.slice(1);
+  const featuredPost = filteredPosts[0];
+  const regularPosts = filteredPosts.slice(1);
 
   return (
     <BlogCustomLayout>
       <div className="mb-5 flex flex-col md:flex-row justify-between items-center gap-3">
         <h2 className="text-xl font-bold text-foreground relative">
-          {search ? `Search Results of "${search}"` : "Latest Articles"}
+          {getLabel()}
           <span className="absolute -bottom-1 left-0 w-10 h-0.5 bg-primary rounded-full"></span>
         </h2>
       </div>
@@ -72,7 +129,7 @@ export default async function BlogIndex({
                 <FaSearch className="text-primary text-lg" />
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-1.5">
-                No blog posts found
+                No posts found
               </h3>
               <p className="text-muted-foreground text-sm">
                 Check back soon for new content or subscribe to our newsletter!
@@ -82,17 +139,7 @@ export default async function BlogIndex({
         )}
       </div>
 
-      {/* Load More Button - more compact */}
-      {publishedPosts.length > 0 && (
-        <div className="mt-8 text-center">
-          <Button
-            variant="outline"
-            className="rounded-full px-6 py-1 h-9 text-sm"
-          >
-            Load More Articles
-          </Button>
-        </div>
-      )}
+      <BlogPagination hasMore={publishedPosts.length > pageSize} />
     </BlogCustomLayout>
   );
 }

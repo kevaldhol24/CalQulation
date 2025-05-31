@@ -5,11 +5,7 @@ import { IoNewspaperOutline } from "react-icons/io5";
 
 export const BlogHero: React.FC = () => {
   const pathname = usePathname();
-  const isIndividualBlogPost =
-    pathname &&
-    /^\/blog\/[^\/]+$/.test(pathname) &&
-    !pathname.includes("/category/") &&
-    !pathname.includes("/tag/");
+  const isIndividualBlogPost = pathname && /^\/blog\/[^\/]+$/.test(pathname);
 
   if (isIndividualBlogPost) {
     return (

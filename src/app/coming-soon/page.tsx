@@ -86,11 +86,11 @@ export default function ComingSoonPage() {
                   <GrArticle size={24} />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white text-center mb-4">
-                  Blogs
+                  Income Tax Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center">
-                  Read our latest articles on financial planning, investment
-                  strategies, and personal finance tips to stay informed.
+                  Calculate your income tax liability effortlessly with our
+                  user-friendly calculator.
                 </p>
               </div>
             </div>

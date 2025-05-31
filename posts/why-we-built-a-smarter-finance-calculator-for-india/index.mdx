@@ -93,7 +93,7 @@ structuredData:
     ]}
 />
 
-It was late 2023, and I was sitting at my kitchen table surrounded by printouts, a calculator, and three different Excel spreadsheets. My wife looked over my shoulder and asked what I was doing.
+It was late 2024, and I was sitting at my kitchen table surrounded by printouts, a calculator, and three different Excel spreadsheets. My wife looked over my shoulder and asked what I was doing.
 
 "Trying to figure out if we should prepay part of our home loan or increase our SIP investments," I replied, not looking up.
 
@@ -105,18 +105,18 @@ That moment—that frustration of trying to make an informed financial decision 
 
 ### The Breaking Point: One Calculation Too Many
 
-I've always considered myself financially savvy. As someone who grew up in a middle-class household in Ahmedabad where every rupee was accounted for, I learned early on that financial decisions matter. By 2023, I had a good job in tech, a home loan from a leading bank, and a disciplined investment routine.
+I've always considered myself financially savvy. As someone who grew up in a middle-class household in Rajkot where every rupee was accounted for, I learned early on that financial decisions matter. By 2024, I had a good job in tech, a home loan from a leading bank, and a disciplined investment routine.
 
 Yet despite my technical background and financial discipline, I struggled with what should have been straightforward decisions:
 
 - Should I prepay my home loan or increase my SIP?
-- How would rising interest rates affect my floating rate loan over its 20-year term?
-- Was I saving enough for my parents' healthcare needs, considering India's medical inflation?
-- How would the new tax regime affect my investment strategy?
+- How would floating rate changes affect my home loan, especially with my planned prepayments?
+- How would customized EMI adjustments impact my loan closure timeline?
+- How would my SIP grow with annual step-up investments matching my salary growth?
 
 The existing calculators were either too simplistic or completely disconnected from Indian realities. Most were built for Western financial systems and failed to account for our unique challenges.
 
-<PullQuote author="Co-founder" role="Former Financial Analyst">
+<PullQuote author="Bhavya Mehta" role="Co-founder">
   When we started, we weren't thinking about building a product for the market. We were simply solving our own problems. Every feature in our calculator exists because one of us personally needed it at some point.
 </PullQuote>
 
@@ -152,7 +152,7 @@ India's financial landscape has always been distinctive. What makes financial pl
 
 Growing up, I watched my father manage finances with a small notebook where he tracked every expense. When I showed him some of the popular financial calculators, he pointed out something profound: "These tools don't understand how we think about money in India."
 
-He was right. Most tools couldn't account for things like planning for a sibling's education, regular remittances to parents in another city, or saving for children's weddings alongside retirement.
+He was right. Most tools couldn't account for things like handling floating rate loan calculations accurately, modeling multiple prepayments at different intervals, or calculating step-up SIPs that grow with your income.
 
 ### The Missing Pieces in Existing Tools
 
@@ -161,35 +161,35 @@ The more I explored existing calculators, the more gaps I found. Here's what was
 <ComparisonTable
   features={[
     {
-      name: "Indian Tax Regime Integration",
-      basic: "Not Available",
-      advanced: "Comprehensive",
+      name: "Floating Rate Loan Integration",
+      basic: "Fixed Rate Only",
+      advanced: "Floating Rate Modeling",
     },
     {
-      name: "Family Financial Planning",
-      basic: "Individual Focus Only",
-      advanced: "Multi-generational Options",
+      name: "Multiple Prepayment Options",
+      basic: "Single Prepayment Only",
+      advanced: "Multiple/Recurring Prepayments",
     },
     {
-      name: "Regional Cost Variations",
-      basic: "Not Considered",
-      advanced: "City-specific Calculations",
+      name: "Detailed Amortization Schedule",
+      basic: "Basic Payment Schedule",
+      advanced: "Comprehensive Month-wise Breakdown",
     },
     {
-      name: "Category-specific Inflation Adjustments",
-      basic: "Generic Inflation Only",
-      advanced: "Education, Healthcare, Housing Specific",
+      name: "Step-Up SIP Calculations",
+      basic: "Fixed SIP Amount Only",
+      advanced: "Annual SIP Increase Options",
     },
     {
-      name: "Traditional + Modern Investment Mix",
-      basic: "Modern Instruments Only",
-      advanced: "Includes Gold, Real Estate, FDs",
+      name: "Inflation-Adjusted SIP Returns",
+      basic: "Nominal Returns Only",
+      advanced: "Real Returns After Inflation",
     }
   ]}
 />
 
 <Callout type="info">
-  In 2023, when we started our research, we found that over 80% of financial decisions made by Indian households involved consultation with family members. Yet not a single calculator we evaluated had features for collaborative financial planning.
+  In late 2024, when we started our research, we found that most loan calculators couldn't accurately model floating rate changes with prepayments, and SIP calculators rarely incorporated step-up investments that matched salary growth patterns common in India's tech sector.
 </Callout>
 
 ### From Spreadsheets to Prototype: The Early Days
@@ -200,10 +200,10 @@ What began as a personal spreadsheet soon evolved. I shared it with a few collea
 
 We started meeting on weekends, expanding the spreadsheet into something more powerful. Our first prototype was crude—just a web form connected to our calculation engine—but it worked. It could handle:
 
-- Home loan optimizations with Indian prepayment rules
+- Home loan calculations with multiple prepayment options
+- Floating rate loan projections with interest rate change scenarios
 - SIP calculations with step-up options tied to expected salary growth
-- Tax benefit comparisons between investment options
-- Inflation-adjusted goal planning
+- Detailed amortization schedules and EMI breakdown charts
 
 When I showed it to my father, he spent three hours on it, recalculating his retirement plans. "This," he said, "actually makes sense to me."
 
@@ -274,61 +274,61 @@ As we rebuilt the calculator with these journeys in mind, we focused on several 
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
   <FeatureCard
-    title="Dynamic Tax Engine"
-    description="Real-time calculations that adjust to both tax regimes and stay updated with policy changes"
+    title="Accuracy and Performance"
+    description="High-precision calculation engine delivering instant results even for complex financial scenarios"
     icon={<FiActivity size={24} />}
   />
 
   <FeatureCard
     title="Multi-scenario Modeling"
-    description="Compare different financial strategies side-by-side with visual projections"
+    description="Try different financial strategies side-by-side with interactive projection models"
     icon={<FiCheckCircle size={24} />}
   />
 
   <FeatureCard
-    title="Smart Defaults"
-    description="Region and profile-specific starting points based on actual Indian financial data"
-    icon={<FiShield size={24} />}
+    title="Modern and Easy UI"
+    description="Intuitive interface with simplified controls that makes complex financial planning accessible"
+    icon={<CgWebsite size={24} />}
   />
 
   <FeatureCard
     title="Privacy-First Design"
-    description="Advanced calculations without requiring personal financial data storage"
-    icon={<FiTrendingUp size={24} />}
+    description="Secure calculations performed locally without storing sensitive financial information"
+    icon={<FiShield size={24} />}
   />
 </div>
 
 Our most challenging technical hurdle was creating a system that could handle the complexity of Indian financial rules while remaining accessible to users with varying levels of financial literacy. The solution came in the form of a layered interface—simple on the surface with the option to "go deeper" into more sophisticated parameters.
 
-<PullQuote author="Our Lead Developer" role="Financial Technology Specialist">
+<PullQuote author="Keval Dhol" role="Cofounder">
   The biggest technical challenge wasn't the calculations themselves. It was figuring out how to present complex financial concepts in a way that feels intuitive. We ended up creating visualization tools that show the impact of decisions over time rather than just presenting numbers.
 </PullQuote>
 
 ### Our Vision Beyond Calculations
 
-By early 2025, we had moved far beyond our original spreadsheet. Calqulation had evolved into a comprehensive financial decision support system. But the calculator remains our core—the engine that powers everything else.
+By early 2025, we had moved far beyond our original spreadsheet. Calqulation had evolved into our specialized EMI and SIP calculators that are now accessible to everyone. These calculators remain our core—the engines that power everything else.
 
 Looking ahead, our vision extends beyond just calculations. We see Calqulation evolving in several ways:
 
 <StatCard 
-  value="Financial Literacy"
-  label="EMBEDDED LEARNING"
+  value="Advanced EMI Features"
+  label="CUSTOMIZABLE LOAN PLANNING"
   trend="up" 
-  trendValue="Contextual education built into calculations"
+  trendValue="Multiple prepayments, floating rates, and EMI adjustments"
   icon={<FiActivity size={24} />}
 />
 
-We're developing a system where every calculation becomes a learning opportunity. Instead of just showing you that a step-up SIP produces better results, we'll explain compound growth principles and show exactly how each addition contributes.
+Our EMI calculator offers comprehensive features for accurate loan planning. You can model floating rate changes at specific points, add multiple prepayments throughout your loan, and even adjust your EMI amounts to see how these changes affect your loan closure timeline and interest savings.
 
 <StatCard 
-  value="Community Wisdom"
-  label="ANONYMOUS BENCHMARKING"
+  value="Smart SIP Planning"
+  label="INVESTMENT GROWTH VISUALIZATION"
   trend="up" 
-  trendValue="Learn from others in similar situations"
+  trendValue="Step-up SIPs and inflation-adjusted returns"
   icon={<FiCheckCircle size={24} />}
 />
 
-Soon, users will be able to anonymously compare their financial strategies with others in similar circumstances. Are other families in Pune with similar incomes saving more for education? How are they achieving that?
+Our SIP calculator lets you visualize how your investments grow with regular step-ups matching your salary growth. Compare different investment frequencies, see the impact of inflation on your returns, and make more informed decisions with our interactive charts and yearly breakdowns.
 
 But most importantly, we want Calqulation to remain true to its roots—a solution built specifically for Indian financial realities, addressing the unique challenges we face in our personal financial journeys.
 
@@ -336,19 +336,19 @@ But most importantly, we want Calqulation to remain true to its roots—a soluti
 
 <ConclusionBox
   title="From Personal Frustration to Public Solution"
-  summary="What began as a personal quest to make better financial decisions has evolved into a tool that thousands of Indians now use daily. The journey from spreadsheet to Calqulation has taught us that truly effective financial tools must understand not just numbers, but cultural contexts, family structures, and regional differences."
+  summary="What began as a personal quest to make better home loan and SIP calculations has evolved into specialized tools that Indians now use daily. The journey from spreadsheet to Calqulation has taught us that truly effective financial tools must understand the real-world scenarios that Indian borrowers and investors face."
   actionItems={[
-    "Financial tools should adapt to people's lives, not force people to adapt to tools.",
-    "India's unique financial landscape deserves tools built specifically for its challenges.",
-    "The best financial decisions come from combining powerful calculations with human wisdom and cultural context.",
-    "Technology should simplify complex decisions without oversimplifying the underlying reality."
+    "EMI calculators must account for floating rates and multiple prepayment options.",
+    "SIP calculators should allow for regular step-ups that match salary growth patterns.",
+    "The best financial decisions come from seeing detailed visualizations of different scenarios.",
+    "Financial tools should be precise yet easy to use, offering both simplicity and depth."
   ]}
   callToAction="Try Calqulation Today"
   callToActionUrl="/tools"
 />
 
-That evening at my kitchen table surrounded by spreadsheets now feels like a distant memory. Yet it reminds me of why we built Calqulation—because financial decisions are too important to make with inadequate tools, especially in a complex and unique financial landscape like India's.
+That evening at my kitchen table surrounded by spreadsheets now feels like a distant memory. Yet it reminds me of why we built Calqulation—because financial decisions are too important to make with inadequate tools, especially when planning loans with floating rates and multiple prepayments or SIPs with increasing investments over time.
 
-Our journey continues as India's financial system evolves. New tax policies, investment vehicles, and economic challenges will emerge. But our mission remains constant: to provide Indians with calculation tools that truly understand their financial lives and help them make better decisions.
+Our journey continues as India's financial system evolves. Our EMI calculator will help you plan your home loans with precision, accounting for prepayments and interest rate changes. Meanwhile, our SIP calculator will show you how your regular investments grow over time, with step-up options and inflation adjustments.
 
-I'd love to hear about your financial calculation challenges. What decisions have been difficult to navigate with existing tools? Share in the comments below, and help us continue building a calculator that truly serves Indian needs.
+I'd love to hear about your experience with our calculators. Have they helped you make better financial decisions? Share in the comments below, and help us continue improving our tools to better serve your needs.

@@ -1,4 +1,5 @@
 import { PageHero } from "@/components/common/PageHero";
+import { LatestFromOurBlog } from "@/components/feature/Blog/LatestFromOurBlog";
 import { Metadata } from "next";
 import Link from "next/link";
 import { BsBank, BsCalculator, BsGraphUp } from "react-icons/bs";
@@ -7,7 +8,7 @@ import {
   FaChartBar,
   FaChartLine,
   FaLightbulb,
-  FaRegClock,
+  FaRegClock
 } from "react-icons/fa";
 import { MdCalculate } from "react-icons/md";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
@@ -119,8 +120,8 @@ export default function Home() {
                   SIP Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate SIP returns, total wealth gain, and view detailed yearly
-                  breakdown of your investments.
+                  Calculate SIP returns, total wealth gain, and view detailed
+                  yearly breakdown of your investments.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
@@ -206,7 +207,6 @@ export default function Home() {
                 the most accurate projections for your financial plans.
               </p>
             </div>
-
             <div className="flex flex-col items-center text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mb-5 shadow-lg">
                 <FaLightbulb className="text-white text-2xl" />
@@ -219,7 +219,6 @@ export default function Home() {
                 reports to help you make better financial choices.
               </p>
             </div>
-
             <div className="flex flex-col items-center text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center mb-5 shadow-lg">
                 <BsBank className="text-white text-2xl" />
@@ -231,8 +230,13 @@ export default function Home() {
                 Whether it&apos;s loans, investments, or taxes, our tools help
                 you plan your finances with confidence and clarity.
               </p>
-            </div>
+            </div>{" "}
           </div>
+        </div>
+
+        {/* Blog section */}
+        <div className="mt-32 mb-20">
+          <LatestFromOurBlog />
         </div>
 
         {/* Call to action section */}

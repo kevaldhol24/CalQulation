@@ -17,7 +17,7 @@ export default function CategoriesCard() {
               size="sm"
               className="rounded-full text-xs h-6 py-0 px-2.5"
             >
-              <Link href={`/blog/category/${generateSlug(category)}`}>
+              <Link href={`/blog?category=${generateSlug(category)}`}>
                 {category}
               </Link>
             </Button>

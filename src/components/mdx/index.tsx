@@ -9,6 +9,7 @@ import Step from "./Step";
 import ProCon from "./ProCon";
 import ConclusionBox from "./ConclusionBox";
 import TableOfContents from "./TableOfContents";
+import { CgWebsite } from "react-icons/cg";
 import {
   FiActivity,
   FiCheckCircle,
@@ -133,6 +134,7 @@ const MDXComponents = {
   FiDollarSign,
   FiShield,
   FiTrendingUp,
+  CgWebsite,
 
   // Next.js components
   Link,
