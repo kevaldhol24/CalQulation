@@ -30,7 +30,7 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
             <div className="absolute bottom-0 left-0 p-6">
               {frontmatter.category && (
                 <Link
-                  href={`/blog/category/${frontmatter.category.toLowerCase()}`}
+                  href={`/blog?category=${frontmatter.category.toLowerCase()}`}
                   className="inline-block text-xs font-bold bg-primary/90 text-white uppercase tracking-wider px-2 py-0.5 rounded-full mb-3"
                 >
                   {frontmatter.category}

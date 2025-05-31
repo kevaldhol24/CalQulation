@@ -51,7 +51,7 @@ export function NavigationProgress() {
     // Add listeners for navigation events
     window.addEventListener("beforeunload", handleRouteChangeStart);
 
-    // Create custom event listener for Next.js App Router
+  // Create custom event listener for Next.js App Router
     const handleClick = (e: MouseEvent) => {
       // Skip if Ctrl key is pressed (new tab navigation)
       if (e.ctrlKey || e.metaKey) {
@@ -65,6 +65,11 @@ export function NavigationProgress() {
         anchor.href &&
         anchor.href.startsWith(window.location.origin)
       ) {
+        // Skip if the link is set to open in a new tab (target="_blank")
+        if (anchor.target === "_blank") {
+          return;
+        }
+        
         // Check if the link is to the current page
         const url = new URL(anchor.href);
         const currentUrl = new URL(window.location.href);

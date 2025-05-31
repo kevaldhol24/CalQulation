@@ -4,6 +4,7 @@ import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { FaToolbox } from "react-icons/fa6";
+import { GoHeartFill } from "react-icons/go";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -234,9 +235,9 @@ export const Footer = () => {
             <p className="text-sm text-gray-500 dark:text-gray-400">
               &copy; {currentYear} Calqulation. All rights reserved.
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 md:mt-0">
-              Designed and built with{" "}
-              <span className="text-red-500 animate-pulse">❤</span> for better
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 md:mt-0 flex gap-1 flex-wrap justify-center">
+              Designed and built with
+              <span className="text-red-500 animate-pulse"><GoHeartFill size={24}/></span> for better
               financial decisions
             </p>
           </div>

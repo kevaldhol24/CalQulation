@@ -39,13 +39,15 @@ export const Sidebar = () => {
       </h3>
       <TagsCard />
 
-      <h3 className="text-xs uppercase tracking-wider text-primary font-semibold mb-4 mt-6 flex items-center">
-        <span className="mr-2">✦</span>
-        <span>Trending Tools</span>
-        <span className="flex-grow border-b border-gray-200 dark:border-gray-800 ml-4"></span>
-      </h3>
-      <EmiCalculatorPromo />
-      <SipCalculatorPromo />
+      <div className="sticky top-16">
+        <h3 className="text-xs uppercase tracking-wider text-primary font-semibold mb-4 mt-6 flex items-center">
+          <span className="mr-2">✦</span>
+          <span>Trending Tools</span>
+          <span className="flex-grow border-b border-gray-200 dark:border-gray-800 ml-4"></span>
+        </h3>
+        <EmiCalculatorPromo />
+        <SipCalculatorPromo />
+      </div>
     </>
   );
 };
