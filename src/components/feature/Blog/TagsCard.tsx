@@ -16,7 +16,7 @@ export default function TagsCard() {
               size="sm"
               className="rounded-full text-xs h-6 py-0 px-2.5"
             >
-              <Link href={`/blog/tag/${generateSlug(tag)}`}>{tag}</Link>
+              <Link href={`/blog?tag=${generateSlug(tag)}`}>{tag}</Link>
             </Button>
           ))}
       </div>

@@ -258,7 +258,7 @@ export default async function BlogPost({
 
                 {postFrontmatter.category && (
                   <Link
-                    href={`/blog/category/${generateSlug(
+                    href={`/blog?category=${generateSlug(
                       postFrontmatter.category
                     )}`}
                     className="text-primary hover:underline"
@@ -309,7 +309,7 @@ export default async function BlogPost({
                         size="sm"
                         className="rounded-full text-xs h-6 py-0 px-2.5"
                       >
-                        <Link href={`/blog/tag/${generateSlug(tag)}`}>
+                        <Link href={`/blog?tag=${generateSlug(tag)}`}>
                           {tag}
                         </Link>
                       </Button>
