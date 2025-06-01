@@ -1,3 +1,4 @@
+
 export const MONTHS = [
   "January",
   "February",
@@ -37,3 +38,84 @@ export const CURRENCY_FORMAT_DECIMAL = {
 };
 
 export const DEFAULT_BLOG_PAGINATION_SIZE = 3;
+
+
+export const SupportedCurrencies = [
+  {
+    label: "₹ INR - Indian Rupee",
+    symbol: "₹",
+    currency: "INR",
+    iso: "en-IN",
+    flag: "IN",
+    flagEmoji: "🇮🇳",
+    style: "currency",
+    currencyDisplay: "symbol",
+    maximumFractionDigits: 2,
+  },
+  {
+    label: "$ USD - United States Dollar",
+    symbol: "$",
+    currency: "USD",
+    iso: "en-US",
+    flag: "US",
+    flagEmoji: "🇺🇸",
+    style: "currency",
+    currencyDisplay: "symbol",
+    maximumFractionDigits: 2,
+  },
+  {
+    label: "€ EUR - Euro",
+    symbol: "€",
+    currency: "EUR",
+    iso: "de-DE",
+    flag: "EU",
+    flagEmoji: "🇪🇺",
+    style: "currency",
+    currencyDisplay: "symbol",
+    maximumFractionDigits: 2,
+  },
+  {
+    label: "£ GBP - British Pound Sterling",
+    symbol: "£",
+    currency: "GBP",
+    iso: "en-GB",
+    flag: "GB",
+    flagEmoji: "🇬🇧",
+    style: "currency",
+    currencyDisplay: "symbol",
+    maximumFractionDigits: 2,
+  },
+  {
+    label: "¥ JPY - Japanese Yen",
+    symbol: "¥",
+    currency: "JPY",
+    iso: "ja-JP",
+    flag: "JP",
+    flagEmoji: "🇯🇵",
+    style: "currency",
+    currencyDisplay: "symbol",
+    maximumFractionDigits: 0,
+  },
+  {
+    label: "₩ KRW - South Korean Won",
+    symbol: "₩",
+    currency: "KRW",
+    iso: "ko-KR",
+    flag: "KR",
+    flagEmoji: "🇰🇷",
+    style: "currency",
+    currencyDisplay: "symbol",
+    maximumFractionDigits: 0,
+  },
+  {
+    label: "₽ RUB - Russian Ruble",
+    symbol: "₽",
+    currency: "RUB",
+    iso: "ru-RU",
+    flag: "RU",
+    flagEmoji: "🇷🇺",
+    style: "currency",
+    currencyDisplay: "symbol",
+    maximumFractionDigits: 2,
+  },  
+]

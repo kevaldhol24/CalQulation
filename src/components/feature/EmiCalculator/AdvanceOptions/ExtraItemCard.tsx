@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { CURRENCY_ISO } from "@/lib/constants";
-import { formateCurrency } from "@/lib/utils";
+import { currency } from "@/services/CurrencyService";
 import {
   EMIChangeImpact,
   InterestRateChangeImpact,
@@ -98,17 +97,13 @@ export const ExtraItemCard = ({
   // Get theme colors
   const theme = colorThemes[color];
   const badgeTheme = badgeColor ? colorThemes[badgeColor] : theme;
+  const { formateCurrency } = currency();
 
   const formatValue = (value: number) => {
     if (displayType === "percentage") {
       return `${value}%`;
     } else {
-      return new Intl.NumberFormat(CURRENCY_ISO, {
-        style: "currency",
-        currency: "INR",
-        currencyDisplay: "symbol",
-        maximumFractionDigits: 0,
-      }).format(value);
+      return formateCurrency(value);
     }
   }; // Calculate impact based on the type of change
   const refinedImpact: CollectedImpact | null = useMemo(() => {

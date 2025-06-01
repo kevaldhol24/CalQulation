@@ -4,7 +4,6 @@ import { CollapsibleWrapper } from "@/components/common/CollapsibleWrapper";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLoan } from "@/contexts/LoanContext";
 import { MONTHS } from "@/lib/constants";
-import { formateCurrency } from "@/lib/utils";
 import { EMIScheduleItem } from "loanwise";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import React, { useMemo, useState } from "react";
@@ -23,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../ui/tooltip";
+import { currency } from "@/services/CurrencyService";
 
 interface YearSummary {
   year: string;
@@ -41,6 +41,7 @@ export const EmiSchedule = () => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   const { loanResults, isLoading, isInitialLoad } = useLoan();
+  const { formateCurrency } = currency();
 
   const yearGroupedData = useMemo(() => {
     // Group EMI items by year

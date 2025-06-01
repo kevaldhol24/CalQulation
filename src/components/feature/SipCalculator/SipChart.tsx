@@ -4,7 +4,7 @@ import { CollapsibleWrapper } from "@/components/common/CollapsibleWrapper";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSip } from "@/contexts/SIPContext";
-import { formateCurrency } from "@/lib/utils";
+import { currency } from "@/services/CurrencyService";
 import {
     BarElement,
     CategoryScale,
@@ -35,6 +35,7 @@ export const SipCharts = () => {
   const { sipResults, sipInputs, isLoading } = useSip();
   const { theme, systemTheme } = useTheme();
   const [isExpanded, setIsExpanded] = useState(true);
+  const { formateCurrency } = currency();
 
   // Determine if we're in dark mode
   const isDarkTheme =

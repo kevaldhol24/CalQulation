@@ -1,7 +1,6 @@
 "use client";
 
 import { useLoan } from "@/contexts/LoanContext";
-import { formateCurrency } from "@/lib/utils";
 import moment from "moment";
 import { FaMoneyBills } from "react-icons/fa6";
 import { GiMoneyStack } from "react-icons/gi";
@@ -13,10 +12,12 @@ import { ShareButton } from "./ShareButton";
 import { SummaryCard } from "./SummaryCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useMemo } from "react";
+import { currency } from "@/services/CurrencyService";
 
 export const LoanSummary = () => {
   // Get loanResults from context
   const { loanResults, isLoading, isInitialLoad } = useLoan();
+  const { formateCurrency } = currency();
 
   // Loading state
   const LoanSummaryLoadingSkeleton = () => (

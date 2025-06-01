@@ -2,7 +2,7 @@
 
 import { CollapsibleWrapper } from "@/components/common/CollapsibleWrapper";
 import { useLoan } from "@/contexts/LoanContext";
-import { formateCurrency } from "@/lib/utils";
+import { currency } from "@/services/CurrencyService";
 import {
   ArcElement,
   BarElement,
@@ -59,6 +59,7 @@ export const LoanCharts = () => {
   const { theme, systemTheme } = useTheme();
   // State for tracking expanded/collapsed state (default: expanded)
   const [isExpanded, setIsExpanded] = useState(true);
+  const { formateCurrency } = currency();
 
   // Determine if we're in dark mode
   const isDarkTheme =

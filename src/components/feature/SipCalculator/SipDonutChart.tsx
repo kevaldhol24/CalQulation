@@ -3,7 +3,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSip } from "@/contexts/SIPContext";
-import { formateCurrency } from "@/lib/utils";
+import { currency } from "@/services/CurrencyService";
 import {
   ArcElement,
   Chart as ChartJS,
@@ -19,6 +19,8 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const SipDonutChart = () => {
+  const { formateCurrency } = currency();
+
   const { sipResults, sipInputs, isLoading } = useSip();
   const { theme, systemTheme } = useTheme();
   const standardChartRef = useRef<ChartJS<"doughnut", number[], string>>(null);

@@ -13,6 +13,7 @@ import {
 import { HeaderClient } from "./HeaderClient";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
+import { CurrencySelector } from "./CurrencySelector";
 import { NewspaperIcon } from "lucide-react";
 
 export const Header = () => {
@@ -74,9 +75,10 @@ export const Header = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </nav>
-
-        <div className="flex items-center gap-4">
+        </nav>        <div className="flex items-center gap-3">
+          {/* Currency Selector */}
+          <CurrencySelector />
+          
           {/* Mobile menu - shown only on small screens */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="md:hidden">
