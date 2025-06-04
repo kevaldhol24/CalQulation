@@ -2,7 +2,6 @@ import { PageHero } from "@/components/common/PageHero";
 import { LatestFromOurBlog } from "@/components/feature/Blog/LatestFromOurBlog";
 import { Metadata } from "next";
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { BsBank, BsCalculator, BsGraphUp } from "react-icons/bs";
 import {
   FaArrowRight,
@@ -37,28 +36,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  // Read the cookie set by middleware
-  // console.log('=== HOME PAGE START ===')
-  const cookieStore = await cookies();
-  const testCookie = cookieStore.get('currency');
-  
-  // console.log('All cookies:', cookieStore.getAll())
-  console.log('Test cookie found:', testCookie)
-  // console.log('=== HOME PAGE END ===')
-  
   return (
-    <div className="bg-white dark:bg-gray-950 min-h-screen">
-      {/* Display cookie value for testing */}
-      {testCookie ? (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md mx-4 mt-4">
-          <strong>Cookie Test SUCCESS:</strong> {testCookie.value}
-        </div>
-      ) : (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md mx-4 mt-4">
-          <strong>Cookie Test FAILED:</strong> No cookie found
-        </div>
-      )}
-      
+    <div className="bg-white dark:bg-gray-950 min-h-screen">      
       <PageHero
         title="Welcome to Calqulation"
         subtitle="Smart financial calculation tools to help you make better

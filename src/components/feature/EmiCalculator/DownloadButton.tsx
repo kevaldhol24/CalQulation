@@ -19,7 +19,7 @@ export function DownloadButton() {
         return;
       }
 
-      const result = exportToExcel(loanResults, loanDetails);
+      const result = await exportToExcel(loanResults, loanDetails);
       
       if (result.success) {
         toast.success(`Calculation exported to ${result.fileName}`);

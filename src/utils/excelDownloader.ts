@@ -4,11 +4,11 @@ import { LoanCalculationInputs, LoanCalculationOutput } from "loanwise";
 import * as XLSX from 'xlsx-js-style';
 import moment from 'moment';
 
-export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: LoanCalculationInputs) => {
+export const exportToExcel = async (loanData: LoanCalculationOutput, loanDetails: LoanCalculationInputs) => {
   try {
     // Create a new workbook
     const workbook = XLSX.utils.book_new();
-    
+
     // Define colors for Excel styling
     const COLORS = {
       PRIMARY: "4361EE",      // Blue
@@ -21,7 +21,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
       ALT_ROW: "F5F5F5",      // Alternate row color
       RED: "FF0000"           // For warnings
     };
-    
+
     // Add workbook properties for branding
     workbook.Props = {
       Title: "Loan Calculation Report",
@@ -55,11 +55,11 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
     ];
 
     const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
-    
+
     // Apply styling to the summary sheet
     // Title styling with merged cells
-    summarySheet['A1'] = { 
-      v: 'CalQulation - Loan Summary Report', 
+    summarySheet['A1'] = {
+      v: 'CalQulation - Loan Summary Report',
       t: 's',
       s: {
         font: { bold: true, color: { rgb: COLORS.WHITE }, size: 16 },
@@ -67,7 +67,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         alignment: { horizontal: "center", vertical: "center" }
       }
     };
-    
+
     // Date styling
     summarySheet['A2'] = {
       v: 'Generated on: ' + moment().format('MMMM D, YYYY [at] h:mm A'),
@@ -77,7 +77,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         alignment: { horizontal: "left" }
       }
     };
-    
+
     // Section headers
     summarySheet['A4'] = {
       v: 'Loan Summary',
@@ -88,7 +88,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         border: { bottom: { style: "thin", color: { rgb: COLORS.LIGHT_GRAY } } }
       }
     };
-    
+
     summarySheet['A13'] = {
       v: 'Loan Details',
       t: 's',
@@ -98,7 +98,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         border: { bottom: { style: "thin", color: { rgb: COLORS.LIGHT_GRAY } } }
       }
     };
-    
+
     // Apply styling to the data rows
     const applyDataRowStyle = (row: number, key: string, value: string | number) => {
       // Key cell (Column A)
@@ -110,7 +110,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
           alignment: { horizontal: "left" }
         }
       };
-      
+
       // Value cell (Column B)
       summarySheet[`B${row}`] = {
         v: value,
@@ -122,7 +122,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         }
       };
     };
-    
+
     // Apply styles to data rows
     applyDataRowStyle(6, 'EMI', loanData.summary.emi);
     applyDataRowStyle(7, 'Loan Amount', loanData.summary.loanAmount);
@@ -130,11 +130,11 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
     applyDataRowStyle(9, 'Total Amount Payable', loanData.summary.totalAmountPayable);
     applyDataRowStyle(10, 'Total Prepayment', loanData.summary.totalPrepayment);
     applyDataRowStyle(11, 'Last Payment Date', moment(loanData.summary.lastPaymentDate).format('MMMM YYYY'));
-    
+
     applyDataRowStyle(15, 'Initial Interest Rate (%)', loanDetails.initialInterestRate);
     applyDataRowStyle(16, 'Tenure (Months)', loanDetails.tenureMonths);
     applyDataRowStyle(17, 'Start Date', moment(loanDetails.startDate).format('MMMM YYYY'));
-    
+
     // Copyright notice
     summarySheet['A19'] = {
       v: '© CalQulation - This report is for informational purposes only',
@@ -144,22 +144,22 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         alignment: { horizontal: "left" }
       }
     };
-    
+
     summarySheet['!merges'] = [
       { s: { r: 0, c: 0 }, e: { r: 0, c: 1 } },
       { s: { r: 19, c: 0 }, e: { r: 19, c: 1 } }
     ];
-    
+
     // Set column widths for better readability
     summarySheet['!cols'] = [{ wch: 25 }, { wch: 15 }];
-    
+
     XLSX.utils.book_append_sheet(workbook, summarySheet, 'Summary');
 
     // Create repayment schedule sheet
     const scheduleHeaders = [
-      'Payment Date', 
-      'EMI Number', 
-      'EMI Amount', 
+      'Payment Date',
+      'EMI Number',
+      'EMI Amount',
       'Interest Paid',
       'Principal Paid',
       'Prepayment',
@@ -168,7 +168,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
       'Remaining Balance',
       'Interest Rate (%)'
     ];
-    
+
     const scheduleData = loanData.schedule.map(item => [
       moment(new Date(item.year, item.month, 1)).format('MMMM YYYY'),
       item.emiNumber,
@@ -184,9 +184,9 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
 
     // Add headers to schedule data
     scheduleData.unshift(scheduleHeaders);
-    
+
     const scheduleSheet = XLSX.utils.aoa_to_sheet(scheduleData);
-    
+
     // Apply header styling
     const headerStyle = {
       font: { bold: true, color: { rgb: COLORS.WHITE }, size: 12 },
@@ -199,7 +199,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         right: { style: "thin", color: { rgb: COLORS.LIGHT_GRAY } }
       }
     };
-    
+
     // Apply styles to header row
     for (let i = 0; i < scheduleHeaders.length; i++) {
       const cellRef = XLSX.utils.encode_cell({ r: 0, c: i });
@@ -207,13 +207,13 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         scheduleSheet[cellRef].s = headerStyle;
       }
     }
-    
+
     // Apply alternating row styles and data formatting
     for (let i = 1; i < scheduleData.length; i++) {
       const rowStyle = {
         fill: i % 2 === 0 ? { fgColor: { rgb: COLORS.ALT_ROW } } : null
       };
-      
+
       for (let j = 0; j < scheduleData[i].length; j++) {
         const cellRef = XLSX.utils.encode_cell({ r: i, c: j });
         if (scheduleSheet[cellRef]) {
@@ -244,7 +244,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         }
       }
     }
-    
+
     // Set column widths for schedule sheet
     scheduleSheet['!cols'] = [
       { wch: 15 }, // Date
@@ -258,7 +258,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
       { wch: 12 }, // Remaining Balance
       { wch: 10 }  // Interest Rate
     ];
-    
+
     XLSX.utils.book_append_sheet(workbook, scheduleSheet, 'Repayment Schedule');
 
     // Add advanced data sheets with similar styling pattern
@@ -280,7 +280,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
       });
 
       const prepaymentSheet = XLSX.utils.aoa_to_sheet(prepaymentData);
-      
+
       // Style title
       prepaymentSheet['A1'] = {
         v: 'Prepayments - CalQulation',
@@ -291,7 +291,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
           alignment: { horizontal: "center", vertical: "center" }
         }
       };
-      
+
       // Style headers
       const headerRow = ['A4', 'B4', 'C4', 'D4'];
       headerRow.forEach(cellRef => {
@@ -309,7 +309,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
           };
         }
       });
-      
+
       prepaymentSheet['!cols'] = [{ wch: 12 }, { wch: 12 }, { wch: 15 }, { wch: 15 }];
       prepaymentSheet['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 3 } }];
       XLSX.utils.book_append_sheet(workbook, prepaymentSheet, 'Prepayments');
@@ -322,7 +322,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         [''],
         ['New Rate (%)', 'Effective Date']
       ];
-      
+
       loanDetails.interestRateChanges.forEach((change) => {
         interestData.push([
           String(change.rate),
@@ -331,7 +331,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
       });
 
       const interestSheet = XLSX.utils.aoa_to_sheet(interestData);
-      
+
       // Style title
       interestSheet['A1'] = {
         v: 'Interest Rate Changes - CalQulation',
@@ -342,7 +342,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
           alignment: { horizontal: "center", vertical: "center" }
         }
       };
-      
+
       // Style headers
       ['A4', 'B4'].forEach(cellRef => {
         if (interestSheet[cellRef]) {
@@ -359,7 +359,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
           };
         }
       });
-      
+
       interestSheet['!cols'] = [{ wch: 12 }, { wch: 15 }];
       interestSheet['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 1 } }];
       XLSX.utils.book_append_sheet(workbook, interestSheet, 'Interest Rate Changes');
@@ -372,7 +372,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         [''],
         ['New EMI', 'Start Date']
       ];
-      
+
       loanDetails.emiChanges.forEach((change) => {
         emiChangeData.push([
           String(change.emi),
@@ -381,7 +381,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
       });
 
       const emiChangeSheet = XLSX.utils.aoa_to_sheet(emiChangeData);
-      
+
       // Style title
       emiChangeSheet['A1'] = {
         v: 'EMI Changes - CalQulation',
@@ -392,7 +392,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
           alignment: { horizontal: "center", vertical: "center" }
         }
       };
-      
+
       // Style headers
       ['A4', 'B4'].forEach(cellRef => {
         if (emiChangeSheet[cellRef]) {
@@ -409,7 +409,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
           };
         }
       });
-      
+
       emiChangeSheet['!cols'] = [{ wch: 12 }, { wch: 15 }];
       emiChangeSheet['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 1 } }];
       XLSX.utils.book_append_sheet(workbook, emiChangeSheet, 'EMI Changes');
@@ -433,7 +433,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
     ];
 
     const brandingSheet = XLSX.utils.aoa_to_sheet(brandingData);
-    
+
     // Style title
     brandingSheet['A1'] = {
       v: 'CalQulation - Loan Calculation Tool',
@@ -444,7 +444,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         alignment: { horizontal: "center", vertical: "center" }
       }
     };
-    
+
     // Style date
     brandingSheet['A3'] = {
       v: 'Report generated on: ' + moment().format('MMMM D, YYYY [at] h:mm A'),
@@ -454,7 +454,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         alignment: { horizontal: "left" }
       }
     };
-    
+
     // Style disclaimer heading
     brandingSheet['A5'] = {
       v: 'Disclaimer:',
@@ -464,7 +464,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         alignment: { horizontal: "left" }
       }
     };
-    
+
     // Style copyright
     brandingSheet['A10'] = {
       v: '© ' + new Date().getFullYear() + ' CalQulation. All rights reserved.',
@@ -474,7 +474,7 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         alignment: { horizontal: "left" }
       }
     };
-    
+
     // Style warning
     brandingSheet['A13'] = {
       v: 'This document is protected and should not be modified.',
@@ -484,20 +484,20 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         alignment: { horizontal: "left" }
       }
     };
-    
+
     brandingSheet['!cols'] = [{ wch: 100 }]; // Wide column for disclaimer text
     brandingSheet['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 2 } }];
     XLSX.utils.book_append_sheet(workbook, brandingSheet, 'About');
-    
+
     // Generate Excel file
     const fileName = `Loan_Calculation_${new Date().toISOString().slice(0, 10)}.xlsx`;
-    
+
     // Add workbook structure
     if (!workbook.Workbook) workbook.Workbook = {};
-    
+
     // Add file protection settings
     workbook.Workbook.Views = [{ RTL: false }];
-    
+
     // Apply sheet protection to all sheets
     // Note: Basic protection is used here, which is not highly secure
     // but will prevent casual users from editing
@@ -518,9 +518,9 @@ export const exportToExcel = (loanData: LoanCalculationOutput, loanDetails: Loan
         pivotTables: false
       };
     }
-    
+
     XLSX.writeFile(workbook, fileName);
-    
+
     return { success: true, fileName };
   } catch (error) {
     console.error('Error exporting to Excel:', error);
