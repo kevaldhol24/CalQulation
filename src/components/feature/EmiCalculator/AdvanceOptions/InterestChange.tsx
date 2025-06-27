@@ -5,6 +5,7 @@ import {
   CalendarRange,
   Coins,
   Percent,
+  Plus,
   TrendingDown,
   TrendingUp,
 } from "lucide-react";
@@ -17,12 +18,13 @@ import {
 } from "@/components/ui/tooltip";
 import { ExtraItemCard } from "./ExtraItemCard";
 import { ImpactType, InterestRateChange } from "loanwise";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useLoan } from "@/contexts/LoanContext";
 import moment from "moment";
 import { InterestRateChangeDialog } from "./InterestRateChangeDialog";
 import { IconType } from "react-icons";
 import { isSameMonth } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export const InterestChange = () => {
   const {
@@ -30,6 +32,8 @@ export const InterestChange = () => {
     loanResults,
     setLoanDetails,
   } = useLoan();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const getRateChangeText = (rateChange: InterestRateChange) => {
     const DATE_FORMAT = "MMMM YYYY";
@@ -119,7 +123,20 @@ export const InterestChange = () => {
             </Tooltip>
           </TooltipProvider>
         </span>
-        <InterestRateChangeDialog />
+        <Button
+          variant="outline"
+          onClick={() => setIsOpen(true)}
+          className="border-dashed bg-amber-50/50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800 text-amber-600 dark:text-amber-400 hover:bg-amber-100/50 dark:hover:bg-amber-800/20 transition-all group"
+        >
+          <Plus className="size-4 group-hover:rotate-90 transition-transform duration-300" />
+          Add
+        </Button>
+        {isOpen && (
+          <InterestRateChangeDialog
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+          />
+        )}
       </h4>
 
       {interestRateChanges && interestRateChanges.length > 0 ? (

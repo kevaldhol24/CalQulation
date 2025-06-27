@@ -58,19 +58,24 @@ export const TenureInput: FC<TenureInputProps> = ({
 
   const handleChange = useCallback(
     (newValue: string | number) => {
+      if (newValue === "") {
+        setLocalValue(null);
+        return;
+      }
+
       let numericValue: number | null =
         typeof newValue === "string"
           ? parseFloat(newValue.replace(/,/g, ""))
           : newValue;
       if (isNaN(numericValue)) {
-        numericValue = localValue || defaultValue || null;
+        return;
       }
       if (numericValue && tenureUnit === "Yr") {
         numericValue = numericValue * 12;
       }
       setLocalValue(numericValue);
     },
-    [defaultValue, localValue, tenureUnit]
+    [tenureUnit]
   );
 
   const handleBlur = useCallback(() => {

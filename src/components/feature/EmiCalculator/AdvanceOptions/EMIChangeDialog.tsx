@@ -8,21 +8,24 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog";
 import { useLoan } from "@/contexts/LoanContext";
 import { formateDate, formatMonthYear, isSameMonth } from "@/lib/utils";
 import { EMIChange } from "loanwise";
-import { AlertTriangle, CreditCard, Plus, XIcon } from "lucide-react";
+import { AlertTriangle, CreditCard, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { AmountInput } from "../../../common/AmountInput";
 
-export const EMIChangeDialog = () => {
+export interface EMIChangeDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const EMIChangeDialog = ({ isOpen, onClose }: EMIChangeDialogProps) => {
   const { loanDetails, loanResults, updateLoanDetails, getMinimumEMIForMonth } =
     useLoan();
-  const [isOpen, setIsOpen] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const minStartDate = useMemo(() => {
@@ -161,24 +164,12 @@ export const EMIChangeDialog = () => {
       emiChange,
     ]);
 
-    setIsOpen(false);
+    onClose();
   };
 
   return (
     <Dialog open={isOpen}>
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          onClick={() => setIsOpen(true)}
-          className="border-dashed bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-100/50 dark:hover:bg-blue-800/20 transition-all group"
-        >
-          <Plus className="size-4 group-hover:rotate-90 transition-transform duration-300" />
-          Add
-        </Button>
-      </DialogTrigger>
-      <DialogContent
-        className="sm:max-w-[475px]"
-      >
+      <DialogContent className="sm:max-w-[475px]">
         <DialogHeader className="flex flex-row items-start justify-between">
           <div>
             <DialogTitle className="flex items-center">
@@ -192,7 +183,7 @@ export const EMIChangeDialog = () => {
           <Button
             variant="ghost"
             className="p-1 h-6 w-6"
-            onClick={() => setIsOpen(false)}
+            onClick={onClose}
           >
             <XIcon />
             <span className="sr-only">Close</span>
@@ -246,7 +237,7 @@ export const EMIChangeDialog = () => {
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline" onClick={() => setIsOpen(false)}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </DialogClose>
