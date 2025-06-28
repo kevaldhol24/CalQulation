@@ -9,12 +9,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SupportedCurrencies } from "@/lib/constants";
-import { getCurrencyCookie, setCurrencyCookie, getCurrentCurrency } from "@/services/CurrencyService";
+import {
+  getCurrencyCookie,
+  setCurrencyCookie,
+  getCurrentCurrency,
+} from "@/services/CurrencyService";
 import { FaChevronDown } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
+import { Skeleton } from "../ui/skeleton";
 
 export function CurrencySelector() {
-  const [currentCurrency, setCurrentCurrency] = useState(() => getCurrentCurrency());
+  const [currentCurrency, setCurrentCurrency] = useState(() =>
+    getCurrentCurrency()
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -27,11 +35,13 @@ export function CurrencySelector() {
     }
   }, []);
 
-  const handleCurrencyChange = (currencyData: typeof SupportedCurrencies[0]) => {
+  const handleCurrencyChange = (
+    currencyData: (typeof SupportedCurrencies)[0]
+  ) => {
     setIsLoading(true);
     setCurrencyCookie(currencyData);
     setCurrentCurrency(currencyData);
-    
+
     // Refresh the page to update all currency formatting
     setTimeout(() => {
       window.location.reload();
@@ -40,14 +50,16 @@ export function CurrencySelector() {
 
   if (!isClient) {
     return (
-      <Button 
-        variant="outline" 
+      <Button
+        variant="outline"
         size="sm"
         className="bg-input/5 hover:bg-input/10 !border-[#ffffff26] text-white hover:text-white h-9 px-3"
         disabled
       >
-        <span className="text-lg mr-2">🇮🇳</span>
-        <span className="font-medium">₹</span>
+        <span className="text-lg mr-2">
+          <Skeleton className="w-6 h-4 bg-white/20" />
+        </span>
+        <Skeleton className="w-4 h-4 bg-white/20" />
         <FaChevronDown className="ml-2 h-3 w-3" />
       </Button>
     );
@@ -56,8 +68,8 @@ export function CurrencySelector() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           size="sm"
           className="bg-input/5 hover:bg-input/10 !border-[#ffffff26] text-white hover:text-white h-9 px-3"
           disabled={isLoading}
@@ -66,8 +78,15 @@ export function CurrencySelector() {
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           ) : (
             <>
-              <span className="text-lg mr-2">{currentCurrency.flagEmoji}</span>
-              <span className="font-medium">{currentCurrency.symbol}</span>
+              <span className="text-lg mr-2">
+                <Image
+                  src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${currentCurrency.flag}.svg`}
+                  alt={`${currentCurrency.label} flag`}
+                  width={24}
+                  height={16}
+                />
+              </span>
+              <span className="font-medium mb-[2px]">{currentCurrency.symbol}</span>
             </>
           )}
           <FaChevronDown className="ml-2 h-3 w-3" />
@@ -82,18 +101,25 @@ export function CurrencySelector() {
             key={currency.currency}
             onClick={() => handleCurrencyChange(currency)}
             className={`flex items-center gap-3 cursor-pointer p-3 ${
-              currentCurrency.currency === currency.currency 
-                ? "bg-accent text-accent-foreground" 
+              currentCurrency.currency === currency.currency
+                ? "bg-accent text-accent-foreground"
                 : ""
             }`}
           >
-            <span className="text-xl">{currency.flagEmoji}</span>
+            <span className="text-xl">
+              <Image
+                src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${currency.flag}.svg`}
+                alt={`${currency.label} flag`}
+                width={24}
+                height={16}
+              />
+            </span>
             <div className="flex flex-col flex-1">
               <span className="font-medium">
                 {currency.symbol} {currency.currency}
               </span>
               <span className="text-xs text-muted-foreground">
-                {currency.label.split(' - ')[1]}
+                {currency.label.split(" - ")[1]}
               </span>
             </div>
             {currentCurrency.currency === currency.currency && (

@@ -7,7 +7,6 @@ type CurrencyData = {
     currency: string;
     iso: string;
     flag: string;
-    flagEmoji: string;
     style: string;
     currencyDisplay: string;
     maximumFractionDigits: number;
