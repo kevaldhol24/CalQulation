@@ -22,6 +22,7 @@ import {
   useState,
 } from "react";
 import { useSearchParams } from "next/navigation";
+import { InitialLoanResults } from "./InitialLoanResults";
 
 // Define types
 type LoanContextType = {
@@ -62,10 +63,10 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingShared, setIsLoadingShared] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  
+
   // Use search params to get the shared ID if available
   const searchParams = useSearchParams();
-  const sharedId = searchParams.get('share');
+  const sharedId = searchParams.get("share");
 
   // Use ref for timeout to avoid dependency cycle
   const calculationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -80,7 +81,7 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
       setIsLoadingShared(true);
       try {
         const result = await getSharedCalculation(sharedId);
-        
+
         if (result.success && result.loanDetails) {
           setLoanDetails(result.loanDetails);
         } else {
@@ -168,8 +169,13 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
       conflictingMonths: conflicts,
     };
   }, [loanDetails]);
-  
+
   useEffect(() => {
+    if (isInitialLoad && !sharedId) {
+      setLoanResults(InitialLoanResults);
+      setIsInitialLoad(false);
+      return;
+    }
     // Clear any existing timeout to prevent stale calculations
     if (calculationTimeoutRef.current) {
       clearTimeout(calculationTimeoutRef.current);

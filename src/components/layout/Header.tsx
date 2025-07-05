@@ -1,18 +1,9 @@
 import Link from "next/link";
-import { FaChartLine, FaChevronDown } from "react-icons/fa";
-import { RiMoneyDollarCircleFill } from "react-icons/ri";
-import { Button } from "../ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+import { CurrencySelector } from "./CurrencySelector";
 import { HeaderClient } from "./HeaderClient";
 import { Logo } from "./Logo";
-import { ThemeToggle } from "./ThemeToggle";
-import { CurrencySelector } from "./CurrencySelector";
 import { MobileSidebar } from "./MobileSidebar";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const Header = () => {
   return (
@@ -29,49 +20,25 @@ export const Header = () => {
           >
             Blog
           </Link>
-
           <Link
             href="/tool/emi-calculator"
             className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
           >
             EMI Calculator
           </Link>
-
           <Link
             href="/tool/sip-calculator"
             className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
           >
             SIP Calculator
           </Link>
-
           <Link
             href="/tools"
             className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
           >
             All Tools
           </Link>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex items-center gap-1">
-                Coming Soon <FaChevronDown size={12} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                disabled
-                className="flex items-center gap-2 opacity-70"
-              >
-                <FaChartLine size={14} /> Compound Interest
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                disabled
-                className="flex items-center gap-2 opacity-70"
-              >
-                <RiMoneyDollarCircleFill size={14} /> Tax Calculator
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>        </nav>
+        </nav>
         <div className="flex items-center gap-3">
           {/* Currency Selector - shown only on desktop */}
           <div className="hidden md:block">

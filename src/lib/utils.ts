@@ -50,6 +50,23 @@ export const generateSlug = (name: string): string => {
     .replace(/-+/g, '-') // Replace multiple hyphens with a single hyphen
 }
 
+export const comparisonBreakpoints = (compact?: boolean) => {
+
+  const getBreakPoint = (breakpoint: "sm" | "md" | "lg" | "xl") => {
+    const bpMapping = {
+      sm: compact ? "2xl" : "sm",
+      md: compact ? "xl" : "md",
+      lg: compact ? "2xl" : "lg",
+      xl: compact ? "xl" : "xl",
+    };
+    return bpMapping[breakpoint] || breakpoint;
+  }
+
+  return {
+    getBreakPoint
+  }
+}
+
 /**
  * Checks if we're running in development mode
  */

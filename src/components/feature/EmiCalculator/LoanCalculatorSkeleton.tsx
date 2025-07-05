@@ -1,18 +1,54 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
-export const LoanCalculatorSkeleton = () => {
+interface LoanCalculatorSkeletonProps {
+  compact?: boolean;
+}
+
+export const LoanCalculatorSkeleton: React.FC<LoanCalculatorSkeletonProps> = ({
+  compact,
+}) => {
   return (
-    <div className="bg-white/10 sm:rounded-xl backdrop-blur-xl sm:p-1.5">
-      <div>
-        <div className="bg-background sm:rounded-t-lg p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div
+      className={cn([
+        {
+          "bg-white/10 backdrop-blur-xl": true,
+          "sm:rounded-xl sm:p-1.5": !compact,
+        },
+      ])}
+    >
+      <div
+        className={cn([
+          {
+            "bg-background p-6 shadow-lg": true,
+            "sm:rounded-t-lg": !compact,
+            "2xl:rounded-t-lg pt-12 md:pt-6": compact,
+          },
+        ])}
+      >
+        <div
+          className={cn([
+            {
+              "grid grid-cols-1 gap-6 mt-2": true,
+              "lg:grid-cols-2": !compact,
+            },
+          ])}
+        >
           <div>
             <h2 className="text-lg font-bold col-span-2 flex items-center">
               <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
               Loan details
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 mt-6">
+            <div
+              className={cn([
+                {
+                  "grid grid-cols-1 gap-2 mt-2": true,
+                  "sm:grid-cols-2 lg:grid-cols-1": !compact,
+                },
+              ])}
+            >
               {/* Input fields skeletons */}
               {Array(4)
                 .fill(0)
@@ -32,7 +68,15 @@ export const LoanCalculatorSkeleton = () => {
               </h2>
               {/* No share button during loading */}
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:gap-4 mt-2">
+            <div
+              className={cn([
+                {
+                  "grid grid-cols-1 gap-2 mt-2": true,
+                  "sm:grid-cols-2 lg:gap-4": !compact,
+                  "lg:grid-cols-2 2xl:gap-4": compact,
+                },
+              ])}
+            >
               {Array(6)
                 .fill(0)
                 .map((_, i) => (
@@ -61,7 +105,14 @@ export const LoanCalculatorSkeleton = () => {
         </div>
       </div>
 
-      <div className="bg-background p-6 sm:rounded-b-lg">
+      <div
+        className={cn([
+          {
+            "bg-background p-6 shadow-lg": true,
+            "sm:rounded-b-lg": !compact,
+          },
+        ])}
+      >
         {/* Charts Skeleton */}
         <div className="mt-6">
           <Skeleton className="h-[300px] w-full" />

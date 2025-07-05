@@ -11,10 +11,15 @@ import { DownloadButton } from "./DownloadButton";
 import { ShareButton } from "./ShareButton";
 import { SummaryCard } from "./SummaryCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 import { currency } from "@/services/CurrencyService";
+import { cn } from "@/lib/utils";
 
-export const LoanSummary = () => {
+interface LoanSummaryProps {
+  compact?: boolean;
+}
+
+export const LoanSummary: FC<LoanSummaryProps> = ({ compact }) => {
   // Get loanResults from context
   const { loanResults, isLoading, isInitialLoad } = useLoan();
   const { formateCurrency } = currency();
@@ -29,7 +34,15 @@ export const LoanSummary = () => {
         </h2>
         {/* No share button during loading */}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:gap-4 mt-2">
+      <div
+        className={cn([
+          {
+            "grid grid-cols-1 gap-2 mt-2": true,
+            "sm:grid-cols-2 lg:gap-4": !compact,
+            "lg:grid-cols-2 2xl:gap-4": compact,   
+          },
+        ])}
+      >
         {Array(6)
           .fill(0)
           .map((_, i) => (
@@ -82,7 +95,15 @@ export const LoanSummary = () => {
           Loan Summary
         </h2>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:gap-3 mt-2">
+      <div
+        className={cn([
+          {
+            "grid grid-cols-1 gap-2 mt-2": true,
+            "sm:grid-cols-2 lg:gap-4": !compact,
+            "lg:grid-cols-2 2xl:gap-4": compact,   
+          },
+        ])}
+      >
         <SummaryCard
           value={formateCurrency(nextMonthEmi)}
           title="Next month EMI"
@@ -120,9 +141,9 @@ export const LoanSummary = () => {
         <SummaryCard
           value={remainingMonths}
           title="Remaining EMIs"
-          helpText={`${
-            loanResults.schedule.length - remainingMonths
-          } EMI${loanResults.schedule.length - remainingMonths === 1 ? "" : "s"} paid`}
+          helpText={`${loanResults.schedule.length - remainingMonths} EMI${
+            loanResults.schedule.length - remainingMonths === 1 ? "" : "s"
+          } paid`}
           color="purple"
           icon={<IoMdCalendar size={28} />}
         />
@@ -133,7 +154,7 @@ export const LoanSummary = () => {
       </p>
 
       <div className="flex justify-center gap-2 mt-4">
-        <ShareButton />
+       {!compact && <ShareButton />}
         <DownloadButton />
       </div>
     </div>

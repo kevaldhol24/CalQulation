@@ -1,9 +1,10 @@
 import { Breadcrumb } from "@/components/common/Breadcrumb";
 import { ToolPageHero } from "@/components/common/PageHero";
 import { Comments } from "@/components/feature/Comments";
-import { LoanCalculator } from "@/components/feature/EmiCalculator/LoanCalculator";
+import {
+  LoanCalculatorWithProvider
+} from "@/components/feature/EmiCalculator/LoanCalculator";
 import { LoanCalculatorSkeleton } from "@/components/feature/EmiCalculator/LoanCalculatorSkeleton";
-import { LoanProvider } from "@/contexts/LoanContext";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { BsBank } from "react-icons/bs";
@@ -99,9 +100,7 @@ export default function EmiCalculatorPage() {
                 </div>
               }
             >
-              <LoanProvider>
-                <LoanCalculator />
-              </LoanProvider>
+              <LoanCalculatorWithProvider />
             </Suspense>
           </div>
         </div>

@@ -1,20 +1,50 @@
 "use client";
-import { useLoan } from "@/contexts/LoanContext";
-import { formateDate } from "@/lib/utils";
-import { MonthPicker } from "../../common/MonthPicker";
-import { AdvanceLoanInputs } from "./AdvanceOptions/AdvanceLoanInputs";
-import { EmiSchedule } from "./EmiScehdule";
-import { LoanCharts } from "./LoanCharts";
+import { LoanProvider, useLoan } from "@/contexts/LoanContext";
+import { cn, formateDate } from "@/lib/utils";
 import { AmountInput } from "../../common/AmountInput";
 import { InterestInput } from "../../common/InterestInput";
+import { MonthPicker } from "../../common/MonthPicker";
 import { TenureInput } from "../../common/TenureInput";
-import { LoanSummary } from "./LoanSummary";
+import { AdvanceLoanInputs } from "./AdvanceOptions/AdvanceLoanInputs";
+import { EmiSchedule } from "./EmiScehdule";
 import { LoanCalculatorSkeleton } from "./LoanCalculatorSkeleton";
+import { LoanCharts } from "./LoanCharts";
+import { LoanSummary } from "./LoanSummary";
+import { useEffect } from "react";
+import { LoanCalculationInputs } from "loanwise";
 
-export const LoanCalculator = () => {
+interface LoanCalculatorProps {
+  compact?: boolean;
+  hideEmiSchedule?: boolean; // Optional prop to hide EMI schedule
+  hideAdvanceOptions?: boolean; // Optional prop to hide advance options
+  hideLoanCharts?: boolean; // Optional prop to hide loan charts
+  initialLoanDetails?: LoanCalculationInputs;
+}
+
+export const LoanCalculator: React.FC<LoanCalculatorProps> = ({
+  compact,
+  initialLoanDetails,
+  hideEmiSchedule,
+  hideAdvanceOptions,
+  hideLoanCharts,
+}) => {
   // Use the loan context instead of local state
-  const { loanDetails, updateLoanDetails, isSharedLoading, isInitialLoad } =
-    useLoan();
+  const {
+    loanDetails,
+    updateLoanDetails,
+    isSharedLoading,
+    isInitialLoad,
+    setLoanDetails,
+  } = useLoan();
+
+  useEffect(() => {
+    if (initialLoanDetails) {
+      setLoanDetails((prev) => ({
+        ...prev,
+        ...initialLoanDetails,
+      }));
+    }
+  }, [initialLoanDetails, setLoanDetails]);
 
   const handleChange = (value: number, key: string) => {
     if (value === loanDetails[key as keyof typeof loanDetails]) return;
@@ -23,19 +53,48 @@ export const LoanCalculator = () => {
 
   // Show skeleton during the initial load with shared calculation
   if (isInitialLoad || isSharedLoading) {
-    return <LoanCalculatorSkeleton />;
+    return <LoanCalculatorSkeleton compact={compact} />;
   }
 
   return (
-    <div className="sm:rounded-xl bg-white/10 backdrop-blur-xl sm:p-1.5">
-      <div className="bg-background sm:rounded-t-lg p-6 shadow-lg">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2">
-          <div>
+    <div
+      className={cn([
+        {
+          "bg-white/10 backdrop-blur-xl": true,
+          "sm:rounded-xl sm:p-1.5": !compact,
+        },
+      ])}
+    >
+      <div
+        className={cn([
+          {
+            "bg-background p-6 shadow-lg": true,
+            "sm:rounded-t-lg": !compact,
+            "2xl:rounded-t-lg pt-12 md:pt-6": compact,
+          },
+        ])}
+      >
+        <div
+          className={cn([
+            {
+              "grid grid-cols-1 gap-6 mt-2": true,
+              "lg:grid-cols-2": !compact,
+            },
+          ])}
+        >
+          <div className="">
             <h2 className="text-lg font-bold col-span-2 flex items-center">
               <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
               Loan details
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 mt-2">
+            <div
+              className={cn([
+                {
+                  "grid grid-cols-1 gap-2 mt-2": true,
+                  "sm:grid-cols-2 lg:grid-cols-1": !compact,
+                },
+              ])}
+            >
               <AmountInput
                 label="Loan Amount"
                 id="loan-amount"
@@ -86,21 +145,62 @@ export const LoanCalculator = () => {
             </div>
           </div>
           <div>
-            <LoanSummary />
+            <LoanSummary compact={compact} />
           </div>
         </div>
       </div>
 
-      <div className="bg-background p-6 pb-0 shadow-lg">
-        <AdvanceLoanInputs />
-      </div>
-
-      <div className="bg-background sm:rounded-b-lg p-6 shadow-lg">
-        <div>
-          <LoanCharts />
+      {!hideAdvanceOptions && (
+        <div className="bg-background p-6 pb-0 shadow-lg">
+          <AdvanceLoanInputs />
         </div>
-        <EmiSchedule />
-      </div>
+      )}
+
+      {(!hideEmiSchedule || !hideLoanCharts) && (
+        <div
+          className={cn([
+            {
+              "bg-background p-6 shadow-lg": true,
+              "sm:rounded-b-lg": !compact,
+            },
+          ])}
+        >
+          {!hideLoanCharts && (
+            <div>
+              <LoanCharts compact={compact} />
+            </div>
+          )}
+          {!hideEmiSchedule && <EmiSchedule />}
+        </div>
+      )}
     </div>
   );
+};
+
+// Higher Order Component that wraps the LoanCalculator with LoanProvider
+export const withLoanProvider = <P extends object>(
+  Component: React.ComponentType<P>
+) => {
+  const WrappedComponent: React.FC<P> = (props) => {
+    return (
+      <LoanProvider>
+        <Component {...props} />
+      </LoanProvider>
+    );
+  };
+
+  // Set display name for better debugging
+  WrappedComponent.displayName = `withLoanProvider(${
+    Component.displayName || Component.name
+  })`;
+
+  return WrappedComponent;
+};
+
+// Specific HOC for LoanCalculator
+export const LoanCalculatorWithProvider = withLoanProvider(LoanCalculator);
+
+// Legacy HOC for backward compatibility
+export const LoanCalculatorHOC: React.FC<LoanCalculatorProps> = (props) => {
+  return <LoanCalculatorWithProvider {...props} />;
 };
