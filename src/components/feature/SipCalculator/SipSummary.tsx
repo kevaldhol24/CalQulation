@@ -2,17 +2,18 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSip } from "@/contexts/SIPContext";
-import { formateCurrency } from "@/lib/utils";
 import { FaChartLine, FaMoneyBills, FaPercent } from "react-icons/fa6";
 import { GiMoneyStack } from "react-icons/gi";
 import { GrMoney } from "react-icons/gr";
 import { TbMoneybag } from "react-icons/tb";
 import { SummaryCard } from "../EmiCalculator/SummaryCard";
 import { SipDonutChart } from "./SipDonutChart";
+import { currency } from "@/services/CurrencyService";
 
 export const SipSummary = () => {
   // Get loanResults from context
   const { sipResults, isLoading, sipInputs } = useSip();
+  const { formateCurrency } = currency();
 
   // Loading state
   const SipSummaryLoadingSkeleton = () => (

@@ -10,12 +10,13 @@ import { useLoan } from "@/contexts/LoanContext";
 import { formatMonthYear, isSameMonth } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { EMIChange } from "loanwise";
-import { ArrowDown, ArrowUp, CreditCard } from "lucide-react";
-import { useCallback } from "react";
+import { ArrowDown, ArrowUp, CreditCard, Plus } from "lucide-react";
+import { useCallback, useState } from "react";
 import { IconType } from "react-icons";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { EMIChangeDialog } from "./EMIChangeDialog";
 import { ExtraItemCard } from "./ExtraItemCard";
+import { Button } from "@/components/ui/button";
 
 export const EmiChange = () => {
   const {
@@ -23,6 +24,7 @@ export const EmiChange = () => {
     loanResults,
     setLoanDetails,
   } = useLoan();
+  const [isOpen, setIsOpen] = useState(false);
 
   const getEmiChangeText = (emiChange: EMIChange) => {
     return `Effective from ${formatMonthYear(emiChange.startDate)}`;
@@ -92,8 +94,17 @@ export const EmiChange = () => {
             </Tooltip>
           </TooltipProvider>
         </span>
-
-        <EMIChangeDialog />
+        <Button
+          variant="outline"
+          onClick={() => setIsOpen(true)}
+          className="border-dashed bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-100/50 dark:hover:bg-blue-800/20 transition-all group"
+        >
+          <Plus className="size-4 group-hover:rotate-90 transition-transform duration-300" />
+          Add
+        </Button>
+        {isOpen && (
+          <EMIChangeDialog isOpen={isOpen} onClose={() => setIsOpen(false)} />
+        )}
       </h4>
 
       {emiChanges && emiChanges.length > 0 ? (

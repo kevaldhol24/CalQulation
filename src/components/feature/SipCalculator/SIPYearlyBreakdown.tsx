@@ -17,12 +17,13 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useSip } from "@/contexts/SIPContext";
-import { formateCurrency } from "@/lib/utils";
+import { currency } from "@/services/CurrencyService";
 import React, { useState } from "react";
 import { BiInfoCircle } from "react-icons/bi";
 
 export const SIPYearlyBreakdown = () => {
   const [isExpanded, setIsExpanded] = useState(true);
+  const { formateCurrency } = currency();
 
   const { sipResults, isLoading } = useSip();
 

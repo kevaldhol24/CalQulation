@@ -8,6 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getCurrencySymbol } from "@/services/CurrencyService";
 import { CreditCard, Percent } from "lucide-react";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
@@ -21,7 +22,7 @@ type InfoDialogProps = {
 
 export const AdvanceOptionsInfoDialog = ({ trigger }: InfoDialogProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const CURRENCY_ICON = getCurrencySymbol();
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -200,13 +201,15 @@ export const AdvanceOptionsInfoDialog = ({ trigger }: InfoDialogProps) => {
                       <span className="font-medium text-blue-700 dark:text-blue-300">
                         Increase your EMI
                       </span>
-                      <span>from ₹10,000 to ₹12,000</span>
+                      <span>
+                        from {CURRENCY_ICON}10,000 to {CURRENCY_ICON}12,000
+                      </span>
                     </li>
                     <li className="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded-md text-sm border border-emerald-100 dark:border-emerald-800/30 flex flex-col">
                       <span className="font-medium text-emerald-700 dark:text-emerald-300">
                         Make an extra payment
                       </span>
-                      <span>of ₹50,000</span>
+                      <span>of {CURRENCY_ICON}50,000</span>
                     </li>
                   </ul>
                   <p className="text-sm mt-4">
@@ -214,10 +217,12 @@ export const AdvanceOptionsInfoDialog = ({ trigger }: InfoDialogProps) => {
                   </p>
                   <ol className="space-y-2 text-sm pl-4 list-decimal">
                     <li>First, your interest drops to 8.5%</li>
-                    <li>Then your monthly payment goes up to ₹12,000</li>
                     <li>
-                      Finally, your ₹50,000 extra payment reduces your loan
-                      balance
+                      Then your monthly payment goes up to {CURRENCY_ICON}12,000
+                    </li>
+                    <li>
+                      Finally, your {CURRENCY_ICON}50,000 extra payment reduces
+                      your loan balance
                     </li>
                   </ol>
                   <p className="text-sm italic mt-2">
@@ -591,8 +596,8 @@ export const AdvanceOptionsInfoDialog = ({ trigger }: InfoDialogProps) => {
                   </p>
                   <p className="text-gray-700 dark:text-gray-300 mt-3">
                     Think of prepayments like paying your future self. For every
-                    ₹10,000 you put in now, you might save ₹15,000 or more in
-                    interest over time!
+                    {CURRENCY_ICON}10,000 you put in now, you might save{" "}
+                    {CURRENCY_ICON}15,000 or more in interest over time!
                   </p>
 
                   <div className="flex items-center mt-4 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-100 dark:border-emerald-800/30">
@@ -737,7 +742,10 @@ export const AdvanceOptionsInfoDialog = ({ trigger }: InfoDialogProps) => {
 
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 rounded-b-xl flex justify-between items-center">
           <div className="text-white text-sm">
-            Got a question about loan calculations? <Link href="/contact" className="text-accent">Contact Us</Link>
+            Got a question about loan calculations?{" "}
+            <Link href="/contact" className="text-accent">
+              Contact Us
+            </Link>
           </div>
           <Button
             onClick={() => setIsOpen(false)}

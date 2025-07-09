@@ -8,8 +8,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog";
 import {
   Select,
@@ -27,14 +26,19 @@ import {
   isSameMonth,
 } from "@/lib/utils";
 import { ImpactType, InterestRateChange } from "loanwise";
-import { AlertTriangle, Percent, Plus, XIcon } from "lucide-react";
+import { AlertTriangle, Percent, XIcon } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { InterestInput } from "../../../common/InterestInput";
-
-export const InterestRateChangeDialog = () => {
+interface InterestChangeDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+export const InterestRateChangeDialog = ({
+  isOpen,
+  onClose,
+}: InterestChangeDialogProps) => {
   const { loanDetails, loanResults, updateLoanDetails } = useLoan();
-  const [isOpen, setIsOpen] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
   const [realisticInterestError, setRealisticInterestError] = useState<
     string | null
@@ -136,7 +140,7 @@ export const InterestRateChangeDialog = () => {
       rateChange,
     ]);
 
-    setIsOpen(false);
+    onClose();
   };
 
   const hasRealisticInterest = useCallback(() => {
@@ -175,16 +179,6 @@ export const InterestRateChangeDialog = () => {
 
   return (
     <Dialog open={isOpen}>
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          onClick={() => setIsOpen(true)}
-          className="border-dashed bg-amber-50/50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800 text-amber-600 dark:text-amber-400 hover:bg-amber-100/50 dark:hover:bg-amber-800/20 transition-all group"
-        >
-          <Plus className="size-4 group-hover:rotate-90 transition-transform duration-300" />
-          Add
-        </Button>
-      </DialogTrigger>
       <DialogContent className="sm:max-w-[475px]">
         <DialogHeader className="flex flex-row items-start justify-between">
           <div>
@@ -199,7 +193,7 @@ export const InterestRateChangeDialog = () => {
           <Button
             variant="ghost"
             className="p-1 h-6 w-6"
-            onClick={() => setIsOpen(false)}
+            onClick={onClose}
           >
             <XIcon />
             <span className="sr-only">Close</span>
@@ -273,7 +267,7 @@ export const InterestRateChangeDialog = () => {
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline" onClick={() => setIsOpen(false)}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </DialogClose>

@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
   return (
-    <div className="bg-white dark:bg-gray-950 min-h-screen">
+    <div className="bg-white dark:bg-gray-950 min-h-screen">      
       <PageHero
         title="Welcome to Calqulation"
         subtitle="Smart financial calculation tools to help you make better

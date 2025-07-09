@@ -8,8 +8,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog";
 import {
   Select,
@@ -22,15 +21,22 @@ import {
 import { useLoan } from "@/contexts/LoanContext";
 import { formateDate, formatMonthYear, isSameMonth } from "@/lib/utils";
 import { ImpactType, Prepayment, PrepaymentFrequency } from "loanwise";
-import { AlertTriangle, Plus, XIcon } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { AlertTriangle, XIcon } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { TbMoneybag } from "react-icons/tb";
 import { v4 as uuid } from "uuid";
 import { AmountInput } from "../../../common/AmountInput";
 
-export const PrepaymentDialog = () => {
+export interface PrepaymentDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const PrepaymentDialog = ({
+  isOpen,
+  onClose,
+}: PrepaymentDialogProps) => {
   const { loanDetails, loanResults, updateLoanDetails } = useLoan();
-  const [isOpen, setIsOpen] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const minStartDate = useMemo(() => {
@@ -100,7 +106,7 @@ export const PrepaymentDialog = () => {
     }
   }, [isOpen, minStartDate]);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     // Check for conflicts again right before submission
     const isConflict = loanDetails.prepayments?.some((prepayment) =>
       isSameMonth(prepayment.startDate, newPrepayment.startDate)
@@ -132,25 +138,18 @@ export const PrepaymentDialog = () => {
       prepayment,
     ]);
 
-    setIsOpen(false);
-  };
+    onClose();
+  }, [
+    loanDetails.prepayments,
+    newPrepayment,
+    onClose,
+    updateLoanDetails,
+    validationError,
+  ]);
 
   return (
     <Dialog open={isOpen}>
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          onClick={() => setIsOpen(true)}
-          className="border-dashed bg-emerald-50/50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100/50 dark:hover:bg-emerald-800/20 transition-all group"
-          aria-label="Add new prepayment"
-        >
-          <Plus className="size-4" aria-hidden="true" />
-          Add
-        </Button>
-      </DialogTrigger>
-      <DialogContent
-        className="sm:max-w-[475px]"
-      >
+      <DialogContent className="sm:max-w-[475px]">
         <DialogHeader className="flex flex-row items-start justify-between">
           <div>
             <DialogTitle className="flex items-center">
@@ -164,7 +163,7 @@ export const PrepaymentDialog = () => {
           <Button
             variant="ghost"
             className="p-1 h-6 w-6"
-            onClick={() => setIsOpen(false)}
+            onClick={onClose}
             aria-label="Close dialog"
           >
             <XIcon aria-hidden="true" />
@@ -198,7 +197,6 @@ export const PrepaymentDialog = () => {
 
           <div className="grid  grid-cols-1 sm:grid-cols-2 gap-2">
             <div>
-              
               <label className="text-sm" id="prepayment-type-label">
                 Type <span className="text-destructive">*</span>
               </label>
@@ -258,7 +256,6 @@ export const PrepaymentDialog = () => {
                 : ""
             }`}
           >
-            
             <MonthPicker
               label="Start Month"
               required
@@ -292,9 +289,8 @@ export const PrepaymentDialog = () => {
           </div>
         </div>
         <DialogFooter>
-          
           <DialogClose asChild>
-            <Button variant="outline" onClick={() => setIsOpen(false)}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </DialogClose>

@@ -2,7 +2,8 @@
 
 import { CollapsibleWrapper } from "@/components/common/CollapsibleWrapper";
 import { useLoan } from "@/contexts/LoanContext";
-import { formateCurrency } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { currency } from "@/services/CurrencyService";
 import {
   ArcElement,
   BarElement,
@@ -21,7 +22,7 @@ import {
 } from "chart.js";
 import { EMIScheduleItem } from "loanwise";
 import { useTheme } from "next-themes";
-import { useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 
 // Register Chart.js components
@@ -54,11 +55,16 @@ type YearlyAmortizationData = {
   interestData: number[];
 };
 
-export const LoanCharts = () => {
+interface LoanChartsProps {
+  compact?: boolean;
+}
+
+export const LoanCharts: FC<LoanChartsProps> = ({ compact }) => {
   const { loanResults } = useLoan();
   const { theme, systemTheme } = useTheme();
   // State for tracking expanded/collapsed state (default: expanded)
   const [isExpanded, setIsExpanded] = useState(true);
+  const { formateCurrency } = currency();
 
   // Determine if we're in dark mode
   const isDarkTheme =
@@ -604,11 +610,99 @@ export const LoanCharts = () => {
   };
   // More modern card styling with refined glass effect
   const chartCardClass = isDarkTheme
-    ? "bg-gray-900/40 backdrop-blur-sm p-4 md:p-5 rounded-xl shadow-lg border border-gray-800/40 hover:bg-gray-900/50 transition-all duration-300"
-    : "bg-white/80 backdrop-blur-sm p-4 md:p-5 rounded-xl shadow-md border border-gray-100 hover:bg-white/90 transition-all duration-300";
+    ? `bg-gray-900/40 backdrop-blur-sm ${compact ? "p-3" : "p-4 md:p-5"} rounded-xl shadow-lg border border-gray-800/40 hover:bg-gray-900/50 transition-all duration-300`
+    : `bg-white/80 backdrop-blur-sm ${compact ? "p-3" : "p-4 md:p-5"} rounded-xl shadow-md border border-gray-100 hover:bg-white/90 transition-all duration-300`;
+
+  // Create compact-specific chart options
+  const compactDonutOptions: ChartOptions<"doughnut"> = {
+    ...donutOptions,
+    plugins: {
+      ...donutOptions.plugins,
+      legend: {
+        ...donutOptions.plugins?.legend,
+        display: !compact,
+      },
+    },
+  };
+
+  const compactBarOptions: ChartOptions<"bar"> = {
+    ...currencyTooltipOptions,
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+      ...currencyTooltipOptions.plugins,
+      legend: {
+        ...currencyTooltipOptions.plugins?.legend,
+        display: !compact,
+      },
+    },
+    scales: {
+      ...currencyTooltipOptions.scales,
+      x: {
+        ...currencyTooltipOptions.scales?.x,
+        ticks: {
+          ...currencyTooltipOptions.scales?.x?.ticks,
+          autoSkip: true,
+          maxTicksLimit: compact ? 8 : (amortizationData.years.length > 15 ? 15 : undefined),
+          font: {
+            ...currencyTooltipOptions.scales?.x?.ticks?.font,
+            size: compact ? 10 : 11,
+          },
+        },
+      },
+      y: {
+        ...currencyTooltipOptions.scales?.y,
+        ticks: {
+          ...currencyTooltipOptions.scales?.y?.ticks,
+          font: {
+            ...currencyTooltipOptions.scales?.y?.ticks?.font,
+            size: compact ? 10 : 12,
+          },
+        },
+      },
+    },
+  };
+
+  const compactLineOptions: ChartOptions<"line"> = {
+    ...currencyTooltipOptions,
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+      ...currencyTooltipOptions.plugins,
+      legend: {
+        ...currencyTooltipOptions.plugins?.legend,
+        display: !compact,
+      },
+    },
+    scales: {
+      ...currencyTooltipOptions.scales,
+      x: {
+        ...currencyTooltipOptions.scales?.x,
+        ticks: {
+          ...currencyTooltipOptions.scales?.x?.ticks,
+          autoSkip: true,
+          maxTicksLimit: compact ? 10 : (scheduleChartData.length > 30 ? 20 : 30),
+          font: {
+            ...currencyTooltipOptions.scales?.x?.ticks?.font,
+            size: compact ? 10 : 11,
+          },
+        },
+      },
+      y: {
+        ...currencyTooltipOptions.scales?.y,
+        ticks: {
+          ...currencyTooltipOptions.scales?.y?.ticks,
+          font: {
+            ...currencyTooltipOptions.scales?.y?.ticks?.font,
+            size: compact ? 10 : 12,
+          },
+        },
+      },
+    },
+  };
 
   return (
-    <div className="mb-8">
+    <div className={compact ? "mb-4" : "mb-8"}>
       {/* Collapsible header with toggle button - modern styling */}
       <CollapsibleWrapper
         title="Loan Visualization"
@@ -616,99 +710,84 @@ export const LoanCharts = () => {
         isExpanded={isExpanded}
         onToggle={(opened) => setIsExpanded(opened)}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div
+          className={cn([
+            {
+              "grid grid-cols-1 gap-4": compact,
+              "grid grid-cols-1 gap-6 lg:grid-cols-2": !compact,
+            },
+          ])}
+        >
           {/* Principal vs Interest Donut Chart */}
           <div
             className={`${chartCardClass} transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
           >
-            <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
+            <h3 className={`${compact ? "text-sm" : "text-base md:text-lg"} font-semibold mb-3 flex items-center`}>
               <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 mr-2.5 shadow-sm"></div>
               Payment Breakdown
             </h3>
-            <div className="h-[280px]">
-              <Doughnut data={principalVsInterestData} options={donutOptions} />
+            <div className={compact ? "h-[200px]" : "h-[280px]"}>
+              <Doughnut data={principalVsInterestData} options={compactDonutOptions} />
             </div>
-            <div className="text-center text-sm text-gray-500 dark:text-gray-300 mt-3 font-medium">
-              Total Amount: {formateCurrency(totalAmountPayable)}
+            <div className={`text-center ${compact ? "text-xs" : "text-sm"} text-gray-500 dark:text-gray-300 mt-3 font-medium`}>
+              Total: {formateCurrency(totalAmountPayable)}
             </div>
           </div>
-          {/* Yearly Amortization Bar Chart */}
-          <div
-            className={`${chartCardClass} transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
-          >
-            
-            <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
-              <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 mr-2.5 shadow-sm"></div>
-              Yearly Amortization
-            </h3>
+
+          {/* In compact mode, show only payment breakdown and balance chart */}
+          {!compact && (
+            /* Yearly Amortization Bar Chart */
             <div
-              className="overflow-x-auto sm:overflow-x-visible overflow-y-hidden relative"
-              style={{
-                minWidth: "100%",
-                width: "100%",
-                scrollbarWidth: "thin",
-                scrollbarColor: isDarkTheme
-                  ? "#4B5563 #1F2937"
-                  : "#CBD5E1 #F1F5F9",
-              }}
+              className={`${chartCardClass} transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
             >
-              
+              <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
+                <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 mr-2.5 shadow-sm"></div>
+                Yearly Amortization
+              </h3>
               <div
+                className="overflow-x-auto sm:overflow-x-visible overflow-y-hidden relative"
                 style={{
-                  minWidth:
-                    amortizationData.years.length > 10
-                      ? `${Math.max(
-                          600,
-                          Math.min(1200, amortizationData.years.length * 40)
-                        )}px`
-                      : "100%",
+                  minWidth: "100%",
                   width: "100%",
-                  maxWidth:
-                    amortizationData.years.length > 10 ? "none" : "100%",
-                  height: "280px",
+                  scrollbarWidth: "thin",
+                  scrollbarColor: isDarkTheme
+                    ? "#4B5563 #1F2937"
+                    : "#CBD5E1 #F1F5F9",
                 }}
               >
-                
-                <Bar
-                  data={yearlyAmortizationData}
-                  options={{
-                    ...currencyTooltipOptions,
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    plugins: {
-                      ...currencyTooltipOptions.plugins,
-                      legend: {
-                        ...currencyTooltipOptions.plugins?.legend,
-                        display: true,
-                      },
-                    },
-                    scales: {
-                      ...currencyTooltipOptions.scales,
-                      x: {
-                        ...currencyTooltipOptions.scales?.x,
-                        ticks: {
-                          ...currencyTooltipOptions.scales?.x?.ticks,
-                          autoSkip: true,
-                          maxTicksLimit:
-                            amortizationData.years.length > 15 ? 15 : undefined,
-                        },
-                      },
-                    },
+                <div
+                  style={{
+                    minWidth:
+                      amortizationData.years.length > 10
+                        ? `${Math.max(
+                            600,
+                            Math.min(1200, amortizationData.years.length * 40)
+                          )}px`
+                        : "100%",
+                    width: "100%",
+                    maxWidth:
+                      amortizationData.years.length > 10 ? "none" : "100%",
+                    height: "280px",
                   }}
-                />
+                >
+                  <Bar
+                    data={yearlyAmortizationData}
+                    options={compactBarOptions}
+                  />
+                </div>
+              </div>
+              <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
+                {amortizationData.years.length > 10 &&
+                  "← Swipe horizontally to see all years →"}
               </div>
             </div>
-            <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
-              {amortizationData.years.length > 10 &&
-                "← Swipe horizontally to see all years →"}
-            </div>
-          </div>
+          )}
+
           {/* Loan Balance Area Chart */}
           <div
-            className={`${chartCardClass} mb-2 lg:col-span-2 transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
+            className={`${chartCardClass} mb-2 ${!compact ? "lg:col-span-2" : ""} transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
           >
-            
-            <h3 className="text-base md:text-lg font-semibold mb-3 flex items-center">
+            <h3 className={`${compact ? "text-sm" : "text-base md:text-lg"} font-semibold mb-3 flex items-center`}>
               <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-green-500 to-teal-500 mr-2.5 shadow-sm"></div>
               Loan Balance Over Time
             </h3>
@@ -723,55 +802,35 @@ export const LoanCharts = () => {
                   : "#CBD5E1 #F1F5F9",
               }}
             >
-              
               <div
                 style={{
-                  minWidth:
-                    scheduleChartData.length > 20
-                      ? `${Math.max(
-                          800,
-                          Math.min(1600, scheduleChartData.length * 25)
-                        )}px`
-                      : "100%",
+                  minWidth: compact 
+                    ? "100%"
+                    : scheduleChartData.length > 20
+                    ? `${Math.max(
+                        800,
+                        Math.min(1600, scheduleChartData.length * 25)
+                      )}px`
+                    : "100%",
                   width: "100%",
-                  maxWidth: scheduleChartData.length > 20 ? "none" : "100%",
-                  height: "280px",
+                  maxWidth: compact 
+                    ? "100%"
+                    : scheduleChartData.length > 20 ? "none" : "100%",
+                  height: compact ? "200px" : "280px",
                 }}
               >
-                
                 <Line
                   data={balanceChartData}
-                  options={{
-                    ...currencyTooltipOptions,
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    plugins: {
-                      ...currencyTooltipOptions.plugins,
-                      legend: {
-                        ...currencyTooltipOptions.plugins?.legend,
-                        display: true,
-                      },
-                    },
-                    scales: {
-                      ...currencyTooltipOptions.scales,
-                      x: {
-                        ...currencyTooltipOptions.scales?.x,
-                        ticks: {
-                          ...currencyTooltipOptions.scales?.x?.ticks,
-                          autoSkip: true,
-                          maxTicksLimit:
-                            scheduleChartData.length > 30 ? 20 : 30,
-                        },
-                      },
-                    },
-                  }}
+                  options={compactLineOptions}
                 />
               </div>
             </div>
-            <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
-              {scheduleChartData.length > 20 &&
-                "← Swipe horizontally to see full timeline →"}
-            </div>
+            {!compact && (
+              <div className="text-xs text-right text-gray-500 dark:text-gray-400 mt-2 sm:hidden">
+                {scheduleChartData.length > 20 &&
+                  "← Swipe horizontally to see full timeline →"}
+              </div>
+            )}
           </div>
         </div>
       </CollapsibleWrapper>

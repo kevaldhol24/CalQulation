@@ -1,8 +1,8 @@
 import { PageHero } from "@/components/common/PageHero";
 import { Metadata } from "next";
 import Link from "next/link";
-import { BsBank, BsCalculator, BsGraphUp } from "react-icons/bs";
-import { FaArrowRight, FaChartLine, FaLightbulb, FaRegClock, FaTools } from "react-icons/fa";
+import { BsBank, BsCalculator, BsGraphUp, BsCreditCard } from "react-icons/bs";
+import { FaCar, FaArrowRight, FaChartLine, FaLightbulb, FaRegClock, FaTools } from "react-icons/fa";
 import { MdCalculate } from "react-icons/md";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 
@@ -46,6 +46,18 @@ export default function ToolsPage() {
           position: 2,
           name: "SIP Calculator",
           url: "https://www.calqulation.com/tool/sip-calculator"
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Car Loan Calculator",
+          url: "https://www.calqulation.com/tool/car-loan-calculator"
+        },
+        {
+          "@type": "ListItem", 
+          position: 4,
+          name: "Personal Loan Calculator",
+          url: "https://www.calqulation.com/tool/personal-loan-calculator"
         }
       ]
     }
@@ -159,6 +171,80 @@ export default function ToolsPage() {
 
                 <div className="text-center">
                   <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full text-white font-medium group-hover:from-emerald-600 group-hover:to-green-700 transition-all duration-300">
+                    Use Calculator <FaArrowRight className="ml-2" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* Car Loan Calculator Card - Available */}
+          <Link href="/tool/car-loan-calculator" className="group">
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+              <div className="h-3 bg-gradient-to-r from-orange-500 to-red-500"></div>
+              <div className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <FaCar className="text-white text-2xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                  Car Loan Calculator
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                  Calculate your car loan EMI, total interest, and monthly payments
+                  for vehicle financing.
+                </p>
+
+                <div className="flex flex-wrap gap-2 justify-center mb-6">
+                  <span className="bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs px-3 py-1 rounded-full">
+                    Auto Loans
+                  </span>
+                  <span className="bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs px-3 py-1 rounded-full">
+                    Vehicle Financing
+                  </span>
+                  <span className="bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs px-3 py-1 rounded-full">
+                    Car EMI
+                  </span>
+                </div>
+
+                <div className="text-center">
+                  <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full text-white font-medium group-hover:from-orange-600 group-hover:to-red-600 transition-all duration-300">
+                    Use Calculator <FaArrowRight className="ml-2" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* Personal Loan Calculator Card - Available */}
+          <Link href="/tool/personal-loan-calculator" className="group">
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+              <div className="h-3 bg-gradient-to-r from-pink-500 to-purple-500"></div>
+              <div className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <BsCreditCard className="text-white text-2xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                  Personal Loan Calculator
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                  Calculate your personal loan EMI, total interest, and monthly payments
+                  for all your personal financing needs.
+                </p>
+
+                <div className="flex flex-wrap gap-2 justify-center mb-6">
+                  <span className="bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 text-xs px-3 py-1 rounded-full">
+                    Personal Loans
+                  </span>
+                  <span className="bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 text-xs px-3 py-1 rounded-full">
+                    Quick Approval
+                  </span>
+                  <span className="bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 text-xs px-3 py-1 rounded-full">
+                    Flexible EMI
+                  </span>
+                </div>
+
+                <div className="text-center">
+                  <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full text-white font-medium group-hover:from-pink-600 group-hover:to-purple-600 transition-all duration-300">
                     Use Calculator <FaArrowRight className="ml-2" />
                   </span>
                 </div>

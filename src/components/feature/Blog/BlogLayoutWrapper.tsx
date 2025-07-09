@@ -3,11 +3,15 @@
 import { usePathname } from "next/navigation";
 import { IoNewspaperOutline } from "react-icons/io5";
 
-export const BlogHero: React.FC = () => {
+interface BlogHeroProps {
+  isMobileApp?: boolean;
+}
+
+export const BlogHero: React.FC<BlogHeroProps> = ({ isMobileApp }) => {
   const pathname = usePathname();
   const isIndividualBlogPost = pathname && /^\/blog\/[^\/]+$/.test(pathname);
 
-  if (isIndividualBlogPost) {
+  if (isIndividualBlogPost || isMobileApp) {
     return (
       <div className="relative">
         <div className="absolute inset-0 top-[-58px] bg-blue-900" />

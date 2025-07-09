@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import moment from "moment";
 import { twMerge } from "tailwind-merge";
-import { CURRENCY_FORMAT_DECIMAL, CURRENCY_ISO, DATE_ISO } from "./constants";
+import { DATE_ISO } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -9,12 +9,6 @@ export function cn(...inputs: ClassValue[]) {
 
 export const formateDate = (date: Date) => {
   return moment(date).format(DATE_ISO);
-};
-
-export const formateCurrency = (amount: number) => {
-  return new Intl.NumberFormat(CURRENCY_ISO, CURRENCY_FORMAT_DECIMAL as never).format(
-    amount
-  );
 };
 
 export const isInterestRateRealistic = (loanAmount: number, emi: number, interestRate: number): boolean => {
@@ -54,6 +48,23 @@ export const generateSlug = (name: string): string => {
     .trim()
     .replace(/\s+/g, '-') // Replace spaces with hyphens
     .replace(/-+/g, '-') // Replace multiple hyphens with a single hyphen
+}
+
+export const comparisonBreakpoints = (compact?: boolean) => {
+
+  const getBreakPoint = (breakpoint: "sm" | "md" | "lg" | "xl") => {
+    const bpMapping = {
+      sm: compact ? "2xl" : "sm",
+      md: compact ? "xl" : "md",
+      lg: compact ? "2xl" : "lg",
+      xl: compact ? "xl" : "xl",
+    };
+    return bpMapping[breakpoint] || breakpoint;
+  }
+
+  return {
+    getBreakPoint
+  }
 }
 
 /**

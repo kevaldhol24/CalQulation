@@ -1,16 +1,21 @@
 import { BlogHero } from "@/components/feature/Blog/BlogLayoutWrapper";
 import CategoryNav from "@/components/feature/Blog/CategoryNav";
+import { cookies } from "next/headers";
 import { Suspense } from "react";
 
-export default function BlogLayout({
+export default async function BlogLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const isMobileAppCookie = cookieStore.get("is-mobile-app");
+  const isMobileApp = isMobileAppCookie?.value === "true";
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-background">
       {/* Hero section - conditionally rendered based on route */}
-      <BlogHero />
+      <BlogHero isMobileApp={isMobileApp} />
 
       {/* Main Content Area */}
       <div className="bg-gray-50 dark:bg-background">

@@ -9,13 +9,14 @@ import {
 import { useLoan } from "@/contexts/LoanContext";
 import { motion } from "framer-motion";
 import { PrepaymentFrequency, type Prepayment as IPrepayment } from "loanwise";
-import { Rocket } from "lucide-react";
+import { Plus, Rocket } from "lucide-react";
 import moment from "moment";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { TbMoneybag } from "react-icons/tb";
 import { ExtraItemCard } from "./ExtraItemCard";
 import { PrepaymentDialog } from "./PrepaymentDialog";
+import { Button } from "@/components/ui/button";
 
 export const Prepayment = () => {
   const {
@@ -23,6 +24,7 @@ export const Prepayment = () => {
     setLoanDetails,
     loanResults,
   } = useLoan();
+  const [isOpen, setIsOpen] = useState(false);
 
   const getPrepaymentText = (prepayment: IPrepayment) => {
     const DATE_FORMAT = "MMMM YYYY";
@@ -98,7 +100,21 @@ export const Prepayment = () => {
               </Tooltip>
             </TooltipProvider>
           </span>
-          <PrepaymentDialog />
+          <Button
+            variant="outline"
+            onClick={() => setIsOpen(true)}
+            className="border-dashed bg-emerald-50/50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100/50 dark:hover:bg-emerald-800/20 transition-all group"
+            aria-label="Add new prepayment"
+          >
+            <Plus className="size-4" aria-hidden="true" />
+            Add
+          </Button>
+          {isOpen && (
+            <PrepaymentDialog
+              isOpen={isOpen}
+              onClose={() => setIsOpen(false)}
+            />
+          )}
         </h4>
 
         {prepayments && prepayments.length > 0 ? (

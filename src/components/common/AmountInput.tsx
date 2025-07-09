@@ -3,6 +3,7 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { Slider } from "./Slider";
 import { TextField } from "./TextField";
+import { getCurrencySymbol } from "@/services/CurrencyService";
 
 interface AmountInputProps
   extends Omit<
@@ -81,7 +82,7 @@ export const AmountInput: FC<AmountInputProps> = ({
       <TextField
         {...props}
         label={props.label}
-        endAdornment={"₹"}
+        endAdornment={getCurrencySymbol()}
         className="w-full pr-11"
         value={localValue ? localValue.toLocaleString() : ""}
         onChange={handleInputChange}
