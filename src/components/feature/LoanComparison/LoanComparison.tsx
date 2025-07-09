@@ -8,7 +8,13 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { HiHome } from "react-icons/hi";
 
-export default function LoanComparison() {
+interface LoanComparisonProps {
+  isFromMobileApp?: boolean;
+}
+
+export default function LoanComparison({
+  isFromMobileApp,
+}: LoanComparisonProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentLoan, setCurrentLoan] = useState(1);
 
@@ -32,19 +38,21 @@ export default function LoanComparison() {
 
   return (
     <div className="bg-gray-200 dark:bg-gray-950 min-h-screen">
-      <ToolPageHero
-        title="Loan Comparison"
-        subtitle="Compare multiple loan options side by side to make the best financial decision."
-      >
-        <Breadcrumb
-          items={[
-            { label: "Home", href: "/", icon: <HiHome /> },
-            { label: "Tools", href: "/tools" },
-            { label: "Loan Comparison", href: "/tool/loan-comparison" },
-          ]}
-          className="text-gray-300"
-        />
-      </ToolPageHero>
+      {!isFromMobileApp && (
+        <ToolPageHero
+          title="Loan Comparison"
+          subtitle="Compare multiple loan options side by side to make the best financial decision."
+        >
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/", icon: <HiHome /> },
+              { label: "Tools", href: "/tools" },
+              { label: "Loan Comparison", href: "/tool/loan-comparison" },
+            ]}
+            className="text-gray-300"
+          />
+        </ToolPageHero>
+      )}
 
       <div className="relative max-w-7xl mx-auto px-0 md:px-6 lg:px-8 z-10 pt-0 pb-0 sm:pb-8">
         <div className="md:rounded-xl md:p-1.5 bg-white/10 backdrop-blur-xl">

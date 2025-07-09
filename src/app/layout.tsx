@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
 import { ThemeProvider } from "@/components/layout/theme-provider";
-import { Footer } from "@/components/layout";
 import { NavigationProgress } from "@/components/layout/NavigationProgress";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
-import { BackToTop } from "@/components/common/BackToTop";
+import { MobileAppProvider } from "@/contexts/MobileAppContext";
+import { ConditionalLayout } from "@/components/layout/ConditionalLayout";
+import { cookies } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,11 +60,16 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.calqulation.com"),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Check if request is from mobile app using server-side cookies
+  const cookieStore = await cookies();
+  const isMobileAppCookie = cookieStore.get('is-mobile-app');
+  const initialIsMobileApp = isMobileAppCookie?.value === 'true';
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -82,16 +87,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <Suspense
-            fallback={<div className="h-1 bg-gray-200 dark:bg-gray-800"></div>}
-          >
-            <NavigationProgress />
-          </Suspense>
-          {children}
-          <Toaster position="top-right" />
-          <Footer />
-          <BackToTop />
+          <MobileAppProvider initialIsMobileApp={initialIsMobileApp}>
+            <Suspense
+              fallback={<div className="h-1 bg-gray-200 dark:bg-gray-800"></div>}
+            >
+              <NavigationProgress />
+            </Suspense>
+            <ConditionalLayout>
+              {children}
+            </ConditionalLayout>
+            <Toaster position="top-right" />
+          </MobileAppProvider>
         </ThemeProvider>
 
         {/* Structured data for rich results */}

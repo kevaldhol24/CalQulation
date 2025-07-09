@@ -1,13 +1,12 @@
 import { Breadcrumb } from "@/components/common/Breadcrumb";
 import { ToolPageHero } from "@/components/common/PageHero";
 import { Comments } from "@/components/feature/Comments";
-import {
-  LoanCalculatorWithProvider
-} from "@/components/feature/EmiCalculator/LoanCalculator";
+import { LoanCalculatorWithProvider } from "@/components/feature/EmiCalculator/LoanCalculator";
 import { LoanCalculatorSkeleton } from "@/components/feature/EmiCalculator/LoanCalculatorSkeleton";
 import { formateDate } from "@/lib/utils";
 import { LoanCalculationInputs } from "loanwise";
 import { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Suspense } from "react";
 import { FaCar, FaChartLine, FaLightbulb } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
@@ -39,7 +38,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CarLoanCalculatorPage() {
+export default async function CarLoanCalculatorPage() {
+  const cookieStore = await cookies();
+  const isMobileAppCookie = cookieStore.get("is-mobile-app");
+  const isMobileApp = isMobileAppCookie?.value === "true";
+
   // Initial values suitable for car loans
   const today = new Date();
   const initialCarLoanDetails: LoanCalculationInputs = {
@@ -84,20 +87,25 @@ export default function CarLoanCalculatorPage() {
         }}
       />
 
-      <ToolPageHero
-        title="Car Loan Calculator"
-        subtitle="Calculate your car loan EMI and plan your vehicle financing with ease."
-      >
-        <Breadcrumb
-          items={[
-            { label: "Home", href: "/", icon: <HiHome /> },
-            { label: "Tools", href: "/tools" },
-            { label: "Car Loan Calculator", href: "/tool/car-loan-calculator" },
-          ]}
-          className="text-gray-300"
-        />
-      </ToolPageHero>
-      
+      {!isMobileApp && (
+        <ToolPageHero
+          title="Car Loan Calculator"
+          subtitle="Calculate your car loan EMI and plan your vehicle financing with ease."
+        >
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/", icon: <HiHome /> },
+              { label: "Tools", href: "/tools" },
+              {
+                label: "Car Loan Calculator",
+                href: "/tool/car-loan-calculator",
+              },
+            ]}
+            className="text-gray-300"
+          />
+        </ToolPageHero>
+      )}
+
       <div className="relative max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 z-10 pt-0 pb-0 sm:pb-8">
         <div className="relative overflow-hidden">
           <div className="overflow-hidden">
@@ -108,7 +116,7 @@ export default function CarLoanCalculatorPage() {
                 </div>
               }
             >
-              <LoanCalculatorWithProvider 
+              <LoanCalculatorWithProvider
                 hideAdvanceOptions={true}
                 initialLoanDetails={initialCarLoanDetails}
               />
@@ -133,11 +141,13 @@ export default function CarLoanCalculatorPage() {
 
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800/50 dark:to-blue-900/30 p-6 rounded-xl shadow-sm">
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
-                A Car Loan Calculator is a specialized financial tool designed to help you estimate 
-                the monthly EMI (Equated Monthly Installment) for your vehicle financing. Whether 
-                you&apos;re planning to buy a new car, used car, or considering refinancing your 
-                existing auto loan, our calculator provides accurate estimates to help you make 
-                informed decisions about your car purchase.
+                A Car Loan Calculator is a specialized financial tool designed
+                to help you estimate the monthly EMI (Equated Monthly
+                Installment) for your vehicle financing. Whether you&apos;re
+                planning to buy a new car, used car, or considering refinancing
+                your existing auto loan, our calculator provides accurate
+                estimates to help you make informed decisions about your car
+                purchase.
               </p>
             </div>
           </section>
@@ -154,8 +164,9 @@ export default function CarLoanCalculatorPage() {
             </div>
 
             <p className="text-gray-700 dark:text-gray-200 leading-relaxed mb-10">
-              Our car loan calculator is specifically designed for vehicle financing, with default 
-              values and ranges optimized for car loans in India. Here&apos;s how it helps you:
+              Our car loan calculator is specifically designed for vehicle
+              financing, with default values and ranges optimized for car loans
+              in India. Here&apos;s how it helps you:
             </p>
 
             {/* Car loan specific features */}
@@ -188,7 +199,8 @@ export default function CarLoanCalculatorPage() {
                       Interest Rate
                     </h4>
                     <p className="text-gray-600 dark:text-gray-300 text-sm">
-                      Auto loan interest rate offered by your lender (typically 8-12%)
+                      Auto loan interest rate offered by your lender (typically
+                      8-12%)
                     </p>
                   </div>
 
@@ -212,8 +224,9 @@ export default function CarLoanCalculatorPage() {
                 </div>
 
                 <p className="text-gray-700 dark:text-gray-300">
-                  Our calculator instantly shows your monthly car EMI, total interest cost, 
-                  and the complete payment breakdown for your vehicle financing.
+                  Our calculator instantly shows your monthly car EMI, total
+                  interest cost, and the complete payment breakdown for your
+                  vehicle financing.
                 </p>
               </div>
             </div>
@@ -236,9 +249,9 @@ export default function CarLoanCalculatorPage() {
                   Plan Your Car Purchase Budget
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  Determine how much car you can afford based on your monthly budget. 
-                  Avoid overstretching your finances and choose a car that fits your 
-                  financial comfort zone.
+                  Determine how much car you can afford based on your monthly
+                  budget. Avoid overstretching your finances and choose a car
+                  that fits your financial comfort zone.
                 </p>
               </div>
 
@@ -247,9 +260,9 @@ export default function CarLoanCalculatorPage() {
                   Compare Car Loan Offers
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  Evaluate different car loan offers from banks, NBFCs, and car dealerships. 
-                  Compare interest rates, processing fees, and total costs to find the 
-                  best deal for your car financing.
+                  Evaluate different car loan offers from banks, NBFCs, and car
+                  dealerships. Compare interest rates, processing fees, and
+                  total costs to find the best deal for your car financing.
                 </p>
               </div>
 
@@ -258,9 +271,9 @@ export default function CarLoanCalculatorPage() {
                   Understand True Cost of Ownership
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  See the complete financial picture including total interest cost. 
-                  This helps you understand the true cost of financing your car beyond 
-                  just the monthly EMI amount.
+                  See the complete financial picture including total interest
+                  cost. This helps you understand the true cost of financing
+                  your car beyond just the monthly EMI amount.
                 </p>
               </div>
 
@@ -269,9 +282,10 @@ export default function CarLoanCalculatorPage() {
                   Make Informed Decisions
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  Get instant calculations to make quick decisions at the dealership. 
-                  Know your EMI amount beforehand to negotiate better terms and avoid 
-                  surprises during the car buying process.
+                  Get instant calculations to make quick decisions at the
+                  dealership. Know your EMI amount beforehand to negotiate
+                  better terms and avoid surprises during the car buying
+                  process.
                 </p>
               </div>
             </div>
@@ -449,9 +463,10 @@ export default function CarLoanCalculatorPage() {
                   </h3>
                   <div className="text-gray-700 dark:text-gray-300">
                     <p>
-                      Car loan interest rates in India typically range from 8% to 12% per annum, 
-                      depending on factors like your credit score, loan amount, tenure, and the 
-                      lender. Banks usually offer lower rates compared to NBFCs, and new car loans 
+                      Car loan interest rates in India typically range from 8%
+                      to 12% per annum, depending on factors like your credit
+                      score, loan amount, tenure, and the lender. Banks usually
+                      offer lower rates compared to NBFCs, and new car loans
                       often have better rates than used car loans.
                     </p>
                   </div>
@@ -466,10 +481,11 @@ export default function CarLoanCalculatorPage() {
                   </h3>
                   <div className="text-gray-700 dark:text-gray-300">
                     <p>
-                      Most lenders finance up to 80-90% of the car&apos;s on-road price. For new cars, 
-                      you can typically get up to 90% financing, while used cars may be financed 
-                      up to 80%. The loan amount also depends on your income, creditworthiness, 
-                      and repayment capacity.
+                      Most lenders finance up to 80-90% of the car&apos;s
+                      on-road price. For new cars, you can typically get up to
+                      90% financing, while used cars may be financed up to 80%.
+                      The loan amount also depends on your income,
+                      creditworthiness, and repayment capacity.
                     </p>
                   </div>
                 </div>
@@ -483,10 +499,11 @@ export default function CarLoanCalculatorPage() {
                   </h3>
                   <div className="text-gray-700 dark:text-gray-300">
                     <p>
-                      The ideal car loan tenure is typically 3-5 years. While longer tenures 
-                      (up to 7 years) reduce your EMI burden, they significantly increase the 
-                      total interest cost. Consider your cash flow and aim for the shortest 
-                      tenure you can comfortably afford.
+                      The ideal car loan tenure is typically 3-5 years. While
+                      longer tenures (up to 7 years) reduce your EMI burden,
+                      they significantly increase the total interest cost.
+                      Consider your cash flow and aim for the shortest tenure
+                      you can comfortably afford.
                     </p>
                   </div>
                 </div>
@@ -496,14 +513,17 @@ export default function CarLoanCalculatorPage() {
               <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md">
                 <div className="border-l-4 border-amber-500 p-6">
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                    Should I choose fixed or floating interest rate for car loans?
+                    Should I choose fixed or floating interest rate for car
+                    loans?
                   </h3>
                   <div className="text-gray-700 dark:text-gray-300">
                     <p>
-                      Most car loans in India come with fixed interest rates, which provide 
-                      certainty in your EMI payments. Fixed rates are generally recommended 
-                      for car loans due to their shorter tenure compared to home loans. This 
-                      helps you plan your finances better without worrying about rate fluctuations.
+                      Most car loans in India come with fixed interest rates,
+                      which provide certainty in your EMI payments. Fixed rates
+                      are generally recommended for car loans due to their
+                      shorter tenure compared to home loans. This helps you plan
+                      your finances better without worrying about rate
+                      fluctuations.
                     </p>
                   </div>
                 </div>
@@ -514,10 +534,12 @@ export default function CarLoanCalculatorPage() {
           {/* Disclaimer */}
           <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl border border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-600 dark:text-gray-400 italic">
-              Note: This car loan calculator provides estimates based on the information you provide. 
-              Actual loan terms, EMI amounts, and interest rates may vary based on the lender&apos;s 
-              specific policies, your credit profile, processing fees, and other factors. Always 
-              consult with your bank or financial institution for final loan details and terms.
+              Note: This car loan calculator provides estimates based on the
+              information you provide. Actual loan terms, EMI amounts, and
+              interest rates may vary based on the lender&apos;s specific
+              policies, your credit profile, processing fees, and other factors.
+              Always consult with your bank or financial institution for final
+              loan details and terms.
             </p>
           </div>
 

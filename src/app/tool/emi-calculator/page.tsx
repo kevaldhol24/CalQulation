@@ -1,11 +1,10 @@
 import { Breadcrumb } from "@/components/common/Breadcrumb";
 import { ToolPageHero } from "@/components/common/PageHero";
 import { Comments } from "@/components/feature/Comments";
-import {
-  LoanCalculatorWithProvider
-} from "@/components/feature/EmiCalculator/LoanCalculator";
+import { LoanCalculatorWithProvider } from "@/components/feature/EmiCalculator/LoanCalculator";
 import { LoanCalculatorSkeleton } from "@/components/feature/EmiCalculator/LoanCalculatorSkeleton";
 import { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Suspense } from "react";
 import { BsBank } from "react-icons/bs";
 import {
@@ -44,7 +43,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function EmiCalculatorPage() {
+export default async function EmiCalculatorPage() {
+  const cookieStore = await cookies();
+  const isMobileAppCookie = cookieStore.get("is-mobile-app");
+  const initialIsWeb = isMobileAppCookie?.value !== "true";
+
   // Schema.org structured data for the EMI calculator
   const calculatorSchemaJson = {
     "@context": "https://schema.org",
@@ -77,19 +80,21 @@ export default function EmiCalculatorPage() {
         }}
       />
 
-      <ToolPageHero
-        title="EMI Calculator"
-        subtitle="Get accurate EMI calculations with our advanced financial tool."
-      >
-        <Breadcrumb
-          items={[
-            { label: "Home", href: "/", icon: <HiHome /> },
-            { label: "Tools", href: "/tools" },
-            { label: "EMI Calculator", href: "/tool/emi-calculator" },
-          ]}
-          className="text-gray-300"
-        />
-      </ToolPageHero>
+      {initialIsWeb && (
+        <ToolPageHero
+          title="EMI Calculator"
+          subtitle="Get accurate EMI calculations with our advanced financial tool."
+        >
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/", icon: <HiHome /> },
+              { label: "Tools", href: "/tools" },
+              { label: "EMI Calculator", href: "/tool/emi-calculator" },
+            ]}
+            className="text-gray-300"
+          />
+        </ToolPageHero>
+      )}
       <div className="relative max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 z-10 pt-0 pb-0 sm:pb-8">
         <div className="relative overflow-hidden">
           <div className="overflow-hidden">

@@ -9,6 +9,7 @@ import { Breadcrumb } from "@/components/common/Breadcrumb";
 import { LoanCalculatorWithProvider } from "@/components/feature/EmiCalculator/LoanCalculator";
 import { LoanCalculatorSkeleton } from "@/components/feature/EmiCalculator/LoanCalculatorSkeleton";
 import { Comments } from "@/components/feature/Comments";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title:
@@ -59,7 +60,11 @@ const calculatorSchemaJson = {
   ],
 };
 
-export default function PersonalLoanCalculatorPage() {
+export default async function PersonalLoanCalculatorPage() {
+  const cookieStore = await cookies();
+  const isMobileAppCookie = cookieStore.get("is-mobile-app");
+  const isMobileApp = isMobileAppCookie?.value === "true";
+
   // Initial loan details suitable for personal loans
   const initialLoanDetails = {
     loanAmount: 500000, // ₹5,00,000 - typical personal loan amount
@@ -80,22 +85,24 @@ export default function PersonalLoanCalculatorPage() {
         }}
       />
 
-      <ToolPageHero
-        title="Personal Loan Calculator"
-        subtitle="Calculate your personal loan EMI with our advanced calculator designed for personal financing needs."
-      >
-        <Breadcrumb
-          items={[
-            { label: "Home", href: "/", icon: <HiHome /> },
-            { label: "Tools", href: "/tools" },
-            {
-              label: "Personal Loan Calculator",
-              href: "/tool/personal-loan-calculator",
-            },
-          ]}
-          className="text-gray-300"
-        />
-      </ToolPageHero>
+      {!isMobileApp && (
+        <ToolPageHero
+          title="Personal Loan Calculator"
+          subtitle="Calculate your personal loan EMI with our advanced calculator designed for personal financing needs."
+        >
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/", icon: <HiHome /> },
+              { label: "Tools", href: "/tools" },
+              {
+                label: "Personal Loan Calculator",
+                href: "/tool/personal-loan-calculator",
+              },
+            ]}
+            className="text-gray-300"
+          />
+        </ToolPageHero>
+      )}
 
       <div className="relative max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 z-10 pt-0 pb-0 sm:pb-8">
         <div className="relative overflow-hidden">
@@ -415,9 +422,9 @@ export default function PersonalLoanCalculatorPage() {
               </div>
             </div>
           </section>
-        <div>
-          <Comments postId="tool_personal-loan-calculator" />
-        </div>
+          <div>
+            <Comments postId="tool_personal-loan-calculator" />
+          </div>
         </div>
       </div>
     </div>
