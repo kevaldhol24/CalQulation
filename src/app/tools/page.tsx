@@ -1,18 +1,29 @@
 import { PageHero } from "@/components/common/PageHero";
 import { Metadata } from "next";
 import Link from "next/link";
+import { BiTransfer } from "react-icons/bi";
 import { BsBank, BsCalculator, BsGraphUp, BsCreditCard } from "react-icons/bs";
-import { FaCar, FaArrowRight, FaChartLine, FaLightbulb, FaRegClock, FaTools } from "react-icons/fa";
+import {
+  FaCar,
+  FaArrowRight,
+  FaChartLine,
+  FaLightbulb,
+  FaRegClock,
+  FaTools,
+} from "react-icons/fa";
 import { MdCalculate } from "react-icons/md";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 
 export const metadata: Metadata = {
   title: "Financial Tools | Calqulation - Smart Financial Calculators",
-  description: "Explore our comprehensive suite of financial calculators and tools. Calculate EMIs, SIPs, and more with our powerful and easy-to-use financial tools.",
-  keywords: "financial tools, financial calculators, EMI calculator, SIP calculator, loan calculator, investment calculator, financial planning tools",
+  description:
+    "Explore our comprehensive suite of financial calculators and tools. Calculate EMIs, SIPs, and more with our powerful and easy-to-use financial tools.",
+  keywords:
+    "financial tools, financial calculators, EMI calculator, SIP calculator, loan calculator, investment calculator, financial planning tools",
   openGraph: {
     title: "Financial Tools | Calqulation - Smart Financial Calculators",
-    description: "Explore our comprehensive suite of financial calculators and tools. Calculate EMIs, SIPs, and more with our powerful and easy-to-use financial tools.",
+    description:
+      "Explore our comprehensive suite of financial calculators and tools. Calculate EMIs, SIPs, and more with our powerful and easy-to-use financial tools.",
     url: "https://www.calqulation.com/tool",
     images: [
       {
@@ -31,7 +42,8 @@ export default function ToolsPage() {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: "Financial Tools & Calculators",
-    description: "A comprehensive collection of financial tools and calculators for loans, investments, and financial planning.",
+    description:
+      "A comprehensive collection of financial tools and calculators for loans, investments, and financial planning.",
     mainEntity: {
       "@type": "ItemList",
       itemListElement: [
@@ -39,28 +51,28 @@ export default function ToolsPage() {
           "@type": "ListItem",
           position: 1,
           name: "EMI Calculator",
-          url: "https://www.calqulation.com/tool/emi-calculator"
+          url: "https://www.calqulation.com/tool/emi-calculator",
         },
         {
           "@type": "ListItem",
           position: 2,
           name: "SIP Calculator",
-          url: "https://www.calqulation.com/tool/sip-calculator"
+          url: "https://www.calqulation.com/tool/sip-calculator",
         },
         {
           "@type": "ListItem",
           position: 3,
           name: "Car Loan Calculator",
-          url: "https://www.calqulation.com/tool/car-loan-calculator"
+          url: "https://www.calqulation.com/tool/car-loan-calculator",
         },
         {
-          "@type": "ListItem", 
+          "@type": "ListItem",
           position: 4,
           name: "Personal Loan Calculator",
-          url: "https://www.calqulation.com/tool/personal-loan-calculator"
-        }
-      ]
-    }
+          url: "https://www.calqulation.com/tool/personal-loan-calculator",
+        },
+      ],
+    },
   };
 
   return (
@@ -98,7 +110,8 @@ export default function ToolsPage() {
             <span className="block">Our Financial Calculators</span>
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400">
-            Powerful tools to help you plan your financial future with confidence
+            Powerful tools to help you plan your financial future with
+            confidence
           </p>
         </div>
 
@@ -141,6 +154,42 @@ export default function ToolsPage() {
             </div>
           </Link>
 
+          {/* Loan Comparison Card - Available */}
+          <Link href="/tool/loan-comparison" className="group">
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+              <div className="h-3 bg-gradient-to-r from-yellow-600 to-red-800"></div>
+              <div className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-yellow-600 to-red-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <BiTransfer className="text-white text-2xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                  Loan Comparison
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                  Compare different loan offers, interest rates, and EMIs to find the best option for you .
+                </p>
+
+                <div className="flex flex-wrap gap-2 justify-center mb-6">
+                  <span className="bg-blue-50 dark:bg-blue-900/30 text-yellow-700 dark:text-yellow-300 text-xs px-3 py-1 rounded-full">
+                    Home Loans
+                  </span>
+                  <span className="bg-blue-50 dark:bg-blue-900/30 text-yellow-700 dark:text-yellow-300 text-xs px-3 py-1 rounded-full">
+                    Car Loans
+                  </span>
+                  <span className="bg-blue-50 dark:bg-blue-900/30 text-yellow-700 dark:text-yellow-300 text-xs px-3 py-1 rounded-full">
+                    Personal Loans
+                  </span>
+                </div>
+
+                <div className="text-center">
+                  <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-yellow-600 to-red-800 rounded-full text-white font-medium group-hover:from-yellow-500 group-hover:to-red-700 transition-all duration-300">
+                    Use Calculator <FaArrowRight className="ml-2" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
           {/* SIP Calculator Card - Available */}
           <Link href="/tool/sip-calculator" className="group">
             <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
@@ -153,8 +202,8 @@ export default function ToolsPage() {
                   SIP Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate SIP returns, total wealth gain, and view detailed yearly
-                  breakdown of your investments.
+                  Calculate SIP returns, total wealth gain, and view detailed
+                  yearly breakdown of your investments.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
@@ -190,8 +239,8 @@ export default function ToolsPage() {
                   Car Loan Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate your car loan EMI, total interest, and monthly payments
-                  for vehicle financing.
+                  Calculate your car loan EMI, total interest, and monthly
+                  payments for vehicle financing.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
@@ -227,8 +276,8 @@ export default function ToolsPage() {
                   Personal Loan Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate your personal loan EMI, total interest, and monthly payments
-                  for all your personal financing needs.
+                  Calculate your personal loan EMI, total interest, and monthly
+                  payments for all your personal financing needs.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
@@ -269,7 +318,7 @@ export default function ToolsPage() {
                   FD Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate maturity amount, interest earned and plan your fixed 
+                  Calculate maturity amount, interest earned and plan your fixed
                   deposits effectively.
                 </p>
 
@@ -305,7 +354,7 @@ export default function ToolsPage() {
                   CAGR Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate Compound Annual Growth Rate for your investments and 
+                  Calculate Compound Annual Growth Rate for your investments and
                   compare investment performance.
                 </p>
 
@@ -341,8 +390,8 @@ export default function ToolsPage() {
                   Income Tax Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate your income tax liability and plan your taxes efficiently 
-                  with detailed tax breakdown.
+                  Calculate your income tax liability and plan your taxes
+                  efficiently with detailed tax breakdown.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
@@ -368,7 +417,8 @@ export default function ToolsPage() {
               Why Use Our Financial Tools?
             </h2>
             <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400">
-              Smart features designed to enhance your financial planning experience
+              Smart features designed to enhance your financial planning
+              experience
             </p>
           </div>
 
@@ -381,7 +431,7 @@ export default function ToolsPage() {
                 Accurate Calculations
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                Our tools use precise financial algorithms to provide you with 
+                Our tools use precise financial algorithms to provide you with
                 accurate results and forecasts for your financial decisions.
               </p>
             </div>
@@ -394,8 +444,8 @@ export default function ToolsPage() {
                 Interactive Visualizations
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                Visual charts and graphs help you understand complex financial data 
-                at a glance and make informed decisions.
+                Visual charts and graphs help you understand complex financial
+                data at a glance and make informed decisions.
               </p>
             </div>
 
@@ -407,8 +457,9 @@ export default function ToolsPage() {
                 Advanced Options
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                Customize calculations with advanced features like step-up investments, 
-                prepayments, floating rates, and inflation adjustments.
+                Customize calculations with advanced features like step-up
+                investments, prepayments, floating rates, and inflation
+                adjustments.
               </p>
             </div>
           </div>
@@ -421,8 +472,8 @@ export default function ToolsPage() {
               Start Planning Your Financial Future Today
             </h3>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-              Explore our powerful financial tools and get started on your journey 
-              towards financial freedom and security.
+              Explore our powerful financial tools and get started on your
+              journey towards financial freedom and security.
             </p>
             <div className="flex justify-center gap-4 flex-wrap">
               <Link href="/tool/emi-calculator" className="group">

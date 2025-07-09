@@ -10,7 +10,7 @@ import { EmiSchedule } from "./EmiScehdule";
 import { LoanCalculatorSkeleton } from "./LoanCalculatorSkeleton";
 import { LoanCharts } from "./LoanCharts";
 import { LoanSummary } from "./LoanSummary";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { LoanCalculationInputs } from "loanwise";
 
 interface LoanCalculatorProps {
@@ -37,12 +37,17 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({
     setLoanDetails,
   } = useLoan();
 
+  // Use a ref to track if we've already set initial details to prevent loops
+  const initialDetailsSetRef = useRef(false);
+  
   useEffect(() => {
-    if (initialLoanDetails) {
+    // Only set initial loan details once
+    if (initialLoanDetails && !initialDetailsSetRef.current) {
       setLoanDetails((prev) => ({
         ...prev,
         ...initialLoanDetails,
       }));
+      initialDetailsSetRef.current = true;
     }
   }, [initialLoanDetails, setLoanDetails]);
 

@@ -68,19 +68,25 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
   const searchParams = useSearchParams();
   const sharedId = searchParams.get("share");
 
-  // Use ref for timeout to avoid dependency cycle
+  // Use ref for timeout to avoid dependency cycle and track if we've loaded shared calculation
   const calculationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hasLoadedSharedRef = useRef<boolean>(false);
+  
   // Load shared calculation if the ID is provided in the URL
   useEffect(() => {
+    // Store current sharedId to avoid conflicts with new IDs
+    const currentSharedId = sharedId;
+    
     const loadSharedCalculation = async () => {
-      if (!sharedId) {
+      // If no shared ID or we've already loaded this shared calculation, skip
+      if (!currentSharedId || hasLoadedSharedRef.current) {
         setIsInitialLoad(false);
         return;
       }
 
       setIsLoadingShared(true);
       try {
-        const result = await getSharedCalculation(sharedId);
+        const result = await getSharedCalculation(currentSharedId);
 
         if (result.success && result.loanDetails) {
           setLoanDetails(result.loanDetails);
@@ -90,12 +96,21 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
       } catch (error) {
         // console.error("Error loading shared calculation:", error);
       } finally {
+        // Mark that we've loaded the shared calculation
+        hasLoadedSharedRef.current = true;
         setIsLoadingShared(false);
         setIsInitialLoad(false);
       }
     };
 
     loadSharedCalculation();
+    
+    // Reset the loaded flag when sharedId changes
+    return () => {
+      if (currentSharedId !== sharedId) {
+        hasLoadedSharedRef.current = false;
+      }
+    };
   }, [sharedId]);
 
   // Update specific loan detail field
@@ -171,11 +186,18 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
   }, [loanDetails]);
 
   useEffect(() => {
+    // If initial load and no shared ID, set initial results
     if (isInitialLoad && !sharedId) {
       setLoanResults(InitialLoanResults);
       setIsInitialLoad(false);
       return;
     }
+    
+    // Skip recalculation if still in initial load or shared loading state
+    if (isInitialLoad || isLoadingShared) {
+      return;
+    }
+    
     // Clear any existing timeout to prevent stale calculations
     if (calculationTimeoutRef.current) {
       clearTimeout(calculationTimeoutRef.current);
@@ -202,7 +224,7 @@ export const LoanProvider = ({ children }: { children: ReactNode }) => {
         clearTimeout(calculationTimeoutRef.current);
       }
     };
-  }, [loanDetails]);
+  }, [loanDetails, isInitialLoad, isLoadingShared, sharedId]);
 
   const getMinimumEMIForMonth = useCallback(
     (date: Date) => {
