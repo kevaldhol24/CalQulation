@@ -189,7 +189,7 @@ export const RDYearlyBreakdown = () => {
           </TooltipProvider>
         </div>
         <p className="text-xs text-muted-foreground mt-3 text-center italic">
-          * All amounts are shown in rupees. Interest is compounded as per the selected frequency.
+          *Interest is compounded as per the selected frequency.
         </p>
       </CollapsibleWrapper>
     </>
