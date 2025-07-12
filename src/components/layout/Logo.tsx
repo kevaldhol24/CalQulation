@@ -1,4 +1,4 @@
-import { MdCalculate } from "react-icons/md";
+import Image from "next/image";
 
 interface LogoProps {
   flag?: boolean;
@@ -6,9 +6,7 @@ interface LogoProps {
 
 export const Logo = ({ flag }: LogoProps) => (
   <div className="flex items-center gap-2">
-    <div className="bg-[#a419ff] p-2 rounded-lg shadow-md group-hover:shadow-lg transition-all duration-300">
-      <MdCalculate className="text-white text-xl" />
-    </div>
+    <Image src={flag ? "/Images/logo/Calqulation-light.svg" : "/Images/logo/Calqulation.svg"} height={40} width={40} alt="logo"/>
     <span
       className={`text-xl font-bold bg-gradient-to-r bg-clip-text text-transparent${
         flag
