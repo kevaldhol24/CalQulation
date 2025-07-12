@@ -68,7 +68,7 @@ export default async function GoalBasedSIPCalculatorPage() {
       {!isMobileApp && (
         <ToolPageHero
           title="Goal-Based SIP Calculator"
-          subtitle="Calculate the monthly SIP amount needed to achieve your financial goals. Plan your systematic investments with precision and track your progress."
+          subtitle="Calculate the monthly SIP amount needed to achieve your financial goals."
         >
           <Breadcrumb
             items={[

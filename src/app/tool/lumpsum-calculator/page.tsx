@@ -67,8 +67,8 @@ export default async function LumpsumCalculatorPage() {
 
       {!isMobileApp && (
         <ToolPageHero
-          title="Lumpsum Investment Calculator"
-          subtitle="Calculate the future value of your lumpsum investment with compound interest. Plan your one-time investments with accurate projections and yearly breakdowns."
+          title="Lumpsum SIP Calculator"
+          subtitle="Calculate the future value of your lumpsum investment with compound interest."
         >
           <Breadcrumb
             items={[
