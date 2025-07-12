@@ -8,10 +8,11 @@ import {
   FaChartBar,
   FaChartLine,
   FaLightbulb,
-  FaRegClock
+  FaRegClock,
+  FaBalanceScale
 } from "react-icons/fa";
-import { MdCalculate } from "react-icons/md";
-import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import { MdCalculate, MdExplore } from "react-icons/md";
+
 
 export const metadata: Metadata = {
   title: "Calqulation | Free Online Financial Calculators & Tools",
@@ -69,116 +70,162 @@ export default async function Home() {
           </p>
         </div>
 
-        {/* Calculator cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* EMI Calculator Card - Available */}
+        {/* Featured Calculator cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          {/* EMI Calculator Card */}
           <Link href="/tool/emi-calculator" className="group">
-            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
-              <div className="h-3 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-              <div className="p-8">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <MdCalculate className="text-white text-2xl" />
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transform transition-all duration-500 hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-gray-700 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/10 dark:to-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="h-3 bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600"></div>
+              <div className="p-8 relative z-10">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
+                  <MdCalculate className="text-white text-3xl" />
                 </div>
-                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                   EMI Calculator
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6 leading-relaxed">
                   Calculate your loan EMI, total interest payable, and generate
-                  a detailed amortization schedule.
+                  a detailed amortization schedule with smart insights.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
-                  <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs px-3 py-1 rounded-full">
+                  <span className="bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-700 dark:text-blue-300 text-xs px-3 py-2 rounded-full font-medium">
                     Home Loans
                   </span>
-                  <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs px-3 py-1 rounded-full">
+                  <span className="bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-700 dark:text-blue-300 text-xs px-3 py-2 rounded-full font-medium">
                     Car Loans
                   </span>
-                  <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs px-3 py-1 rounded-full">
+                  <span className="bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-700 dark:text-blue-300 text-xs px-3 py-2 rounded-full font-medium">
                     Personal Loans
                   </span>
                 </div>
 
                 <div className="text-center">
-                  <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-medium group-hover:from-blue-600 group-hover:to-purple-700 transition-all duration-300">
-                    Use Calculator <FaArrowRight className="ml-2" />
+                  <span className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-semibold group-hover:from-blue-600 group-hover:to-purple-700 transition-all duration-300 shadow-lg group-hover:shadow-xl">
+                    Calculate Now <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
                 </div>
               </div>
             </div>
           </Link>
 
-          {/* Compound Interest Calculator Card - Coming Soon */}
+          {/* SIP Calculator Card */}
           <Link href="/tool/sip-calculator" className="group">
-            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
-              <div className="h-3 bg-gradient-to-r from-emerald-500 to-green-600"></div>
-              <div className="p-8">
-                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <BsGraphUp className="text-white text-2xl" />
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transform transition-all duration-500 hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-gray-700 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/10 dark:to-green-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="h-3 bg-gradient-to-r from-emerald-500 via-emerald-600 to-green-600"></div>
+              <div className="p-8 relative z-10">
+                <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
+                  <BsGraphUp className="text-white text-3xl" />
                 </div>
-                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-4 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300">
                   SIP Calculator
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6 leading-relaxed">
                   Calculate SIP returns, total wealth gain, and view detailed
-                  yearly breakdown of your investments.
+                  yearly breakdown of your investment journey.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
-                  <span className="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs px-3 py-1 rounded-full">
+                  <span className="bg-gradient-to-r from-emerald-100 to-green-100 dark:from-emerald-900/30 dark:to-green-900/30 text-emerald-700 dark:text-emerald-300 text-xs px-3 py-2 rounded-full font-medium">
                     Mutual Funds
                   </span>
-                  <span className="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs px-3 py-1 rounded-full">
+                  <span className="bg-gradient-to-r from-emerald-100 to-green-100 dark:from-emerald-900/30 dark:to-green-900/30 text-emerald-700 dark:text-emerald-300 text-xs px-3 py-2 rounded-full font-medium">
                     Wealth Creation
                   </span>
-                  <span className="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs px-3 py-1 rounded-full">
+                  <span className="bg-gradient-to-r from-emerald-100 to-green-100 dark:from-emerald-900/30 dark:to-green-900/30 text-emerald-700 dark:text-emerald-300 text-xs px-3 py-2 rounded-full font-medium">
                     Retirement
                   </span>
                 </div>
 
                 <div className="text-center">
-                  <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full text-white font-medium group-hover:from-emerald-600 group-hover:to-green-700 transition-all duration-300">
-                    Use Calculator <FaArrowRight className="ml-2" />
+                  <span className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full text-white font-semibold group-hover:from-emerald-600 group-hover:to-green-700 transition-all duration-300 shadow-lg group-hover:shadow-xl">
+                    Calculate Now <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
                 </div>
               </div>
             </div>
           </Link>
 
-          {/* Tax Calculator Card - Coming Soon */}
-          <div className="h-full relative">
-            <div className="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-sm rounded-2xl overflow-hidden bg-black/20 dark:bg-black/60">
-              <span className="bg-white/80 dark:bg-gray-800/80 text-gray-800 dark:text-white px-4 py-2 rounded-full font-bold shadow-lg">
-                Coming Soon
-              </span>
-            </div>
-            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-700 opacity-75">
-              <div className="h-3 bg-gradient-to-r from-amber-500 to-orange-500"></div>
-              <div className="p-8">
-                <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <RiMoneyDollarCircleFill className="text-white text-2xl" />
+          {/* Loan Comparison Calculator Card */}
+          <Link href="/tool/loan-comparison" className="group">
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transform transition-all duration-500 hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-gray-700 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/10 dark:to-red-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="h-3 bg-gradient-to-r from-orange-500 via-orange-600 to-red-600"></div>
+              <div className="p-8 relative z-10">
+                <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
+                  <FaBalanceScale className="text-white text-3xl" />
                 </div>
-                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
-                  Tax Calculator
+                <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-4 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
+                  Loan Comparison
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Estimate your income tax liability and plan your taxes
-                  efficiently with our tax calculator.
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6 leading-relaxed">
+                  Compare different loan options side-by-side to make the best
+                  financial decision for your needs.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
-                  <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs px-3 py-1 rounded-full">
-                    Income Tax
+                  <span className="bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 text-orange-700 dark:text-orange-300 text-xs px-3 py-2 rounded-full font-medium">
+                    Interest Rates
                   </span>
-                  <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs px-3 py-1 rounded-full">
-                    Tax Saving
+                  <span className="bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 text-orange-700 dark:text-orange-300 text-xs px-3 py-2 rounded-full font-medium">
+                    EMI Comparison
                   </span>
-                  <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs px-3 py-1 rounded-full">
-                    Tax Planning
+                  <span className="bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 text-orange-700 dark:text-orange-300 text-xs px-3 py-2 rounded-full font-medium">
+                    Best Choice
+                  </span>
+                </div>
+
+                <div className="text-center">
+                  <span className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 rounded-full text-white font-semibold group-hover:from-orange-600 group-hover:to-red-700 transition-all duration-300 shadow-lg group-hover:shadow-xl">
+                    Compare Now <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
                 </div>
               </div>
             </div>
+          </Link>
+        </div>
+
+        {/* Explore More Tools Section */}
+        <div className="text-center">
+          <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-2xl p-8 shadow-xl">
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mr-4">
+                <MdExplore className="text-white text-3xl" />
+              </div>
+              <div className="text-left">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  Discover More Tools
+                </h3>
+                <p className="text-indigo-100 text-lg">
+                  Explore our complete collection of 12+ financial calculators
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-center gap-3 mb-6">
+              <span className="bg-white/20 text-white text-sm px-4 py-2 rounded-full font-medium backdrop-blur-sm">
+                GST Calculator
+              </span>
+              <span className="bg-white/20 text-white text-sm px-4 py-2 rounded-full font-medium backdrop-blur-sm">
+                FD Calculator
+              </span>
+              <span className="bg-white/20 text-white text-sm px-4 py-2 rounded-full font-medium backdrop-blur-sm">
+                Goal SIP
+              </span>
+              <span className="bg-white/20 text-white text-sm px-4 py-2 rounded-full font-medium backdrop-blur-sm">
+                Lumpsum Calculator
+              </span>
+              <span className="bg-white/20 text-white text-sm px-4 py-2 rounded-full font-medium backdrop-blur-sm">
+                And 8+ More
+              </span>
+            </div>
+            <Link 
+              href="/tools"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-purple-600 font-bold rounded-full hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              View All Calculators <FaArrowRight className="ml-3" />
+            </Link>
           </div>
         </div>
 
