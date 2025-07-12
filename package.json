@@ -28,7 +28,7 @@
     "date-fns": "^4.1.0",
     "framer-motion": "^12.9.4",
     "gray-matter": "^4.0.3",
-    "loanwise": "github:kevaldhol24/LoanWise#feature/sip-calculator",
+    "loanwise": "github:kevaldhol24/LoanWise#feature/more-tools",
     "lucide-react": "^0.503.0",
     "moment": "^2.30.1",
     "next": "15.3.1",

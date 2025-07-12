@@ -21,6 +21,7 @@ interface TenureInputProps
   getMarks?: (tenureUnit: "Yr" | "Mo") => { value: number; label: string }[];
   sliderMax?: number;
   sliderMin?: number;
+  onlyYears?: boolean; // If true, only show years in the input
 }
 
 const MAX_VALUE = 360; // 30 years in months
@@ -38,6 +39,7 @@ export const TenureInput: FC<TenureInputProps> = ({
   sliderMax = MAX_VALUE,
   sliderMin = MIN_VALUE,
   getMarks,
+  onlyYears = false,
   ...props
 }) => {
   const [localValue, setLocalValue] = useState<number | null>(
@@ -122,32 +124,34 @@ export const TenureInput: FC<TenureInputProps> = ({
         {...props}
         label={label}
         endAdornment={
-          <div>
-            <Button
-              variant="ghost"
-              className={`border-x-1 ${
-                tenureUnit === "Yr" ? "bg-muted border-y-1" : ""
-              }`}
-              style={{ borderRadius: "0" }}
-              onClick={() => handleTenureUnitChange("Yr")}
-              aria-label="Set tenure in years"
-              aria-pressed={tenureUnit === "Yr"}
-            >
-              Yr
-            </Button>
-            <Button
-              variant="ghost"
-              className={`border-0 ${
-                tenureUnit === "Mo" ? "bg-muted border-y-1" : ""
-              }`}
-              style={{ borderRadius: "0 6px 6px 0" }}
-              onClick={() => handleTenureUnitChange("Mo")}
-              aria-label="Set tenure in months"
-              aria-pressed={tenureUnit === "Mo"}
-            >
-              Mo
-            </Button>
-          </div>
+          !onlyYears ? (
+            <div>
+              <Button
+                variant="ghost"
+                className={`border-x-1 ${
+                  tenureUnit === "Yr" ? "bg-muted border-y-1" : ""
+                }`}
+                style={{ borderRadius: "0" }}
+                onClick={() => handleTenureUnitChange("Yr")}
+                aria-label="Set tenure in years"
+                aria-pressed={tenureUnit === "Yr"}
+              >
+                Yr
+              </Button>
+              <Button
+                variant="ghost"
+                className={`border-0 ${
+                  tenureUnit === "Mo" ? "bg-muted border-y-1" : ""
+                }`}
+                style={{ borderRadius: "0 6px 6px 0" }}
+                onClick={() => handleTenureUnitChange("Mo")}
+                aria-label="Set tenure in months"
+                aria-pressed={tenureUnit === "Mo"}
+              >
+                Mo
+              </Button>
+            </div>
+          ) : null
         }
         adornmentClassName="!right-0 !px-0 !top-[24px] !border-none"
         className="w-full pr-11"

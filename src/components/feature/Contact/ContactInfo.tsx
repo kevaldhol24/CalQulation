@@ -114,7 +114,7 @@ export const ContactInfo = () => {
               Website
             </h4>
             <a
-              href="https://calqulation.com"
+              href="https://www.calqulation.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 dark:text-blue-400 hover:underline"
