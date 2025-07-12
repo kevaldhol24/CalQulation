@@ -35,7 +35,7 @@ export const AmountInput: FC<AmountInputProps> = ({
   value,
   hideSlider,
   onChange,
-  minValue = 100000,
+  minValue,
   maxValue = 100000000,
   step = 50000,
   marks = defaultMarks,
@@ -61,8 +61,14 @@ export const AmountInput: FC<AmountInputProps> = ({
 
   const handleBlur = () => {
     let value = localValue;
-    if (!value || value < minValue) value = minValue;
-    if (!value || value > maxValue) value = maxValue;
+
+    if (!value && !minValue) {
+      value = 0;
+    }
+    if (minValue && (!value || value < minValue)) {
+      value = minValue;
+    }
+    if (value && value > maxValue) value = maxValue;
     if (onChange) {
       setLocalValue(value);
       onChange(value);

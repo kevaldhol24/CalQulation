@@ -86,7 +86,7 @@ export const LumpsumCalculator: FC = () => {
                 step={0.1}
               />
               <TenureInput
-                label="Investment Duration"
+                label="Investment Duration (Years)"
                 id="investment-duration"
                 title="Enter the investment duration"
                 placeholder="Enter duration"
@@ -96,6 +96,7 @@ export const LumpsumCalculator: FC = () => {
                 onChange={
                   (value) => updateLumpsumInputs("years", Number(value) / 12) // Convert months back to years
                 }
+                onlyYears
                 minValue={12}
                 maxValue={600}
                 step={12}

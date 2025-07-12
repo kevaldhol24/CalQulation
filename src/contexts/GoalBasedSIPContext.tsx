@@ -8,6 +8,7 @@ interface GoalBasedSIPContextType {
   goalBasedSIPInputs: GoalBasedSIPInputs;
   goalBasedSIPResults: GoalBasedSIPOutput | null;
   isLoading: boolean;
+  isInitialLoad: boolean;
   updateGoalBasedSIPInputs: (inputs: Partial<GoalBasedSIPInputs>) => void;
 }
 
@@ -18,7 +19,9 @@ const GoalBasedSIPContext = createContext<GoalBasedSIPContextType | undefined>(
 export const useGoalBasedSIP = (): GoalBasedSIPContextType => {
   const context = useContext(GoalBasedSIPContext);
   if (!context) {
-    throw new Error("useGoalBasedSIP must be used within a GoalBasedSIPProvider");
+    throw new Error(
+      "useGoalBasedSIP must be used within a GoalBasedSIPProvider"
+    );
   }
   return context;
 };
@@ -30,13 +33,16 @@ interface GoalBasedSIPProviderProps {
 export const GoalBasedSIPProvider: React.FC<GoalBasedSIPProviderProps> = ({
   children,
 }) => {
-  const [goalBasedSIPInputs, setGoalBasedSIPInputs] = useState<GoalBasedSIPInputs>({
-    goalAmount: 1000000, // Default 10 lakhs
-    years: 10,
-    annualRate: 12,
-  });
+  const [goalBasedSIPInputs, setGoalBasedSIPInputs] =
+    useState<GoalBasedSIPInputs>({
+      goalAmount: 1000000, // Default 10 lakhs
+      years: 10,
+      annualRate: 12,
+    });
 
-  const [goalBasedSIPResults, setGoalBasedSIPResults] = useState<GoalBasedSIPOutput | null>(null);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [goalBasedSIPResults, setGoalBasedSIPResults] =
+    useState<GoalBasedSIPOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const updateGoalBasedSIPInputs = useCallback(
@@ -70,10 +76,11 @@ export const GoalBasedSIPProvider: React.FC<GoalBasedSIPProviderProps> = ({
         console.error("Error calculating goal-based SIP:", error);
         setGoalBasedSIPResults(null);
       } finally {
+        setIsInitialLoad(false);
         setIsLoading(false);
       }
     };
-    
+
     initialCalculation();
   }, [goalBasedSIPInputs]);
 
@@ -81,6 +88,7 @@ export const GoalBasedSIPProvider: React.FC<GoalBasedSIPProviderProps> = ({
     goalBasedSIPInputs,
     goalBasedSIPResults,
     isLoading,
+    isInitialLoad,
     updateGoalBasedSIPInputs,
   };
 

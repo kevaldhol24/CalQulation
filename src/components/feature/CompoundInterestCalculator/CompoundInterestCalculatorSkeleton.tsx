@@ -1,9 +1,9 @@
 "use client";
 
-import { FC } from "react";
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const GoalBasedSIPCalculatorSkeleton: FC = () => {
+export const CompoundInterestCalculatorSkeleton: React.FC = () => {
   return (
     <div className="sm:rounded-xl bg-white/10 backdrop-blur-xl sm:p-1.5">
       <div className="bg-background sm:rounded-t-lg p-6 shadow-lg">

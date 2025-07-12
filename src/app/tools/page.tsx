@@ -172,7 +172,8 @@ export default function ToolsPage() {
                   Loan Comparison
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Compare different loan offers, interest rates, and EMIs to find the best option for you .
+                  Compare different loan offers, interest rates, and EMIs to
+                  find the best option for you .
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
@@ -319,7 +320,8 @@ export default function ToolsPage() {
                   Lumpsum Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate returns on your one-time investment with compound interest and yearly growth breakdown.
+                  Calculate returns on your one-time investment with compound
+                  interest and yearly growth breakdown.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
@@ -355,7 +357,8 @@ export default function ToolsPage() {
                   Goal-Based SIP Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate the monthly SIP amount needed to achieve your specific financial goals with precise planning.
+                  Calculate the monthly SIP amount needed to achieve your
+                  specific financial goals with precise planning.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
@@ -391,7 +394,8 @@ export default function ToolsPage() {
                   SWP Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate systematic withdrawals from your investments. Perfect for retirement and income planning.
+                  Calculate systematic withdrawals from your investments.
+                  Perfect for retirement and income planning.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
@@ -415,41 +419,43 @@ export default function ToolsPage() {
             </div>
           </Link>
 
-          {/* CAGR Calculator Card - Coming Soon */}
-          <div className="h-full relative">
-            <div className="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-sm rounded-2xl overflow-hidden bg-black/20 dark:bg-black/60">
-              <span className="bg-white/80 dark:bg-gray-800/80 text-gray-800 dark:text-white px-4 py-2 rounded-full font-bold shadow-lg">
-                Coming Soon
-              </span>
-            </div>
-            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-700 opacity-75">
-              <div className="h-3 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
-              <div className="p-8">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <FaChartLine className="text-white text-2xl" />
-                </div>
-                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
-                  CAGR Calculator
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate Compound Annual Growth Rate for your investments and
-                  compare investment performance.
-                </p>
+          {/* Compound Interest Calculator Card - Coming Soon */}
+          <Link href="/tool/compound-interest-calculator" className="group">
+            <div className="h-full relative">
+              <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-700">
+                <div className="h-3 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
+                <div className="p-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <FaChartLine className="text-white text-2xl" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                    Compound Interest Calculator
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                    Calculate the future value of your investments with compound
+                    interest, including detailed yearly growth analysis.
+                  </p>
 
-                <div className="flex flex-wrap gap-2 justify-center mb-6">
-                  <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs px-3 py-1 rounded-full">
-                    Investment Growth
-                  </span>
-                  <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs px-3 py-1 rounded-full">
-                    Portfolio Analysis
-                  </span>
-                  <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs px-3 py-1 rounded-full">
-                    Performance Metrics
-                  </span>
+                  <div className="flex flex-wrap gap-2 justify-center mb-6">
+                    <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs px-3 py-1 rounded-full">
+                      Investment Growth
+                    </span>
+                    <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs px-3 py-1 rounded-full">
+                      Wealth Accumulation
+                    </span>
+                    <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs px-3 py-1 rounded-full">
+                      Future Value
+                    </span>
+                  </div>
+                  <div className="text-center">
+                    <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full text-white font-medium group-hover:from-purple-600 group-hover:to-indigo-700 transition-all duration-300">
+                      Use Calculator <FaArrowRight className="ml-2" />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Income Tax Calculator - Coming Soon */}
           <div className="h-full relative">

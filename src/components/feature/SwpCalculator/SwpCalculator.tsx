@@ -132,7 +132,7 @@ export const SwpCalculator: React.FC = () => {
               />
 
               <TenureInput
-                label="Withdrawal Period"
+                label="Tenure (Years)"
                 id="withdrawal-period"
                 title="Enter the withdrawal period"
                 placeholder="Enter duration"
@@ -142,6 +142,7 @@ export const SwpCalculator: React.FC = () => {
                 onChange={(value) =>
                   updateSwpInputs({ years: Number(value) / 12 })
                 }
+                onlyYears
                 minValue={12}
                 maxValue={600}
                 step={12}

@@ -11,10 +11,10 @@ import { GoalBasedSIPCharts } from "./GoalBasedSIPCharts";
 import { GoalBasedSIPYearlyBreakdown } from "./GoalBasedSIPYearlyBreakdown";
 
 export const GoalBasedSIPCalculator: FC = () => {
-  const { goalBasedSIPInputs, isLoading, updateGoalBasedSIPInputs } =
+  const { goalBasedSIPInputs, isInitialLoad, updateGoalBasedSIPInputs } =
     useGoalBasedSIP();
 
-  if (isLoading) {
+  if (isInitialLoad) {
     return <GoalBasedSIPCalculatorSkeleton />;
   }
 
@@ -51,6 +51,7 @@ export const GoalBasedSIPCalculator: FC = () => {
                 min={1}
                 max={50}
                 step={1}
+                onlyYears
                 placeholder="Investment period"
               />
 

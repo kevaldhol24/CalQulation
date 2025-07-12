@@ -8,6 +8,7 @@ interface SwpContextType {
   swpInputs: SwpInputs;
   swpResults: SwpOutput | null;
   isLoading: boolean;
+  isInitialLoad: boolean;
   updateSwpInputs: (inputs: Partial<SwpInputs>) => void;
 }
 
@@ -33,6 +34,7 @@ export const SwpProvider: React.FC<SwpProviderProps> = ({ children }) => {
     monthlyWithDrawal: 10000, // Default 10k per month
   });
 
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [swpResults, setSwpResults] = useState<SwpOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,10 +58,30 @@ export const SwpProvider: React.FC<SwpProviderProps> = ({ children }) => {
     [swpInputs]
   );
 
+  // Initial calculation
+  React.useEffect(() => {
+    const initialCalculation = async () => {
+      setIsLoading(true);
+      try {
+        const results = await calculateSwp(swpInputs);
+        setSwpResults(results);
+      } catch (error) {
+        console.error("Error calculating SWP:", error);
+        setSwpResults(null);
+      } finally {
+        setIsInitialLoad(false);
+        setIsLoading(false);
+      }
+    };
+
+    initialCalculation();
+  }, [swpInputs]);
+
   const value: SwpContextType = {
     swpInputs,
     swpResults,
     isLoading,
+    isInitialLoad,
     updateSwpInputs,
   };
 
