@@ -2,13 +2,12 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRD } from "@/contexts/RDContext";
+import { currency } from "@/services/CurrencyService";
 import { FaPercent } from "react-icons/fa6";
 import { GiMoneyStack } from "react-icons/gi";
 import { GrMoney } from "react-icons/gr";
 import { TbMoneybag } from "react-icons/tb";
 import { SummaryCard } from "../EmiCalculator/SummaryCard";
-import { RDDonutChart } from "./RDDonutChart";
-import { currency } from "@/services/CurrencyService";
 
 export const RDSummary = () => {
   const { rdResults, isLoading, rdInputs } = useRD();

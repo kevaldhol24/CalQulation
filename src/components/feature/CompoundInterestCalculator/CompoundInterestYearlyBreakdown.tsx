@@ -2,34 +2,25 @@
 
 import { CollapsibleWrapper } from "@/components/common/CollapsibleWrapper";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useCompoundInterest } from "@/contexts/CompoundInterestContext";
 import { currency } from "@/services/CurrencyService";
-import React, { useMemo, useState } from "react";
-
-interface YearSummary {
-  year: number;
-  openingBalance: number;
-  contributions: number;
-  interestEarned: number;
-  closingBalance: number;
-  totalInterest: number;
-}
+import React, { useState } from "react";
 
 export const CompoundInterestYearlyBreakdown: React.FC = () => {
-  const { compoundResults, isLoading, compoundInputs } = useCompoundInterest();
+  const { compoundResults, isLoading } = useCompoundInterest();
   const { formateCurrency } = currency();
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -117,14 +108,16 @@ export const CompoundInterestYearlyBreakdown: React.FC = () => {
             {compoundResults.schedule.map((yearData, index) => {
               return (
                 <React.Fragment key={yearData.year + index}>
-                  <TableRow
-                    className="cursor-pointer hover:bg-muted/50"
-                  >
+                  <TableRow className="cursor-pointer hover:bg-muted/50">
                     <TableCell className="font-medium">
                       {yearData.year}
                     </TableCell>
                     <TableCell>
-                      {formateCurrency(yearData.amount - (yearData.contribution || 0) - yearData.interest)}
+                      {formateCurrency(
+                        yearData.amount -
+                          (yearData.contribution || 0) -
+                          yearData.interest
+                      )}
                     </TableCell>
                     <TableCell>
                       {formateCurrency(yearData.contribution || 0)}
