@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Explore our comprehensive suite of financial calculators and tools. Calculate EMIs, SIPs, and more with our powerful and easy-to-use financial tools.",
   keywords:
-    "financial tools, financial calculators, EMI calculator, SIP calculator, loan calculator, investment calculator, financial planning tools",
+    "financial tools, financial calculators, EMI calculator, SIP calculator, lumpsum calculator, loan calculator, investment calculator, financial planning tools",
   openGraph: {
     title: "Financial Tools | Calqulation - Smart Financial Calculators",
     description:
@@ -70,6 +70,12 @@ export default function ToolsPage() {
           position: 4,
           name: "Personal Loan Calculator",
           url: "https://www.calqulation.com/tool/personal-loan-calculator",
+        },
+        {
+          "@type": "ListItem",
+          position: 5,
+          name: "Lumpsum Calculator",
+          url: "https://www.calqulation.com/tool/lumpsum-calculator",
         },
       ],
     },
@@ -301,41 +307,41 @@ export default function ToolsPage() {
             </div>
           </Link>
 
-          {/* FD Calculator Card - Coming Soon */}
-          <div className="h-full relative">
-            <div className="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-sm rounded-2xl overflow-hidden bg-black/20 dark:bg-black/60">
-              <span className="bg-white/80 dark:bg-gray-800/80 text-gray-800 dark:text-white px-4 py-2 rounded-full font-bold shadow-lg">
-                Coming Soon
-              </span>
-            </div>
-            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-gray-700 opacity-75">
-              <div className="h-3 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+          {/* Lumpsum Calculator Card - Available */}
+          <Link href="/tool/lumpsum-calculator" className="group">
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+              <div className="h-3 bg-gradient-to-r from-green-500 to-emerald-600"></div>
               <div className="p-8">
-                <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <RiMoneyDollarCircleFill className="text-white text-2xl" />
                 </div>
                 <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
-                  FD Calculator
+                  Lumpsum Calculator
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Calculate maturity amount, interest earned and plan your fixed
-                  deposits effectively.
+                  Calculate returns on your one-time investment with compound interest and yearly growth breakdown.
                 </p>
 
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
-                  <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs px-3 py-1 rounded-full">
-                    Fixed Deposits
+                  <span className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs px-3 py-1 rounded-full">
+                    Lumpsum Investment
                   </span>
-                  <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs px-3 py-1 rounded-full">
-                    Interest Calculations
+                  <span className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs px-3 py-1 rounded-full">
+                    Compound Interest
                   </span>
-                  <span className="bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs px-3 py-1 rounded-full">
-                    Tax Planning
+                  <span className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs px-3 py-1 rounded-full">
+                    Wealth Growth
+                  </span>
+                </div>
+
+                <div className="text-center">
+                  <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full text-white font-medium group-hover:from-green-600 group-hover:to-emerald-700 transition-all duration-300">
+                    Use Calculator <FaArrowRight className="ml-2" />
                   </span>
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* CAGR Calculator Card - Coming Soon */}
           <div className="h-full relative">
