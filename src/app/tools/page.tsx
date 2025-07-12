@@ -457,6 +457,77 @@ export default function ToolsPage() {
             </div>
           </Link>
 
+          <Link href="/tool/fd-calculator" className="group">
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+              <div className="h-3 bg-gradient-to-r from-pink-500 to-purple-500"></div>
+              <div className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <BsCreditCard className="text-white text-2xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                  Fixed Deposit Calculator
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                  Calculate your fixed deposit returns, including interest
+                  earned and maturity amount.
+                </p>
+
+                <div className="flex flex-wrap gap-2 justify-center mb-6">
+                  <span className="bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 text-xs px-3 py-1 rounded-full">
+                    Fixed Deposits
+                  </span>
+                  <span className="bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 text-xs px-3 py-1 rounded-full">
+                    Interest Calculation
+                  </span>
+                  <span className="bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 text-xs px-3 py-1 rounded-full">
+                    Maturity Amount
+                  </span>
+                </div>
+
+                <div className="text-center">
+                  <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full text-white font-medium group-hover:from-pink-600 group-hover:to-purple-600 transition-all duration-300">
+                    Use Calculator <FaArrowRight className="ml-2" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/tool/rd-calculator" className="group">
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+              <div className="h-3 bg-gradient-to-r from-pink-500 to-purple-500"></div>
+              <div className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <BsCreditCard className="text-white text-2xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                  Recurring Deposit Calculator
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                  Calculate your recurring deposit maturity amount, total interest, and monthly deposits.
+                </p>
+
+                <div className="flex flex-wrap gap-2 justify-center mb-6">
+                  <span className="bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 text-xs px-3 py-1 rounded-full">
+                    Recurring Deposits
+                  </span>
+                  <span className="bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 text-xs px-3 py-1 rounded-full">
+                    Interest Calculation
+                  </span>
+                  <span className="bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 text-xs px-3 py-1 rounded-full">
+                    Maturity Amount
+                  </span>
+                </div>
+
+                <div className="text-center">
+                  <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full text-white font-medium group-hover:from-pink-600 group-hover:to-purple-600 transition-all duration-300">
+                    Use Calculator <FaArrowRight className="ml-2" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
           {/* Income Tax Calculator - Coming Soon */}
           <div className="h-full relative">
             <div className="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-sm rounded-2xl overflow-hidden bg-black/20 dark:bg-black/60">
