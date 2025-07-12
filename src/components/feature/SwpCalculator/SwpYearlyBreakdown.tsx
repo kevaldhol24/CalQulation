@@ -233,7 +233,7 @@ export const SwpYearlyBreakdown: React.FC = () => {
                 <React.Fragment key={yearData.year}>
                   {/* Year Summary Row - Clickable to expand/collapse */}
                   <TableRow
-                    className="bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/20 dark:to-red-900/20 cursor-pointer hover:from-orange-200 hover:to-red-200 dark:hover:from-orange-900/40 dark:hover:to-red-900/40 text-xs"
+                    className="bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 cursor-pointer hover:from-blue-200 hover:to-purple-200 dark:hover:from-blue-900/40 dark:hover:to-purple-900/40 text-xs"
                     onClick={() => toggleYearExpansion(yearData.year)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {

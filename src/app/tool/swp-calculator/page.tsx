@@ -68,7 +68,7 @@ export default async function SwpCalculatorPage() {
       {!isMobileApp && (
         <ToolPageHero
           title="SWP Calculator"
-          subtitle="Calculate systematic withdrawals from your investments. Plan your retirement income and see how long your money will last with our comprehensive SWP calculator."
+        subtitle="Calculate systematic withdrawals from your investments."
         >
           <Breadcrumb
             items={[

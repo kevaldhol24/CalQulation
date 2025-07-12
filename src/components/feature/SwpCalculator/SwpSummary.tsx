@@ -1,14 +1,14 @@
 "use client";
 
-import React from "react";
-import { useSwp } from "@/contexts/SwpContext";
-import { currency } from "@/services/CurrencyService";
 import { SummaryCard } from "@/components/feature/EmiCalculator/SummaryCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TbMoneybag } from "react-icons/tb";
+import { useSwp } from "@/contexts/SwpContext";
+import { currency } from "@/services/CurrencyService";
+import React from "react";
+import { BiMoneyWithdraw } from "react-icons/bi";
 import { GiMoneyStack } from "react-icons/gi";
-import { FaPercent } from "react-icons/fa6";
 import { GrMoney } from "react-icons/gr";
+import { TbMoneybag } from "react-icons/tb";
 
 export const SwpSummary: React.FC = () => {
   const { swpResults, isLoading, swpInputs } = useSwp();
@@ -19,7 +19,7 @@ export const SwpSummary: React.FC = () => {
     <div>
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-bold mb-1 lg:mb-6 flex items-center">
-          <div className="w-1 h-6 bg-gradient-to-b from-orange-500 to-red-600 rounded-full mr-3 shadow-sm"></div>
+          <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
           SWP Summary
         </h2>
       </div>
@@ -48,7 +48,7 @@ export const SwpSummary: React.FC = () => {
     <div>
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-bold mb-1 lg:mb-6 flex items-center">
-          <div className="w-1 h-6 bg-gradient-to-b from-orange-500 to-red-600 rounded-full mr-3 shadow-sm"></div>
+          <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
           SWP Summary
         </h2>
       </div>
@@ -63,7 +63,7 @@ export const SwpSummary: React.FC = () => {
         <SummaryCard
           value={formateCurrency(swpResults.totalWithdrawals)}
           title="Total Withdrawals"
-          helpText={`Total amount withdrawn over ${swpInputs.years} years`}
+          helpText={`Amount withdrawn over ${swpInputs.years} years`}
           color="red"
           icon={<GrMoney size={28} />}
         />
@@ -79,7 +79,7 @@ export const SwpSummary: React.FC = () => {
           title="Final Balance"
           helpText={`Remaining amount after ${swpInputs.years} years`}
           color="purple"
-          icon={<FaPercent size={28} />}
+          icon={<BiMoneyWithdraw size={28}/>}
         />
       </div>
       <p className="text-sm text-muted-foreground mt-1 italic">

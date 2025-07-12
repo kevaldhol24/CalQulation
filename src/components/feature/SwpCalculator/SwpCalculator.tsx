@@ -24,7 +24,7 @@ export const SwpCalculator: React.FC = () => {
           <div>
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold col-span-2 flex items-center">
-                <div className="w-1 h-6 bg-gradient-to-b from-orange-500 to-red-600 rounded-full mr-3 shadow-sm"></div>
+                <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mr-3 shadow-sm"></div>
                 SWP details
               </h2>
             </div>
