@@ -379,6 +379,42 @@ export default function ToolsPage() {
             </div>
           </Link>
 
+          {/* SWP Calculator Card - Available */}
+          <Link href="/tool/swp-calculator" className="group">
+            <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+              <div className="h-3 bg-gradient-to-r from-orange-500 to-red-600"></div>
+              <div className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <RiMoneyDollarCircleFill className="text-white text-2xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-4">
+                  SWP Calculator
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+                  Calculate systematic withdrawals from your investments. Perfect for retirement and income planning.
+                </p>
+
+                <div className="flex flex-wrap gap-2 justify-center mb-6">
+                  <span className="bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs px-3 py-1 rounded-full">
+                    Retirement Planning
+                  </span>
+                  <span className="bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs px-3 py-1 rounded-full">
+                    Income Planning
+                  </span>
+                  <span className="bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs px-3 py-1 rounded-full">
+                    Withdrawals
+                  </span>
+                </div>
+
+                <div className="text-center">
+                  <span className="inline-flex items-center justify-center px-5 py-2 bg-gradient-to-r from-orange-500 to-red-600 rounded-full text-white font-medium group-hover:from-orange-600 group-hover:to-red-700 transition-all duration-300">
+                    Use Calculator <FaArrowRight className="ml-2" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
           {/* CAGR Calculator Card - Coming Soon */}
           <div className="h-full relative">
             <div className="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-sm rounded-2xl overflow-hidden bg-black/20 dark:bg-black/60">
