@@ -1,3 +1,5 @@
+"use server";
+
 import { GoalBasedSIPCalculator, GoalBasedSIPInputs, GoalBasedSIPOutput } from "loanwise";
 
 /**
@@ -10,7 +12,7 @@ export const calculateGoalBasedSIP = async (
     // Use the GoalBasedSIPCalculator from loanwise library
     const calculator = new GoalBasedSIPCalculator(inputs);
     const result = calculator.calculate();
-    
+
     return {
       ...result,
     };
