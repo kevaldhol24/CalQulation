@@ -55,3 +55,20 @@ model SharedCalculation {
 
     @@index([expiresAt])
 }
+
+model AppVersion {
+    id                   String   @id @default(uuid())
+    platform             String   // android/ios
+    latestVersion        String
+    minRequiredVersion   String
+    updateMessage        String
+    playStoreUrl         String?
+    appStoreUrl          String?
+    changelog            String[] // Array of changelog items
+    isActive             Boolean  @default(true)
+    createdAt            DateTime @default(now())
+    updatedAt            DateTime @updatedAt
+
+    @@unique([platform, isActive])
+    @@index([platform])
+}
