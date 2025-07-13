@@ -1,4 +1,4 @@
-import { LoanCalculationOutput } from "loanwise";
+import { LoanCalculationOutput } from "~lib/calqulation";
 
 export const InitialLoanResults: LoanCalculationOutput = {
     "summary": {

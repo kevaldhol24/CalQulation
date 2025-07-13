@@ -5,7 +5,7 @@ import {
   EMIChangeImpact,
   InterestRateChangeImpact,
   PrepaymentImpact,
-} from "loanwise";
+} from "~lib/calqulation";
 import { ArrowDown, LucideIcon, Trash2 } from "lucide-react";
 import { useMemo } from "react";
 import { IconType } from "react-icons";

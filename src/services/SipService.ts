@@ -4,7 +4,7 @@ import { SIPInputs } from "@/contexts/SIPContext";
 import {
     SIPCalculationResult,
     SIPCalculator
-} from "loanwise";
+} from "~lib/calqulation";
 
 
 export const calculateSip = async (

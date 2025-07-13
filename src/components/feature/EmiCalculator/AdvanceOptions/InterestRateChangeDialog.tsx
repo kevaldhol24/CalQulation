@@ -25,7 +25,7 @@ import {
   isInterestRateRealistic,
   isSameMonth,
 } from "@/lib/utils";
-import { ImpactType, InterestRateChange } from "loanwise";
+import { ImpactType, InterestRateChange } from "~lib/calqulation";
 import { AlertTriangle, Percent, XIcon } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";

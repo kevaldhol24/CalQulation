@@ -1,7 +1,7 @@
 "use client";
 
 import { calculateLumpsum } from "@/services/LumpsumService";
-import { LumpsumInputs, LumpsumOutput } from "loanwise";
+import { LumpsumInputs, LumpsumOutput } from "~lib/calqulation";
 import {
   createContext,
   FC,

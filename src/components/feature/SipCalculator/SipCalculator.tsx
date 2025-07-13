@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useSip } from "@/contexts/SIPContext";
-import { InvestmentFrequency } from "loanwise";
+import { InvestmentFrequency } from "~lib/calqulation";
 import { FC } from "react";
 import { SipSummary } from "./SipSummary";
 import { SIPYearlyBreakdown } from "./SIPYearlyBreakdown";

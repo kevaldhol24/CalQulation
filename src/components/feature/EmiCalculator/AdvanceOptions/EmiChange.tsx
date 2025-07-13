@@ -9,7 +9,7 @@ import {
 import { useLoan } from "@/contexts/LoanContext";
 import { formatMonthYear, isSameMonth } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { EMIChange } from "loanwise";
+import { EMIChange } from "~lib/calqulation";
 import { ArrowDown, ArrowUp, CreditCard, Plus } from "lucide-react";
 import { useCallback, useState } from "react";
 import { IconType } from "react-icons";

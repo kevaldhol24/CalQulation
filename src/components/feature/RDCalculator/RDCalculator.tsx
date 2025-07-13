@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useRD } from "@/contexts/RDContext";
-import { InvestmentFrequency } from "loanwise";
+import { InvestmentFrequency } from "~lib/calqulation";
 import { FC } from "react";
 import { RDSummary } from "./RDSummary";
 import { RDYearlyBreakdown } from "./RDYearlyBreakdown";

@@ -1,6 +1,6 @@
 "use server";
 
-import { SwpCalculator, SwpInputs, SwpOutput } from "loanwise";
+import { SwpCalculator, SwpInputs, SwpOutput } from "~lib/calqulation";
 
 export const calculateSwp = async (inputs: SwpInputs): Promise<SwpOutput> => {
   try {

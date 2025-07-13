@@ -1,7 +1,7 @@
 "use client";
 
 import { calculateSip } from "@/services/SipService";
-import { InvestmentFrequency, SIPCalculationResult } from "loanwise";
+import { InvestmentFrequency, SIPCalculationResult } from "~lib/calqulation";
 import {
   createContext,
   FC,

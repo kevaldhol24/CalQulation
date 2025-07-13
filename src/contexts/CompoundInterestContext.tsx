@@ -7,7 +7,7 @@ import React, {
   useCallback,
   useEffect,
 } from "react";
-import { CompoundInterestInputs, CompoundInterestOutput } from "loanwise";
+import { CompoundInterestInputs, CompoundInterestOutput } from "~lib/calqulation";
 import { calculateCompoundInterest } from "@/services/CompoundInterestService";
 
 interface CompoundInterestContextType {

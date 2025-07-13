@@ -1,6 +1,6 @@
 "use server";
 
-import { GoalBasedSIPCalculator, GoalBasedSIPInputs, GoalBasedSIPOutput } from "loanwise";
+import { GoalBasedSIPCalculator, GoalBasedSIPInputs, GoalBasedSIPOutput } from "~lib/calqulation";
 
 /**
  * Service to calculate goal-based SIP using the loanwise library

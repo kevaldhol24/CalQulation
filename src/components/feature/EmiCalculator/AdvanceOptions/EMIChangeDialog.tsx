@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { useLoan } from "@/contexts/LoanContext";
 import { formateDate, formatMonthYear, isSameMonth } from "@/lib/utils";
-import { EMIChange } from "loanwise";
+import { EMIChange } from "~lib/calqulation";
 import { AlertTriangle, CreditCard, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";

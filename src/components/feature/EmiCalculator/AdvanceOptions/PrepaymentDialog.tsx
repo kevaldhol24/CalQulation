@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { useLoan } from "@/contexts/LoanContext";
 import { formateDate, formatMonthYear, isSameMonth } from "@/lib/utils";
-import { ImpactType, Prepayment, PrepaymentFrequency } from "loanwise";
+import { ImpactType, Prepayment, PrepaymentFrequency } from "~lib/calqulation";
 import { AlertTriangle, XIcon } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { TbMoneybag } from "react-icons/tb";

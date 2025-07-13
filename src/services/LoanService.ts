@@ -4,7 +4,7 @@ import {
   AdvancedLoanCalculator,
   LoanCalculationInputs,
   LoanCalculationOutput,
-} from "loanwise";
+} from "~lib/calqulation";
 
 
 export const calculateLoan = async (
