@@ -11,9 +11,9 @@ import { SwpYearlyBreakdown } from "./SwpYearlyBreakdown";
 import { SwpCalculatorSkeleton } from "./SwpCalculatorSkeleton";
 
 export const SwpCalculator: React.FC = () => {
-  const { swpInputs, updateSwpInputs, isLoading } = useSwp();
+  const { swpInputs, updateSwpInputs, isInitialLoad } = useSwp();
 
-  if (isLoading) {
+  if (isInitialLoad) {
     return <SwpCalculatorSkeleton />;
   }
 
