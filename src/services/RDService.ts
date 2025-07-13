@@ -4,7 +4,7 @@ import { RDInputs } from "@/contexts/RDContext";
 import {
     SIPCalculationResult,
     SIPCalculator
-} from "loanwise";
+} from "~lib/calqulation";
 
 export const calculateRD = async (
     inputs: RDInputs

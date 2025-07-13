@@ -10,7 +10,7 @@ import {
   LoanCalculationInputs,
   LoanCalculationOutput,
   PrepaymentFrequency,
-} from "loanwise";
+} from "~lib/calqulation";
 import {
   createContext,
   ReactNode,

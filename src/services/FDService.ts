@@ -1,6 +1,6 @@
 "use server";
 
-import { CompoundInterestInputs, CompoundInterestOutput, CompoundInterestCalculator } from "loanwise";
+import { CompoundInterestInputs, CompoundInterestOutput, CompoundInterestCalculator } from "~lib/calqulation";
 
 export const calculateFD = async (
     inputs: CompoundInterestInputs

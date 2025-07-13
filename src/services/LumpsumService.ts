@@ -1,6 +1,6 @@
 "use server";
 
-import { LumpsumInputs, LumpsumOutput, LumpsumCalculator } from "loanwise";
+import { LumpsumInputs, LumpsumOutput, LumpsumCalculator } from "~lib/calqulation";
 
 export const calculateLumpsum = async (
   inputs: LumpsumInputs

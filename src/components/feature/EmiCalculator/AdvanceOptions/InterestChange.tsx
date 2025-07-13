@@ -17,7 +17,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ExtraItemCard } from "./ExtraItemCard";
-import { ImpactType, InterestRateChange } from "loanwise";
+import { ImpactType, InterestRateChange } from "~lib/calqulation";
 import { useCallback, useState } from "react";
 import { useLoan } from "@/contexts/LoanContext";
 import moment from "moment";

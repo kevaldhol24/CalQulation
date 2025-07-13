@@ -2,7 +2,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { LoanCalculationInputs } from "loanwise";
+import { LoanCalculationInputs } from "~lib/calqulation";
 
 // Create a new shared calculation
 export async function createSharedCalculation(

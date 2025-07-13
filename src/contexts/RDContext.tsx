@@ -1,7 +1,7 @@
 "use client";
 
 import { calculateRD } from "@/services/RDService";
-import { InvestmentFrequency, SIPCalculationResult } from "loanwise";
+import { InvestmentFrequency, SIPCalculationResult } from "~lib/calqulation";
 import {
   createContext,
   FC,

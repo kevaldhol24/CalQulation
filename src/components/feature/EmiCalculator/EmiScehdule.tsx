@@ -4,7 +4,7 @@ import { CollapsibleWrapper } from "@/components/common/CollapsibleWrapper";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLoan } from "@/contexts/LoanContext";
 import { MONTHS } from "@/lib/constants";
-import { EMIScheduleItem } from "loanwise";
+import { EMIScheduleItem } from "~lib/calqulation";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import React, { useMemo, useState } from "react";
 import { BiInfoCircle } from "react-icons/bi";

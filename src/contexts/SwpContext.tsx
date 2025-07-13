@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useCallback } from "react";
-import { SwpInputs, SwpOutput } from "loanwise";
+import { SwpInputs, SwpOutput } from "~lib/calqulation";
 import { calculateSwp } from "@/services/SwpService";
 
 interface SwpContextType {

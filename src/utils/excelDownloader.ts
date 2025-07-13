@@ -1,6 +1,6 @@
 "use client";
 
-import { LoanCalculationInputs, LoanCalculationOutput } from "loanwise";
+import { LoanCalculationInputs, LoanCalculationOutput } from "~lib/calqulation";
 import * as XLSX from 'xlsx-js-style';
 import moment from 'moment';
 

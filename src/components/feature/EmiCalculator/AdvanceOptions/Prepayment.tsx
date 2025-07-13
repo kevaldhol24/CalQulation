@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useLoan } from "@/contexts/LoanContext";
 import { motion } from "framer-motion";
-import { PrepaymentFrequency, type Prepayment as IPrepayment } from "loanwise";
+import { PrepaymentFrequency, type Prepayment as IPrepayment } from "~lib/calqulation";
 import { Plus, Rocket } from "lucide-react";
 import moment from "moment";
 import { useCallback, useState } from "react";

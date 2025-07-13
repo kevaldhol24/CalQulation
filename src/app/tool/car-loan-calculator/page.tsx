@@ -4,7 +4,7 @@ import { Comments } from "@/components/feature/Comments";
 import { LoanCalculatorWithProvider } from "@/components/feature/EmiCalculator/LoanCalculator";
 import { LoanCalculatorSkeleton } from "@/components/feature/EmiCalculator/LoanCalculatorSkeleton";
 import { formateDate } from "@/lib/utils";
-import { LoanCalculationInputs } from "loanwise";
+import { LoanCalculationInputs } from "~lib/calqulation";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { Suspense } from "react";

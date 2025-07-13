@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useCallback } from "react";
-import { GoalBasedSIPInputs, GoalBasedSIPOutput } from "loanwise";
+import { GoalBasedSIPInputs, GoalBasedSIPOutput } from "~lib/calqulation";
 import { calculateGoalBasedSIP } from "@/services/GoalBasedSIPService";
 
 interface GoalBasedSIPContextType {

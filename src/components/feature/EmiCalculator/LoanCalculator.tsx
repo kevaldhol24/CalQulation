@@ -11,7 +11,7 @@ import { LoanCalculatorSkeleton } from "./LoanCalculatorSkeleton";
 import { LoanCharts } from "./LoanCharts";
 import { LoanSummary } from "./LoanSummary";
 import { useEffect, useRef } from "react";
-import { LoanCalculationInputs } from "loanwise";
+import { LoanCalculationInputs } from "~lib/calqulation";
 
 interface LoanCalculatorProps {
   compact?: boolean;

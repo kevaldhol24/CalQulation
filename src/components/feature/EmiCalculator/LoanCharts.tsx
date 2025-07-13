@@ -20,7 +20,7 @@ import {
   Title,
   TooltipItem,
 } from "chart.js";
-import { EMIScheduleItem } from "loanwise";
+import { EMIScheduleItem } from "~lib/calqulation";
 import { useTheme } from "next-themes";
 import { FC, useMemo, useState } from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
