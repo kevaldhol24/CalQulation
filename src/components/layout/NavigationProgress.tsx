@@ -51,13 +51,13 @@ export function NavigationProgress() {
     // Add listeners for navigation events
     window.addEventListener("beforeunload", handleRouteChangeStart);
 
-  // Create custom event listener for Next.js App Router
+    // Create custom event listener for Next.js App Router
     const handleClick = (e: MouseEvent) => {
       // Skip if Ctrl key is pressed (new tab navigation)
       if (e.ctrlKey || e.metaKey) {
         return;
       }
-      
+
       // Check if the click was on an anchor tag or inside one
       const anchor = (e.target as Element).closest("a");
       if (
@@ -69,13 +69,23 @@ export function NavigationProgress() {
         if (anchor.target === "_blank") {
           return;
         }
-        
+
+        if (
+          anchor.localName.startsWith("mailto") ||
+          anchor.localName.startsWith("tel")
+        ) {
+          return
+        }
+
         // Check if the link is to the current page
         const url = new URL(anchor.href);
         const currentUrl = new URL(window.location.href);
-        
+
         // Compare pathname and search params to determine if it's the same page
-        if (url.pathname === currentUrl.pathname && url.search === currentUrl.search) {
+        if (
+          url.pathname === currentUrl.pathname &&
+          url.search === currentUrl.search
+        ) {
           // If it's the same page, don't start the progress
           return;
         }

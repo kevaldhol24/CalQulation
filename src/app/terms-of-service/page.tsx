@@ -66,15 +66,15 @@ export default function TermsOfServicePage() {
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
                     These Terms of Service govern your relationship with
-                    Calqulation and your use of our website, calculators, tools,
+                    Calqulation and your use of our website, mobile application, calculators, tools,
                     and services. We&apos;ve tried to make them as
                     straightforward as possible.
                   </p>
                   <p className="text-gray-600 dark:text-gray-300">
-                    By using our website and tools, you&apos;re agreeing to
+                    By using our website, mobile app, and tools, you&apos;re agreeing to
                     these terms. If you don&apos;t agree with them, please
                     don&apos;t use our services. These terms were last updated
-                    on May 11, 2025.
+                    on July 17, 2025.
                   </p>
                 </div>
               </div>

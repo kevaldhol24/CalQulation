@@ -503,11 +503,11 @@ export default function AboutUsPage() {
                 name: "Calqulation Founder",
               },
             ],
-            // contactPoint: {
-            //   "@type": "ContactPoint",
-            //   contactType: "customer service",
-            //   email: "contact@calqulation.com",
-            // },
+            contactPoint: {
+              "@type": "ContactPoint",
+              contactType: "customer service",
+              email: "contact@calqulation.com",
+            },
           }),
         }}
       />

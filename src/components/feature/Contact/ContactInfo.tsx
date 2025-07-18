@@ -1,4 +1,4 @@
-import { Clock, Globe, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 
 export const ContactInfo = () => {
   return (
@@ -15,7 +15,7 @@ export const ContactInfo = () => {
       </div>
 
       <div className="space-y-6">
-        {/* <div className="flex items-start gap-3">
+        <div className="flex items-start gap-3">
           <div className="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-full mt-1">
             <Mail className="h-5 w-5 text-blue-600 dark:text-blue-400" />
           </div>
@@ -23,14 +23,15 @@ export const ContactInfo = () => {
             <h4 className="font-medium text-gray-800 dark:text-white">
               Email
             </h4>
-            <div
-            //   href="mailto:contact@calqulation.com"
+            <a
+              href="mailto:contact@calqulation.com"
+              target="_blank"
               className="text-blue-600 dark:text-blue-400 hover:underline"
             >
-              Please fill out the contact form
-            </div>
+              contact@calqulation.com
+            </a>
           </div>
-        </div> */}
+        </div>
 
         <div className="flex items-start gap-3">
           <div className="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-full mt-1">
@@ -102,25 +103,6 @@ export const ContactInfo = () => {
                 LinkedIn
               </a>
             </p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-3">
-          <div className="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-full mt-1">
-            <Globe className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-          </div>
-          <div>
-            <h4 className="font-medium text-gray-800 dark:text-white">
-              Website
-            </h4>
-            <a
-              href="https://www.calqulation.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              www.calqulation.com
-            </a>
           </div>
         </div>
       </div>

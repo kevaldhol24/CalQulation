@@ -427,7 +427,7 @@ export const exportToExcel = async (loanData: LoanCalculationOutput, loanDetails
       ['Actual loan terms may vary. Please consult with a financial advisor before making any financial decisions.'],
       [''],
       ['© ' + new Date().getFullYear() + ' CalQulation. All rights reserved.'],
-      ['Contact: info@calqulation.com'],
+      ['Contact: contact@calqulation.com'],
       [''],
       ['This document is protected and should not be modified.']
     ];

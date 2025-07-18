@@ -1,12 +1,12 @@
 "use client";
 
+import { NewspaperIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { BsCalculator } from "react-icons/bs";
+import { BsAndroid2, BsCalculator } from "react-icons/bs";
 import { FaChartLine, FaTools } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
-import { NewspaperIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Sheet,
@@ -31,7 +31,10 @@ export const MobileSidebar = () => {
           <GiHamburgerMenu className="text-white" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[300px] sm:w-[350px] overflow-auto">
+      <SheetContent
+        side="right"
+        className="w-[300px] sm:w-[350px] overflow-auto"
+      >
         <SheetHeader>
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
@@ -43,6 +46,15 @@ export const MobileSidebar = () => {
 
           {/* Navigation Links */}
           <div className="space-y-2">
+            <Link
+              href="/app"
+              className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-accent transition-colors"
+              onClick={handleLinkClick}
+            >
+              <BsAndroid2 size={18} />
+              <span>App</span>
+            </Link>
+
             <Link
               href="/blog"
               className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-accent transition-colors"
@@ -104,7 +116,9 @@ export const MobileSidebar = () => {
 
           {/* Coming Soon Section */}
           <div className="pt-4 border-t">
-            <p className="text-sm font-medium mb-2 text-muted-foreground">Coming Soon</p>
+            <p className="text-sm font-medium mb-2 text-muted-foreground">
+              Coming Soon
+            </p>
             <div className="space-y-2">
               <div className="flex items-center gap-3 px-3 py-2 rounded-md opacity-50 cursor-not-allowed">
                 <FaChartLine size={18} />

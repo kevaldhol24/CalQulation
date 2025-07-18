@@ -17,9 +17,13 @@ import { cn } from "@/lib/utils";
 
 interface LoanSummaryProps {
   compact?: boolean;
+  isFromMobile?: boolean; // Flag to indicate if the summary is being used from a mobile device
 }
 
-export const LoanSummary: FC<LoanSummaryProps> = ({ compact }) => {
+export const LoanSummary: FC<LoanSummaryProps> = ({
+  compact,
+  isFromMobile,
+}) => {
   // Get loanResults from context
   const { loanResults, isLoading, isInitialLoad } = useLoan();
   const { formateCurrency } = currency();
@@ -39,7 +43,7 @@ export const LoanSummary: FC<LoanSummaryProps> = ({ compact }) => {
           {
             "grid grid-cols-1 gap-2 mt-2": true,
             "sm:grid-cols-2 lg:gap-4": !compact,
-            "lg:grid-cols-2 2xl:gap-4": compact,   
+            "lg:grid-cols-2 2xl:gap-4": compact,
           },
         ])}
       >
@@ -100,7 +104,7 @@ export const LoanSummary: FC<LoanSummaryProps> = ({ compact }) => {
           {
             "grid grid-cols-1 gap-2 mt-2": true,
             "sm:grid-cols-2 lg:gap-4": !compact,
-            "lg:grid-cols-2 2xl:gap-4": compact,   
+            "lg:grid-cols-2 2xl:gap-4": compact,
           },
         ])}
       >
@@ -154,8 +158,8 @@ export const LoanSummary: FC<LoanSummaryProps> = ({ compact }) => {
       </p>
 
       <div className="flex justify-center gap-2 mt-4">
-       {!compact && <ShareButton />}
-        <DownloadButton />
+        {!compact && <ShareButton />}
+        {!isFromMobile && <DownloadButton />}
       </div>
     </div>
   );

@@ -19,6 +19,7 @@ interface LoanCalculatorProps {
   hideAdvanceOptions?: boolean; // Optional prop to hide advance options
   hideLoanCharts?: boolean; // Optional prop to hide loan charts
   initialLoanDetails?: LoanCalculationInputs;
+  isFromMobile?: boolean; // Flag to indicate if the calculator is being used from a mobile device
 }
 
 export const LoanCalculator: React.FC<LoanCalculatorProps> = ({
@@ -27,6 +28,7 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   hideEmiSchedule,
   hideAdvanceOptions,
   hideLoanCharts,
+  isFromMobile,
 }) => {
   // Use the loan context instead of local state
   const {
@@ -150,7 +152,7 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             </div>
           </div>
           <div>
-            <LoanSummary compact={compact} />
+            <LoanSummary compact={compact} isFromMobile={isFromMobile}/>
           </div>
         </div>
       </div>

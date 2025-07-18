@@ -91,7 +91,7 @@ export default function DisclaimerPage() {
                     Not Financial Advice
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    The content and tools provided on FinCalc are for
+                    The content and tools provided on Calqulation website and mobile app are for
                     informational and educational purposes only. We do not
                     provide financial, legal, or tax advice. The calculators and
                     information provided should not be considered as financial
@@ -125,9 +125,9 @@ export default function DisclaimerPage() {
                     User Responsibility
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    By using our calculators and tools, you acknowledge that you
+                    By using our calculators and tools on our website or mobile app, you acknowledge that you
                     are responsible for your own financial decisions. You agree
-                    that FinCalc is not liable for any decisions made based on
+                    that Calqulation is not liable for any decisions made based on
                     the information or calculations provided by our tools.
                   </p>
                   <p className="text-gray-600 dark:text-gray-300">
@@ -157,14 +157,14 @@ export default function DisclaimerPage() {
                     Third-Party Links & Content
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    Our website may contain links to third-party websites or
-                    services that are not owned or controlled by FinCalc. We
+                    Our website and mobile app may contain links to third-party websites or
+                    services that are not owned or controlled by Calqulation. We
                     have no control over, and assume no responsibility for, the
                     content, privacy policies, or practices of any third-party
                     websites or services.
                   </p>
                   <p className="text-gray-600 dark:text-gray-300">
-                    You acknowledge and agree that FinCalc shall not be
+                    You acknowledge and agree that Calqulation shall not be
                     responsible or liable, directly or indirectly, for any
                     damage or loss caused or alleged to be caused by or in
                     connection with the use of or reliance on any such content,
@@ -192,7 +192,7 @@ export default function DisclaimerPage() {
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
                     We reserve the right to modify or replace this disclaimer at
-                    any time without prior notice. By using our website and
+                    any time without prior notice. By using our website, mobile app, and
                     tools, you agree to be bound by the current version of this
                     disclaimer.
                   </p>
@@ -202,7 +202,7 @@ export default function DisclaimerPage() {
                     remaining provisions shall remain in full force and effect.
                   </p>
                   <p className="text-gray-600 dark:text-gray-300">
-                    This disclaimer was last updated on May 11, 2025.
+                    This disclaimer was last updated on July 17, 2025.
                   </p>
                 </div>
               </div>

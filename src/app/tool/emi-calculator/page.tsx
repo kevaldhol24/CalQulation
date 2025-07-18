@@ -105,7 +105,7 @@ export default async function EmiCalculatorPage() {
                 </div>
               }
             >
-              <LoanCalculatorWithProvider />
+              <LoanCalculatorWithProvider isFromMobile={!initialIsWeb} />
             </Suspense>
           </div>
         </div>

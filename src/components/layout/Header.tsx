@@ -15,6 +15,12 @@ export const Header = () => {
         </Link>
         <nav className="hidden md:flex items-center gap-1 text-white">
           <Link
+            href="/app"
+            className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
+          >
+            App
+          </Link>
+          <Link
             href="/blog"
             className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
           >
@@ -25,12 +31,6 @@ export const Header = () => {
             className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
           >
             EMI Calculator
-          </Link>
-          <Link
-            href="/tool/sip-calculator"
-            className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
-          >
-            SIP Calculator
           </Link>
           <Link
             href="/tools"
