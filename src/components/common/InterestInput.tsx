@@ -94,6 +94,7 @@ export const InterestInput: FC<InterestInputProps> = ({
         onBlur={handleBlur}
         aria-label="Interest rate percentage"
         aria-describedby="interest-hint"
+        type="number"
       />
       <span id="interest-hint" className="sr-only">
         Enter annual interest rate in percentage

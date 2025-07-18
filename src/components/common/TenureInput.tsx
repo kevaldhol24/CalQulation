@@ -85,9 +85,11 @@ export const TenureInput: FC<TenureInputProps> = ({
     if (localValue) {
       numericValue = Math.max(minValue, Math.min(maxValue, localValue));
       setLocalValue(numericValue);
+      onChange?.(numericValue);
+      return;
     }
-    setLocalValue(numericValue);
-    onChange?.(numericValue);
+    setLocalValue(minValue);
+    onChange?.(minValue);
   }, [localValue, maxValue, minValue, onChange]);
 
   const handleSliderChange = (newValue: number, isDragging?: boolean) => {
@@ -123,6 +125,7 @@ export const TenureInput: FC<TenureInputProps> = ({
       <TextField
         {...props}
         label={label}
+        type="number"
         endAdornment={
           !onlyYears ? (
             <div>
