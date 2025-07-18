@@ -26,9 +26,8 @@ import {
   MdDarkMode,
   MdLanguage,
   MdNotifications,
-  MdOfflinePin,
   MdSecurity,
-  MdSpeed,
+  MdSpeed
 } from "react-icons/md";
 
 export const metadata: Metadata = {
