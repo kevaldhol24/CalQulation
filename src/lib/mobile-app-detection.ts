@@ -17,7 +17,6 @@ export function isMobileAppClient(): boolean {
 
     // Check for custom properties that might be injected by the mobile app
     return (
-        // @ts-expect-error - ReactNativeWebView is injected by React Native WebView
         window.ReactNativeWebView !== undefined ||
         navigator.userAgent.includes('CalqulationMobileApp')
     );
