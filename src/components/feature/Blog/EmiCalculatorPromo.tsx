@@ -1,8 +1,12 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FaCalculator } from "react-icons/fa";
+import { useMobileApp } from "@/contexts/MobileAppContext";
+import { handleNavigation } from "@/utils/navigation";
 
 export default function EmiCalculatorPromo() {
+  const { isMobileApp } = useMobileApp();
   return (
     <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl overflow-hidden shadow-md mb-4">
       <div className="p-4">
@@ -29,11 +33,21 @@ export default function EmiCalculatorPromo() {
             <span>Visual charts &amp; graphs</span>
           </li>
         </ul>
-        <Link href="/tool/emi-calculator">
-          <Button className="w-full bg-white text-blue-600 hover:bg-blue-50 h-8 text-xs">
+        {isMobileApp ? (
+          <Button 
+            data-target="/tool/emi-calculator"
+            className="w-full bg-white text-blue-600 hover:bg-blue-50 h-8 text-xs navigate-btn"
+            onClick={() => handleNavigation('/tool/emi-calculator', isMobileApp)}
+          >
             Try Now
           </Button>
-        </Link>
+        ) : (
+          <Link href="/tool/emi-calculator">
+            <Button className="w-full bg-white text-blue-600 hover:bg-blue-50 h-8 text-xs">
+              Try Now
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );

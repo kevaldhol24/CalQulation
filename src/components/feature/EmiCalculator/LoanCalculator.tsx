@@ -15,6 +15,7 @@ import { LoanCalculationInputs } from "~lib/calqulation";
 
 interface LoanCalculatorProps {
   compact?: boolean;
+  isSecondary?: boolean;
   hideEmiSchedule?: boolean; // Optional prop to hide EMI schedule
   hideAdvanceOptions?: boolean; // Optional prop to hide advance options
   hideLoanCharts?: boolean; // Optional prop to hide loan charts
@@ -26,6 +27,7 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({
   compact,
   initialLoanDetails,
   hideEmiSchedule,
+  isSecondary,
   hideAdvanceOptions,
   hideLoanCharts,
   isFromMobile,
@@ -152,7 +154,7 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({
             </div>
           </div>
           <div>
-            <LoanSummary compact={compact} isFromMobile={isFromMobile}/>
+            <LoanSummary compact={compact} isFromMobile={isFromMobile} isSecondary={isSecondary}/>
           </div>
         </div>
       </div>

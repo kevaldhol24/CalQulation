@@ -1,8 +1,13 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { FaChartLine } from "react-icons/fa";
 import Link from "next/link";
+import { useMobileApp } from "@/contexts/MobileAppContext";
+import { handleNavigation } from "@/utils/navigation";
 
 export default function SipCalculatorPromo() {
+  const { isMobileApp } = useMobileApp();
   return (
     <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl overflow-hidden shadow-md mb-4">
       <div className="p-4">
@@ -29,11 +34,21 @@ export default function SipCalculatorPromo() {
             <span>Inflation-adjusted returns</span>
           </li>
         </ul>
-        <Link href="/tool/sip-calculator">
-          <Button className="w-full bg-white text-green-600 hover:bg-green-50 h-8 text-xs">
+        {isMobileApp ? (
+          <Button 
+            data-target="/tool/sip-calculator"
+            className="navigate-btn w-full bg-white text-green-600 hover:bg-green-50 h-8 text-xs"
+            onClick={() => handleNavigation('/tool/sip-calculator', isMobileApp)}
+          >
             Try Now
           </Button>
-        </Link>
+        ) : (
+          <Link href="/tool/sip-calculator">
+            <Button className="w-full bg-white text-green-600 hover:bg-green-50 h-8 text-xs">
+              Try Now
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );

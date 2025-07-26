@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { AlertCircle, CheckCircle2, Loader2, Send } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -98,7 +98,7 @@ export const ContactForm = () => {
             setErrors((prev) => ({ ...prev, ...serverErrors }));
           }
         }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         setSubmitStatus({
           success: false,
@@ -110,6 +110,13 @@ export const ContactForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (!Object.keys(submitStatus).length) return;
+    setTimeout(() => {
+      setSubmitStatus({});
+    }, 5000);
+  }, [submitStatus]);
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {submitStatus.message && (
@@ -120,20 +127,20 @@ export const ContactForm = () => {
               : "bg-destructive/10 border-destructive/50"
           }
         >
-            {submitStatus.success ? (
-              <CheckCircle2 className="text-green-600 dark:text-green-400" />
-            ) : (
-              <AlertCircle color="currentColor" className="text-destructive" />
-            )}
-            <AlertDescription
-              className={
-                submitStatus.success
-                  ? "text-green-800 dark:text-green-300"
-                  : "text-destructive"
-              }
-            >
-              {submitStatus.message}
-            </AlertDescription>
+          {submitStatus.success ? (
+            <CheckCircle2 className="text-green-600 dark:text-green-400" />
+          ) : (
+            <AlertCircle color="currentColor" className="text-destructive" />
+          )}
+          <AlertDescription
+            className={
+              submitStatus.success
+                ? "text-green-800 dark:text-green-300"
+                : "text-destructive"
+            }
+          >
+            {submitStatus.message}
+          </AlertDescription>
         </Alert>
       )}
 
