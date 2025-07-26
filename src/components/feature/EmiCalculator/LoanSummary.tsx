@@ -17,11 +17,13 @@ import { cn } from "@/lib/utils";
 
 interface LoanSummaryProps {
   compact?: boolean;
+  isSecondary?: boolean;
   isFromMobile?: boolean; // Flag to indicate if the summary is being used from a mobile device
 }
 
 export const LoanSummary: FC<LoanSummaryProps> = ({
   compact,
+  isSecondary,
   isFromMobile,
 }) => {
   // Get loanResults from context
@@ -158,8 +160,8 @@ export const LoanSummary: FC<LoanSummaryProps> = ({
       </p>
 
       <div className="flex justify-center gap-2 mt-4">
-        {!compact && <ShareButton />}
-        {!isFromMobile && <DownloadButton />}
+        {!compact && !isSecondary && <ShareButton />}
+        {!isFromMobile && !compact && !isSecondary && <DownloadButton />}
       </div>
     </div>
   );

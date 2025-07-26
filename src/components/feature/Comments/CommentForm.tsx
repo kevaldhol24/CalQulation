@@ -3,8 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { Send, MessageCircle, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  Send,
+  MessageCircle,
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+} from "lucide-react";
 import { submitComment } from "@/actions/commentActions";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -39,11 +45,14 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = e.target.value;
     setComment((prev) => ({ ...prev, email }));
-    
+
     if (email && !validateEmail(email)) {
-      setErrors(prev => ({ ...prev, email: "Please enter a valid email address" }));
+      setErrors((prev) => ({
+        ...prev,
+        email: "Please enter a valid email address",
+      }));
     } else {
-      setErrors(prev => ({ ...prev, email: undefined }));
+      setErrors((prev) => ({ ...prev, email: undefined }));
     }
   };
 
@@ -51,9 +60,9 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
     const body = e.target.value;
     setComment((prev) => ({ ...prev, body }));
     if (submitted && !body.trim()) {
-      setErrors(prev => ({ ...prev, body: "Comment text is required" }));
+      setErrors((prev) => ({ ...prev, body: "Comment text is required" }));
     } else {
-      setErrors(prev => ({ ...prev, body: undefined }));
+      setErrors((prev) => ({ ...prev, body: undefined }));
     }
   };
 
@@ -61,9 +70,9 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
     const name = e.target.value;
     setComment((prev) => ({ ...prev, name }));
     if (submitted && !name.trim()) {
-      setErrors(prev => ({ ...prev, name: "Name is required" }));
+      setErrors((prev) => ({ ...prev, name: "Name is required" }));
     } else {
-      setErrors(prev => ({ ...prev, name: undefined }));
+      setErrors((prev) => ({ ...prev, name: undefined }));
     }
   };
 
@@ -75,54 +84,65 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
     const newErrors = {
       body: !comment.body.trim() ? "Comment text is required" : undefined,
       name: !comment.name.trim() ? "Name is required" : undefined,
-      email: comment.email && !validateEmail(comment.email) ? "Please enter a valid email address" : undefined
+      email:
+        comment.email && !validateEmail(comment.email)
+          ? "Please enter a valid email address"
+          : undefined,
     };
-    
+
     setErrors(newErrors);
-    
+
     // Check if there are any errors
-    if (!Object.values(newErrors).some(error => error)) {
+    if (!Object.values(newErrors).some((error) => error)) {
       // Submit the form using the server action
       try {
         setIsSubmitting(true);
         setSubmitStatus({});
-        
+
         const result = await submitComment({
           body: comment.body,
           name: comment.name,
           email: comment.email || undefined,
           postId: postId,
         });
-        
+
         if (result.success) {
           setSubmitStatus({
             success: true,
-            message: result.message
+            message: result.message,
           });
           // Reset the form
           setComment({
             body: "",
             name: "",
-            email: ""
+            email: "",
           });
           setSubmitted(false);
         } else {
           setSubmitStatus({
             success: false,
-            message: result.error
+            message: result.error,
           });
         }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
       } catch (_e: any) {
         setSubmitStatus({
           success: false,
-          message: "An unexpected error occurred. Please try again."
+          message: "An unexpected error occurred. Please try again.",
         });
       } finally {
         setIsSubmitting(false);
       }
     }
   };
+
+  useEffect(() => {
+    if (!Object.keys(submitStatus).length) return;
+    setTimeout(() => {
+      setSubmitStatus({});
+    }, 5000);
+
+  }, [submitStatus]);
 
   return (
     <div
@@ -142,7 +162,9 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
           <Textarea
             id="comment-textarea"
             placeholder="Write your comment here..."
-            className={`min-h-[100px] resize-y w-full ${errors.body ? "border-destructive" : ""}`}
+            className={`min-h-[100px] resize-y w-full ${
+              errors.body ? "border-destructive" : ""
+            }`}
             value={comment.body}
             onChange={handleBodyChange}
             aria-label="Comment text"
@@ -200,7 +222,8 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
           <Alert className="bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800">
             <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
             <AlertDescription className="text-green-800 dark:text-green-300">
-              {submitStatus.message || "Your comment has been submitted and will appear after review."}
+              {submitStatus.message ||
+                "Your comment has been submitted and will appear after review."}
             </AlertDescription>
           </Alert>
         )}
@@ -209,7 +232,8 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
           <Alert className="bg-red-50 dark:bg-red-950 border-red-200 dark:border-red-800">
             <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
             <AlertDescription className="text-red-800 dark:text-red-300">
-              {submitStatus.message || "Failed to submit comment. Please try again."}
+              {submitStatus.message ||
+                "Failed to submit comment. Please try again."}
             </AlertDescription>
           </Alert>
         )}

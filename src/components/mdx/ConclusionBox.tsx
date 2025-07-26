@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import { FiCheckCircle, FiArrowRight } from "react-icons/fi";
+import { useMobileApp } from "@/contexts/MobileAppContext";
+import { handleNavigation } from "@/utils/navigation";
 
 export interface ConclusionBoxProps {
   title: string;
@@ -17,6 +21,11 @@ export const ConclusionBox: React.FC<ConclusionBoxProps> = ({
   callToAction,
   callToActionUrl = "#",
 }) => {
+  const { isMobileApp } = useMobileApp();
+
+  const handleCallToAction = () => {
+    handleNavigation(callToActionUrl, isMobileApp);
+  };
   return (
     <div className="my-12 p-8 bg-gradient-to-br from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 rounded-xl border border-primary/20 shadow-lg">
       <h3 className="text-2xl font-bold text-primary mb-5 flex items-center">
@@ -50,13 +59,24 @@ export const ConclusionBox: React.FC<ConclusionBoxProps> = ({
 
       {callToAction && (
         <div className="text-center mt-8">
-          <Link
-            href={callToActionUrl}
-            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 transition-colors gap-2"
-          >
-            {callToAction}
-            <FiArrowRight className="ml-1" />
-          </Link>
+          {isMobileApp ? (
+            <button
+              data-target={callToActionUrl}
+              onClick={handleCallToAction}
+              className="navigate-btn inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 transition-colors gap-2"
+            >
+              {callToAction}
+              <FiArrowRight className="ml-1" />
+            </button>
+          ) : (
+            <Link
+              href={callToActionUrl}
+              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 transition-colors gap-2"
+            >
+              {callToAction}
+              <FiArrowRight className="ml-1" />
+            </Link>
+          )}
         </div>
       )}
     </div>

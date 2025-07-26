@@ -110,7 +110,7 @@ export default function LoanComparison({
                     </div>
                   }
                 >
-                  <LoanCalculatorWithProvider compact />
+                  <LoanCalculatorWithProvider compact isSecondary/>
                 </Suspense>
               </div>
 
