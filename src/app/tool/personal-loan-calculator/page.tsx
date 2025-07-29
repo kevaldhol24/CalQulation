@@ -115,7 +115,7 @@ export default async function PersonalLoanCalculatorPage() {
               }
             >
               <LoanCalculatorWithProvider
-                hideAdvanceOptions={true}
+                // hideAdvanceOptions={true}
                 isSecondary
                 initialLoanDetails={initialLoanDetails}
               />
