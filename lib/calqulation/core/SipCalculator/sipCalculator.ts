@@ -120,6 +120,7 @@ export class SIPCalculator {
             // Apply step-up rate annually
             if (this.stepUpRate && i > 1 && i % 12 === 1) {
                 monthlyInvestment *= (1 + this.stepUpRate / 100);
+                this.monthlyInvestment = monthlyInvestment;
                 investment = monthlyInvestment;
             }
 
