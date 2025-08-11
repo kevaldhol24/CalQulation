@@ -123,9 +123,15 @@ export const AdvanceLoanInputs = () => {
         )} */}
 
         <div className="grid grid-cols-1 gap-3">
-          <Prepayment />
-          <InterestChange />
-          <EmiChange />
+          <div data-tour="prepayments-section">
+            <Prepayment />
+          </div>
+          <div data-tour="rate-change-section">
+            <InterestChange />
+          </div>
+          <div data-tour="emi-change-section">
+            <EmiChange />
+          </div>
         </div>
       </CollapsibleWrapper>
     </div>

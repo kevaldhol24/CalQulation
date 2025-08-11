@@ -1,4 +1,5 @@
 import { Breadcrumb } from "@/components/common/Breadcrumb";
+import { LoanCalculatorGuide } from "@/components/common/LoanCalculatorGuide";
 import { ToolPageHero } from "@/components/common/PageHero";
 import { Comments } from "@/components/feature/Comments";
 import { LoanCalculatorWithProvider } from "@/components/feature/EmiCalculator/LoanCalculator";
@@ -95,7 +96,8 @@ export default async function EmiCalculatorPage() {
           />
         </ToolPageHero>
       )}
-      <div className="relative max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 z-10 pt-0 pb-0 sm:pb-8">
+      <div className="mt-2 relative max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 z-10 pt-0 pb-0 sm:pb-8">
+        <LoanCalculatorGuide />
         <div className="relative overflow-hidden">
           <div className="overflow-hidden">
             <Suspense
