@@ -1,4 +1,5 @@
 import { PageHero } from "@/components/common/PageHero";
+import ModernDeviceShowcase from "@/components/ui/ScreenshotCarousel";
 import { Metadata } from "next";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { BsGraphUp } from "react-icons/bs";
@@ -16,9 +17,8 @@ import {
   FaRocket,
   FaShieldAlt,
   FaSync,
-  FaTools
+  FaTools,
 } from "react-icons/fa";
-import { HiSparkles } from "react-icons/hi";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import {
   MdAnalytics,
@@ -27,7 +27,7 @@ import {
   MdLanguage,
   MdNotifications,
   MdSecurity,
-  MdSpeed
+  MdSpeed,
 } from "react-icons/md";
 
 export const metadata: Metadata = {
@@ -73,7 +73,7 @@ export default function MobileAppPage() {
             <FaAndroid className="mr-2" /> Android
           </span>
           <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100">
-            <AiFillThunderbolt className="mr-2" />  Fast results
+            <AiFillThunderbolt className="mr-2" /> Fast results
           </span>
           <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
             <IoShieldCheckmarkSharp className="mr-2" /> Accurate
@@ -88,36 +88,7 @@ export default function MobileAppPage() {
           <section className="relative">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1">
-                <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-3xl p-8 shadow-2xl">
-                  <div className="relative">
-                    {/* Phone mockup */}
-                    <div className="mx-auto w-64 h-[500px] bg-black rounded-[3rem] p-2 shadow-2xl">
-                      <div className="w-full h-full bg-white dark:bg-gray-900 rounded-[2.5rem] overflow-hidden relative">
-                        {/* Screen content */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                          <div className="text-center text-white">
-                            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                              <FaCalculator className="text-2xl" />
-                            </div>
-                            <h3 className="text-xl font-bold mb-2">Calqulation</h3>
-                            <p className="text-sm opacity-90">Financial Tools</p>
-                          </div>
-                        </div>
-                        
-                        {/* Notch */}
-                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-b-xl"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Floating elements */}
-                    <div className="absolute -top-4 -left-4 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg animate-bounce">
-                      <HiSparkles className="text-white text-xl" />
-                    </div>
-                    <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                      <FaRocket className="text-white text-xl" />
-                    </div>
-                  </div>
-                </div>
+                <ModernDeviceShowcase />
               </div>
 
               <div className="order-1 lg:order-2">
@@ -126,18 +97,20 @@ export default function MobileAppPage() {
                     <FaMobile className="mr-2" />
                     Coming Soon
                   </div>
-                  
+
                   <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
                     All Your Financial Tools
                     <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                       In Your Pocket
                     </span>
                   </h2>
-                  
+
                   <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                    Experience the power of Calqulation&apos;s financial calculators on your mobile device. 
-                    Our app brings all your favorite tools with enhanced mobile features and seamless synchronization.
-                    Internet connection required for full functionality.
+                    Experience the power of Calqulation&apos;s financial
+                    calculators on your mobile device. Our app brings all your
+                    favorite tools with enhanced mobile features, beautiful
+                    interfaces, and seamless performance. See different
+                    calculators in action with our modern showcase.
                   </p>
 
                   {/* Download buttons */}
@@ -180,7 +153,8 @@ export default function MobileAppPage() {
                   All-in-One Calculator Suite
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Access all your favorite financial calculators in one convenient mobile app with real-time calculations.
+                  Access all your favorite financial calculators in one
+                  convenient mobile app with real-time calculations.
                 </p>
               </div>
 
@@ -193,7 +167,8 @@ export default function MobileAppPage() {
                   Seamless Sync
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Theme and currency preferences sync automatically between web and mobile app for consistent experience.
+                  Theme and currency preferences sync automatically between web
+                  and mobile app for consistent experience.
                 </p>
               </div>
 
@@ -206,7 +181,8 @@ export default function MobileAppPage() {
                   Lightning Fast
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Optimized for mobile performance with instant calculations and smooth user experience.
+                  Optimized for mobile performance with instant calculations and
+                  smooth user experience.
                 </p>
               </div>
 
@@ -219,7 +195,8 @@ export default function MobileAppPage() {
                   Smart Notifications
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Get notified about new features, updates, and financial tips to stay informed.
+                  Get notified about new features, updates, and financial tips
+                  to stay informed.
                 </p>
               </div>
 
@@ -232,7 +209,8 @@ export default function MobileAppPage() {
                   Dark Mode
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Eye-friendly dark mode that automatically adapts to your system preferences.
+                  Eye-friendly dark mode that automatically adapts to your
+                  system preferences.
                 </p>
               </div>
 
@@ -245,11 +223,13 @@ export default function MobileAppPage() {
                   Multi-Currency
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Support for multiple currencies with real-time conversion and regional formatting.
+                  Support for multiple currencies with real-time conversion and
+                  regional formatting.
                 </p>
               </div>
             </div>
           </section>
+
 
           {/* How It Works Section */}
           <section className="bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-900/20 rounded-3xl p-8 lg:p-12">
@@ -272,7 +252,8 @@ export default function MobileAppPage() {
                   Download App
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Get the Calqulation app from Google Play Store (coming soon - currently in review)
+                  Get the Calqulation app from Google Play Store (coming soon -
+                  currently in review)
                 </p>
               </div>
 
@@ -285,7 +266,8 @@ export default function MobileAppPage() {
                   Open & Explore
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Launch the app and explore all financial calculators with enhanced mobile features
+                  Launch the app and explore all financial calculators with
+                  enhanced mobile features
                 </p>
               </div>
 
@@ -298,7 +280,8 @@ export default function MobileAppPage() {
                   Calculate & Plan
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Use any calculator offline and make informed financial decisions on the go
+                  Use any calculator offline and make informed financial
+                  decisions on the go
                 </p>
               </div>
             </div>
@@ -311,24 +294,62 @@ export default function MobileAppPage() {
                 All Tools Available in App
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300">
-                Access every financial calculator from our website, optimized for mobile
+                Access every financial calculator from our website, optimized
+                for mobile
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Tool cards */}
               {[
-                { name: "EMI Calculator", icon: FaCalculator, color: "from-blue-500 to-purple-600" },
-                { name: "SIP Calculator", icon: FaChartLine, color: "from-green-500 to-emerald-600" },
-                { name: "Lumpsum Calculator", icon: BsGraphUp, color: "from-orange-500 to-red-600" },
-                { name: "Loan Comparison", icon: FaChartBar, color: "from-purple-500 to-pink-600" },
-                { name: "FD Calculator", icon: MdCalculate, color: "from-indigo-500 to-blue-600" },
-                { name: "RD Calculator", icon: MdAnalytics, color: "from-emerald-500 to-green-600" },
-                { name: "GST Calculator", icon: FaTools, color: "from-yellow-500 to-orange-600" },
-                { name: "Goal SIP", icon: FaLightbulb, color: "from-pink-500 to-purple-600" },
+                {
+                  name: "EMI Calculator",
+                  icon: FaCalculator,
+                  color: "from-blue-500 to-purple-600",
+                },
+                {
+                  name: "SIP Calculator",
+                  icon: FaChartLine,
+                  color: "from-green-500 to-emerald-600",
+                },
+                {
+                  name: "Lumpsum Calculator",
+                  icon: BsGraphUp,
+                  color: "from-orange-500 to-red-600",
+                },
+                {
+                  name: "Loan Comparison",
+                  icon: FaChartBar,
+                  color: "from-purple-500 to-pink-600",
+                },
+                {
+                  name: "FD Calculator",
+                  icon: MdCalculate,
+                  color: "from-indigo-500 to-blue-600",
+                },
+                {
+                  name: "RD Calculator",
+                  icon: MdAnalytics,
+                  color: "from-emerald-500 to-green-600",
+                },
+                {
+                  name: "GST Calculator",
+                  icon: FaTools,
+                  color: "from-yellow-500 to-orange-600",
+                },
+                {
+                  name: "Goal SIP",
+                  icon: FaLightbulb,
+                  color: "from-pink-500 to-purple-600",
+                },
               ].map((tool, index) => (
-                <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
-                  <div className={`w-12 h-12 bg-gradient-to-br ${tool.color} rounded-xl flex items-center justify-center mb-4 shadow-md`}>
+                <div
+                  key={index}
+                  className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 dark:border-gray-700"
+                >
+                  <div
+                    className={`w-12 h-12 bg-gradient-to-br ${tool.color} rounded-xl flex items-center justify-center mb-4 shadow-md`}
+                  >
                     <tool.icon className="text-white text-xl" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -346,7 +367,8 @@ export default function MobileAppPage() {
                 Built with Modern Technology
               </h2>
               <p className="text-lg text-blue-100">
-                Our app uses cutting-edge technology for the best user experience
+                Our app uses cutting-edge technology for the best user
+                experience
               </p>
             </div>
 
@@ -358,7 +380,8 @@ export default function MobileAppPage() {
                 </div>
                 <h3 className="text-xl font-bold mb-4">Cross-Platform</h3>
                 <p className="text-blue-100">
-                  Seamless experience across mobile and web platforms with synchronized preferences
+                  Seamless experience across mobile and web platforms with
+                  synchronized preferences
                 </p>
               </div>
 
@@ -378,9 +401,12 @@ export default function MobileAppPage() {
                 <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
                   <FaRocket className="text-2xl" />
                 </div>
-                <h3 className="text-xl font-bold mb-4">Optimized Performance</h3>
+                <h3 className="text-xl font-bold mb-4">
+                  Optimized Performance
+                </h3>
                 <p className="text-blue-100">
-                  Lightning-fast calculations with smooth animations and interactions
+                  Lightning-fast calculations with smooth animations and
+                  interactions
                 </p>
               </div>
             </div>
@@ -408,10 +434,11 @@ export default function MobileAppPage() {
                   Ready to Take Your Financial Planning Mobile?
                 </h2>
                 <p className="text-lg text-blue-100 mb-8">
-                  Get ready to experience Calqulation on your mobile device. 
-                  Our app is currently in review and will be available soon on Google Play Store.
+                  Get ready to experience Calqulation on your mobile device. Our
+                  app is currently in review and will be available soon on
+                  Google Play Store.
                 </p>
-                
+
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <div className="relative">
                     <div className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-lg font-medium rounded-xl text-white bg-transparent opacity-75 cursor-not-allowed">
@@ -452,14 +479,15 @@ export default function MobileAppPage() {
             "@context": "https://schema.org",
             "@type": "MobileApplication",
             name: "Calqulation",
-            description: "Financial calculator mobile app with real-time calculations, dark mode, and currency synchronization. Internet connection required.",
+            description:
+              "Financial calculator mobile app with real-time calculations, dark mode, and currency synchronization. Internet connection required.",
             applicationCategory: "FinanceApplication",
             operatingSystem: ["Android"],
             offers: {
               "@type": "Offer",
               price: "0",
               priceCurrency: "USD",
-              availability: "http://schema.org/PreOrder"
+              availability: "http://schema.org/PreOrder",
             },
             screenshot: "/Calqulation1.png",
             author: {
