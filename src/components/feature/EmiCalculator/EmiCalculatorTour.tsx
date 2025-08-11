@@ -261,22 +261,30 @@ export const EmiCalculatorTour: React.FC<EmiCalculatorTourProps> = ({
     const hasBackdropFilter = supportsBackdropFilter();
 
     if (isWebView || !hasBackdropFilter) {
-      // WebView-optimized styles without backdrop-filter and with stronger borders
+      // WebView-optimized styles: completely transparent background with strong outline for maximum visibility
       styleTag.innerHTML = `
         .react-joyride__spotlight { 
-          transition: box-shadow .25s ease, background-color .25s ease, outline .25s ease; 
-          outline: 3px solid rgba(99,102,241,0.9); 
-          box-shadow: 0 0 0 6px rgba(99,102,241,0.4), 0 2px 12px rgba(0,0,0,0.3); 
-          background-color: rgba(255,255,255,0.9);
-          border-radius: 8px;
-          transform: scale(1.02);
+          transition: outline .25s ease, transform .25s ease !important; 
+          outline: 4px solid rgba(99,102,241,1) !important; 
+          box-shadow: 0 0 0 8px rgba(99,102,241,0.3), 0 0 25px rgba(99,102,241,0.6) !important; 
+          background-color: transparent !important;
+          background: transparent !important;
+          border-radius: 8px !important;
+          transform: scale(1.01) !important;
+          opacity: 1 !important;
         }
         .dark .react-joyride__spotlight { 
-          outline: 3px solid rgba(129,140,248,1); 
-          box-shadow: 0 0 0 6px rgba(129,140,248,0.6), 0 2px 12px rgba(0,0,0,0.5); 
-          background-color: rgba(30,41,59,0.95); 
-          border-radius: 8px;
-          transform: scale(1.02);
+          outline: 4px solid rgba(129,140,248,1) !important; 
+          box-shadow: 0 0 0 8px rgba(129,140,248,0.4), 0 0 25px rgba(129,140,248,0.7) !important; 
+          background-color: transparent !important; 
+          background: transparent !important;
+          border-radius: 8px !important;
+          transform: scale(1.01) !important;
+          opacity: 1 !important;
+        }
+        /* Ensure the spotlight hole is completely clear */
+        .react-joyride__overlay {
+          mix-blend-mode: normal !important;
         }
       `;
     } else {
@@ -404,7 +412,7 @@ export const EmiCalculatorTour: React.FC<EmiCalculatorTourProps> = ({
             textColor: dark ? "#e2e8f0" : "#1e293b",
           },
           overlay: { 
-            backgroundColor: isWebViewEnvironment() ? "rgba(0,0,0,0.75)" : "rgba(15,23,42,0.55)"
+            backgroundColor: isWebViewEnvironment() ? "rgba(0,0,0,0.85)" : "rgba(15,23,42,0.55)"
           },
           spotlight: {
             borderRadius: isWebViewEnvironment() ? 8 : 12,
