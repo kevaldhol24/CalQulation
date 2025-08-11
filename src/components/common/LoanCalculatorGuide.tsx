@@ -11,8 +11,7 @@ export const LoanCalculatorGuide = () => {
         }
       }}
       aria-label="Start calculator walkthrough"
-      style={{ borderRadius: "6px 6px 0 0" }}
-      className="absolute right-1/2 translate-x-1/2 bottom-[calc(100%-6px)] z-[1] bg-background hover:bg-background/90 shadow-lg transition-colors group"
+      className="fixed bottom-6 left-4 z-[1] rounded-full shadow-lg transition-colors group bg-purple-700"
     >
       <span>How to Use</span>
       <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20 text-[11px] font-semibold">
