@@ -67,8 +67,8 @@ export default async function RootLayout({
 }>) {
   // Check if request is from mobile app using server-side cookies
   const cookieStore = await cookies();
-  const isMobileAppCookie = cookieStore.get('is-mobile-app');
-  const initialIsMobileApp = isMobileAppCookie?.value === 'true';
+  const isMobileAppCookie = cookieStore.get("is-mobile-app");
+  const initialIsMobileApp = isMobileAppCookie?.value === "true";
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -76,6 +76,11 @@ export default async function RootLayout({
         <link rel="canonical" href="https://www.calqulation.com" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3051538767280870"
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
@@ -89,13 +94,13 @@ export default async function RootLayout({
         >
           <MobileAppProvider initialIsMobileApp={initialIsMobileApp}>
             <Suspense
-              fallback={<div className="h-1 bg-gray-200 dark:bg-gray-800"></div>}
+              fallback={
+                <div className="h-1 bg-gray-200 dark:bg-gray-800"></div>
+              }
             >
               <NavigationProgress />
             </Suspense>
-            <ConditionalLayout>
-              {children}
-            </ConditionalLayout>
+            <ConditionalLayout>{children}</ConditionalLayout>
             <Toaster position="top-right" />
           </MobileAppProvider>
         </ThemeProvider>
