@@ -4,11 +4,12 @@ This document explains the optimizations implemented to fix blurry tour spotligh
 
 ## Problem
 
-When using the site in an Android WebView (like in your mobile app), the tour spotlight elements appeared blurry due to:
+When using the site in an Android WebView (like in your mobile app), the tour spotlight elements appeared blurry and the highlighted content was barely visible due to:
 
 1. **Backdrop Filter Issues**: WebViews don't consistently support `backdrop-filter` CSS property
 2. **Box Shadow Rendering**: Complex box shadows render differently in WebView engines
 3. **CSS Transform Issues**: Some CSS transforms cause visual artifacts in WebView
+4. **Overlay Background**: Semi-transparent background colors on spotlight created an overlay effect making content only slightly visible
 
 ## Solution
 
@@ -40,11 +41,13 @@ The tour component now:
 **WebView-optimized styles:**
 ```css
 .react-joyride__spotlight { 
-  outline: 3px solid rgba(99,102,241,0.9); 
-  box-shadow: 0 0 0 6px rgba(99,102,241,0.4), 0 2px 12px rgba(0,0,0,0.3); 
-  background-color: rgba(255,255,255,0.9);
-  border-radius: 8px;
-  transform: scale(1.02);
+  outline: 4px solid rgba(99,102,241,1) !important; 
+  box-shadow: 0 0 0 8px rgba(99,102,241,0.3), 0 0 25px rgba(99,102,241,0.6) !important; 
+  background-color: transparent !important;
+  background: transparent !important;
+  border-radius: 8px !important;
+  transform: scale(1.01) !important;
+  opacity: 1 !important;
 }
 ```
 
@@ -88,10 +91,11 @@ export function useWebViewOptimization(): WebViewOptimizations {
 
 ## Key Benefits
 
-1. **Clearer Spotlights**: No more blurry or distorted tour highlights in Android WebView
-2. **Better Performance**: Optimized CSS reduces rendering overhead in WebView
-3. **Consistent Experience**: Maintains visual quality across all platforms
-4. **Future-Proof**: Easily extendable for other WebView optimizations
+1. **Crystal Clear Spotlights**: Completely transparent background ensures highlighted content is fully visible in Android WebView
+2. **Strong Visual Borders**: Bold outlines with glowing effects provide clear highlighting without obscuring content
+3. **Better Performance**: Optimized CSS reduces rendering overhead in WebView
+4. **Consistent Experience**: Maintains visual quality across all platforms
+5. **Future-Proof**: Easily extendable for other WebView optimizations
 
 ## Testing
 

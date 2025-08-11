@@ -32,7 +32,7 @@ export function useWebViewOptimization(): WebViewOptimizations {
       hasBackdropFilter,
       shouldUseSimpleEffects,
       recommendedBorderRadius: isWebView ? 8 : 12,
-      recommendedOverlayOpacity: isWebView ? 'rgba(0,0,0,0.75)' : 'rgba(15,23,42,0.55)',
+      recommendedOverlayOpacity: isWebView ? 'rgba(0,0,0,0.85)' : 'rgba(15,23,42,0.55)',
     });
   }, []);
 
@@ -45,11 +45,11 @@ export function getWebViewOptimizedStyles(isWebView: boolean, hasBackdropFilter:
     spotlight: {
       light: isWebView || !hasBackdropFilter 
         ? {
-            outline: '3px solid rgba(99,102,241,0.9)',
-            boxShadow: '0 0 0 6px rgba(99,102,241,0.4), 0 2px 12px rgba(0,0,0,0.3)',
-            backgroundColor: 'rgba(255,255,255,0.9)',
+            outline: '4px solid rgba(99,102,241,1)',
+            boxShadow: '0 0 0 8px rgba(99,102,241,0.3), 0 0 25px rgba(99,102,241,0.6)',
+            backgroundColor: 'transparent',
             borderRadius: '8px',
-            transform: 'scale(1.02)',
+            transform: 'scale(1.01)',
           }
         : {
             outline: '2px solid rgba(99,102,241,0.85)',
@@ -59,11 +59,11 @@ export function getWebViewOptimizedStyles(isWebView: boolean, hasBackdropFilter:
           },
       dark: isWebView || !hasBackdropFilter
         ? {
-            outline: '3px solid rgba(129,140,248,1)',
-            boxShadow: '0 0 0 6px rgba(129,140,248,0.6), 0 2px 12px rgba(0,0,0,0.5)',
-            backgroundColor: 'rgba(30,41,59,0.95)',
+            outline: '4px solid rgba(129,140,248,1)',
+            boxShadow: '0 0 0 8px rgba(129,140,248,0.4), 0 0 25px rgba(129,140,248,0.7)',
+            backgroundColor: 'transparent',
             borderRadius: '8px',
-            transform: 'scale(1.02)',
+            transform: 'scale(1.01)',
           }
         : {
             outline: '2px solid rgba(129,140,248,0.95)',
