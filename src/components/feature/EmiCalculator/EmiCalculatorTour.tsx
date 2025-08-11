@@ -6,6 +6,7 @@ import Joyride, {
   Step,
   TooltipRenderProps,
 } from "react-joyride";
+import { isWebViewEnvironment, supportsBackdropFilter } from "@/lib/mobile-app-detection";
 
 interface EmiCalculatorTourProps {
   storageKey?: string;
@@ -241,7 +242,10 @@ export const EmiCalculatorTour: React.FC<EmiCalculatorTourProps> = ({
   }, [startTour, storageKey]);
 
   useEffect(() => {
-    // Inject spotlight style for better dark mode visibility
+    // Inject spotlight style for better dark mode visibility and WebView compatibility
+    // WebViews have different rendering engines and often don't support modern CSS features
+    // like backdrop-filter properly, causing blurred or distorted spotlight effects.
+    // This fix provides optimized styles specifically for WebView environments.
     if (typeof document === "undefined") return;
     let styleTag = document.getElementById(
       "emi-tour-spotlight-style"
@@ -251,21 +255,48 @@ export const EmiCalculatorTour: React.FC<EmiCalculatorTourProps> = ({
       styleTag.id = "emi-tour-spotlight-style";
       document.head.appendChild(styleTag);
     }
-    styleTag.innerHTML = `
-      .react-joyride__spotlight { 
-        transition: box-shadow .25s ease, background-color .25s ease, outline .25s ease; 
-        outline: 2px solid rgba(99,102,241,0.85); 
-        box-shadow: 0 0 0 4px rgba(99,102,241,0.35), 0 4px 18px -2px rgba(0,0,0,0.45); 
-        background-color: rgba(255,255,255,0.35);
-        backdrop-filter: blur(2px) brightness(1.05);
-      }
-      .dark .react-joyride__spotlight { 
-        outline: 2px solid rgba(129,140,248,0.95); 
-        box-shadow: 0 0 0 4px rgba(129,140,248,0.55), 0 0 0 8px rgba(255,255,255,0.06), 0 4px 22px -2px rgba(0,0,0,0.75); 
-        background-color: rgba(30,41,59,0.55); 
-        backdrop-filter: blur(3px) brightness(1.2) saturate(1.1);
-      }
-    `;
+
+    // Check if we're in a WebView environment
+    const isWebView = isWebViewEnvironment();
+    const hasBackdropFilter = supportsBackdropFilter();
+
+    if (isWebView || !hasBackdropFilter) {
+      // WebView-optimized styles without backdrop-filter and with stronger borders
+      styleTag.innerHTML = `
+        .react-joyride__spotlight { 
+          transition: box-shadow .25s ease, background-color .25s ease, outline .25s ease; 
+          outline: 3px solid rgba(99,102,241,0.9); 
+          box-shadow: 0 0 0 6px rgba(99,102,241,0.4), 0 2px 12px rgba(0,0,0,0.3); 
+          background-color: rgba(255,255,255,0.9);
+          border-radius: 8px;
+          transform: scale(1.02);
+        }
+        .dark .react-joyride__spotlight { 
+          outline: 3px solid rgba(129,140,248,1); 
+          box-shadow: 0 0 0 6px rgba(129,140,248,0.6), 0 2px 12px rgba(0,0,0,0.5); 
+          background-color: rgba(30,41,59,0.95); 
+          border-radius: 8px;
+          transform: scale(1.02);
+        }
+      `;
+    } else {
+      // Standard browser styles with backdrop-filter
+      styleTag.innerHTML = `
+        .react-joyride__spotlight { 
+          transition: box-shadow .25s ease, background-color .25s ease, outline .25s ease; 
+          outline: 2px solid rgba(99,102,241,0.85); 
+          box-shadow: 0 0 0 4px rgba(99,102,241,0.35), 0 4px 18px -2px rgba(0,0,0,0.45); 
+          background-color: rgba(255,255,255,0.35);
+          backdrop-filter: blur(2px) brightness(1.05);
+        }
+        .dark .react-joyride__spotlight { 
+          outline: 2px solid rgba(129,140,248,0.95); 
+          box-shadow: 0 0 0 4px rgba(129,140,248,0.55), 0 0 0 8px rgba(255,255,255,0.06), 0 4px 22px -2px rgba(0,0,0,0.75); 
+          background-color: rgba(30,41,59,0.55); 
+          backdrop-filter: blur(3px) brightness(1.2) saturate(1.1);
+        }
+      `;
+    }
   }, [dark]);
 
 
@@ -372,12 +403,12 @@ export const EmiCalculatorTour: React.FC<EmiCalculatorTourProps> = ({
             primaryColor: "#6366f1",
             textColor: dark ? "#e2e8f0" : "#1e293b",
           },
-          overlay: { backgroundColor: "rgba(15,23,42,0.55)" },
+          overlay: { 
+            backgroundColor: isWebViewEnvironment() ? "rgba(0,0,0,0.75)" : "rgba(15,23,42,0.55)"
+          },
           spotlight: {
-            borderRadius: 12,
-            boxShadow: dark
-              ? "0 0 0 4px rgba(129,140,248,0.55)"
-              : "0 0 0 4px rgba(99,102,241,0.35)",
+            borderRadius: isWebViewEnvironment() ? 8 : 12,
+            boxShadow: "none", // Let CSS handle this for better WebView compatibility
           },
         }}
         locale={{
