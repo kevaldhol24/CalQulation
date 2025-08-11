@@ -261,22 +261,30 @@ export const EmiCalculatorTour: React.FC<EmiCalculatorTourProps> = ({
     const hasBackdropFilter = supportsBackdropFilter();
 
     if (isWebView || !hasBackdropFilter) {
-      // WebView-optimized styles: transparent background with strong outline for clear visibility
+      // WebView-optimized styles: completely transparent background with strong outline for maximum visibility
       styleTag.innerHTML = `
         .react-joyride__spotlight { 
-          transition: box-shadow .25s ease, outline .25s ease, transform .25s ease; 
+          transition: outline .25s ease, transform .25s ease !important; 
           outline: 4px solid rgba(99,102,241,1) !important; 
-          box-shadow: 0 0 0 8px rgba(99,102,241,0.3), 0 0 20px rgba(99,102,241,0.4) !important; 
+          box-shadow: 0 0 0 8px rgba(99,102,241,0.3), 0 0 25px rgba(99,102,241,0.6) !important; 
           background-color: transparent !important;
-          border-radius: 8px;
-          transform: scale(1.01);
+          background: transparent !important;
+          border-radius: 8px !important;
+          transform: scale(1.01) !important;
+          opacity: 1 !important;
         }
         .dark .react-joyride__spotlight { 
           outline: 4px solid rgba(129,140,248,1) !important; 
-          box-shadow: 0 0 0 8px rgba(129,140,248,0.4), 0 0 20px rgba(129,140,248,0.5) !important; 
+          box-shadow: 0 0 0 8px rgba(129,140,248,0.4), 0 0 25px rgba(129,140,248,0.7) !important; 
           background-color: transparent !important; 
-          border-radius: 8px;
-          transform: scale(1.01);
+          background: transparent !important;
+          border-radius: 8px !important;
+          transform: scale(1.01) !important;
+          opacity: 1 !important;
+        }
+        /* Ensure the spotlight hole is completely clear */
+        .react-joyride__overlay {
+          mix-blend-mode: normal !important;
         }
       `;
     } else {
