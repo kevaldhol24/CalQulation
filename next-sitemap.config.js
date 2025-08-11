@@ -6,7 +6,7 @@ module.exports = {
   additionalPaths: async () => {
     return [
       {
-        loc: '/tool/emi-calculator',
+        loc: '/tool/loan-calculator',
         changefreq: 'weekly',
         priority: 0.9,
         lastmod: new Date().toISOString(),

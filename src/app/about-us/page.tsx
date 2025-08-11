@@ -284,7 +284,7 @@ export default function AboutUsPage() {
                 </p>
                 <div className="flex justify-center">
                   <Link
-                    href="/tool/emi-calculator"
+                    href="/tool/loan-calculator"
                     className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
                   >
                     Try Calculator
@@ -452,7 +452,7 @@ export default function AboutUsPage() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <a
-                href="/tool/emi-calculator"
+                href="/tool/loan-calculator"
                 className="bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 p-4 rounded-xl transition-colors border border-blue-200 dark:border-blue-800"
               >
                 <h3 className="font-bold text-blue-700 dark:text-blue-400 mb-2">

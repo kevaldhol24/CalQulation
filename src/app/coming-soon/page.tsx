@@ -174,7 +174,7 @@ export default function ComingSoonPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <a
-              href="/tool/emi-calculator"
+              href="/tool/loan-calculator"
               className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
             >
               <div className="h-2 bg-gradient-to-r from-blue-500 to-purple-600"></div>

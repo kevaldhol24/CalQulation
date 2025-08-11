@@ -89,7 +89,7 @@ export const Footer = () => {
             <ul className="mt-4 space-y-3">
               <li>
                 <Link
-                  href="/tool/emi-calculator"
+                  href="/tool/loan-calculator"
                   prefetch={true}
                   className="text-base text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors flex items-center gap-2 group"
                 >

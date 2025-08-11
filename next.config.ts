@@ -61,20 +61,25 @@ const nextConfig: NextConfig = {
         destination: 'https://www.calqulation.com/:path*',
         permanent: true,
       },
-      // Feature-specific redirects
+      // Feature-specific redirects (legacy -> new canonical)
       {
         source: '/emi-calculator',
-        destination: '/tool/emi-calculator',
+        destination: '/tool/loan-calculator',
         permanent: true,
       },
       {
         source: '/calculators/emi',
-        destination: '/tool/emi-calculator',
+        destination: '/tool/loan-calculator',
         permanent: true,
       },
       {
         source: '/loan-calculator',
-        destination: '/tool/emi-calculator',
+        destination: '/tool/loan-calculator',
+        permanent: true,
+      },
+      {
+        source: '/tool/emi-calculator',
+        destination: '/tool/loan-calculator',
         permanent: true,
       },
     ];

@@ -65,7 +65,7 @@ export const MobileSidebar = () => {
             </Link>
 
             <Link
-              href="/tool/emi-calculator"
+              href="/tool/loan-calculator"
               className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-accent transition-colors"
               onClick={handleLinkClick}
             >

@@ -65,7 +65,7 @@ export async function submitComment(data: CommentSubmission) {
     });
 
     // Revalidate the path where comments are displayed - ensure it's the correct path
-    // For example, if postId is "tool_emi-calculator", revalidate "/tool/emi-calculator"
+    // For example, if postId is "tool_emi-calculator", revalidate "/tool/loan-calculator"
     const pagePath = data.postId.replace('_', '/');
     revalidatePath(`/${pagePath}`);
 

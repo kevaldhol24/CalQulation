@@ -73,7 +73,7 @@ export default async function Home() {
         {/* Featured Calculator cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {/* EMI Calculator Card */}
-          <Link href="/tool/emi-calculator" className="group">
+          <Link href="/tool/loan-calculator" className="group">
             <div className="h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transform transition-all duration-500 hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-gray-700 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/10 dark:to-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="h-3 bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600"></div>
@@ -300,7 +300,7 @@ export default async function Home() {
             </div>
             <div className="mt-8 md:mt-0 md:shrink-0">
               <Link
-                href="/tool/emi-calculator"
+                href="/tool/loan-calculator"
                 className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-blue-600 bg-white hover:bg-blue-50 transition duration-300"
               >
                 Try EMI Calculator
