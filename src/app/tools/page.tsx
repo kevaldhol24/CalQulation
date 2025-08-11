@@ -65,7 +65,7 @@ export default function ToolsPage() {
           "@type": "ListItem",
           position: 1,
           name: "EMI Calculator",
-          url: "https://www.calqulation.com/tool/emi-calculator",
+          url: "https://www.calqulation.com/tool/loan-calculator",
         },
         {
           "@type": "ListItem",
@@ -195,7 +195,7 @@ export default function ToolsPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* EMI Calculator */}
-            <Link href="/tool/emi-calculator" className="group">
+            <Link href="/tool/loan-calculator" className="group">
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transform transition duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700 h-full">
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 shadow-md">
                   <MdCalculate className="text-white text-xl" />
@@ -516,7 +516,7 @@ export default function ToolsPage() {
               journey towards financial freedom and security.
             </p>
             <div className="flex justify-center gap-4 flex-wrap">
-              <Link href="/tool/emi-calculator" className="group">
+              <Link href="/tool/loan-calculator" className="group">
                 <span className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg">
                   Try EMI Calculator <FaArrowRight className="ml-2" />
                 </span>

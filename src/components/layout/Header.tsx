@@ -27,7 +27,7 @@ export const Header = () => {
             Blog
           </Link>
           <Link
-            href="/tool/emi-calculator"
+            href="/tool/loan-calculator"
             className="px-4 py-2 text-gray-300 hover:text-white rounded-md transition-colors"
           >
             EMI Calculator

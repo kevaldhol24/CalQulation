@@ -19,20 +19,20 @@ import { RiMoneyDollarCircleFill } from "react-icons/ri";
 
 export const metadata: Metadata = {
   title:
-    "EMI Calculator | Calculate - Loan EMI, Interest & Amortization Schedule",
+    "Loan Calculator | Calculate - Loan EMI, Interest & Amortization Schedule",
   description:
     "Calculate your loan EMI, total interest payable, and view detailed amortization schedule. Plan home loans, car loans & personal loans with advanced options like prepayments.",
   keywords:
     "EMI calculator, loan calculator with floating rate, loan EMI calculation, home loan EMI, car loan EMI, personal loan calculator, loan amortization schedule, prepayment calculator, interest rates",
   alternates: {
-    canonical: "https://www.calqulation.com/tool/emi-calculator",
+    canonical: "https://www.calqulation.com/tool/loan-calculator",
   },
   openGraph: {
     title:
-      "EMI Calculator | Calculate - Loan EMI, Interest & Amortization Schedule",
+      "Loan Calculator | Calculate - Loan EMI, Interest & Amortization Schedule",
     description:
       "Calculate your loan EMI, total interest payable, and view detailed amortization schedule. Plan home loans, car loans & personal loans with advanced options.",
-    url: "https://www.calqulation.com/tool/emi-calculator",
+    url: "https://www.calqulation.com/tool/loan-calculator",
     images: [
       {
         url: "/Financial-planning.svg",
@@ -83,14 +83,14 @@ export default async function EmiCalculatorPage() {
 
       {initialIsWeb && (
         <ToolPageHero
-          title="EMI Calculator"
-          subtitle="Get accurate EMI calculations with our advanced financial tool."
+          title="Loan Calculator"
+          subtitle="Get accurate loan calculations with our advanced financial tool."
         >
           <Breadcrumb
             items={[
               { label: "Home", href: "/", icon: <HiHome /> },
               { label: "Tools", href: "/tools" },
-              { label: "EMI Calculator", href: "/tool/emi-calculator" },
+              { label: "Loan Calculator", href: "/tool/loan-calculator" },
             ]}
             className="text-gray-300"
           />

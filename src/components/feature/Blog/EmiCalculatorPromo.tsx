@@ -35,14 +35,14 @@ export default function EmiCalculatorPromo() {
         </ul>
         {isMobileApp ? (
           <Button 
-            data-target="/tool/emi-calculator"
+            data-target="/tool/loan-calculator"
             className="w-full bg-white text-blue-600 hover:bg-blue-50 h-8 text-xs navigate-btn"
-            onClick={() => handleNavigation('/tool/emi-calculator', isMobileApp)}
+            onClick={() => handleNavigation('/tool/loan-calculator', isMobileApp)}
           >
             Try Now
           </Button>
         ) : (
-          <Link href="/tool/emi-calculator">
+          <Link href="/tool/loan-calculator">
             <Button className="w-full bg-white text-blue-600 hover:bg-blue-50 h-8 text-xs">
               Try Now
             </Button>

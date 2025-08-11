@@ -508,7 +508,7 @@ export default function PrivacyPolicyPage() {
                   About Us
                 </a>
                 <a
-                  href="/tool/emi-calculator"
+                  href="/tool/loan-calculator"
                   className="text-blue-600 dark:text-blue-400 hover:underline"
                 >
                   EMI Calculator

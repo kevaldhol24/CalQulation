@@ -62,7 +62,7 @@ export function NotFoundContent() {
                 Plan your loan repayments with our easy-to-use EMI calculator
               </p>
               <Link
-                href="/tool/emi-calculator"
+                href="/tool/loan-calculator"
                 className="text-blue-600 dark:text-blue-400 font-medium hover:underline"
               >
                 Calculate Now →
