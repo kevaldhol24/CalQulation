@@ -55,27 +55,9 @@ export const AdvanceLoanInputs = () => {
         isExpanded={showAdvanceOptions}
         onToggle={(opened) => setShowAdvanceOptions(opened)}
       >
-        <div className="mb-3">
+        <div className="">
           <CollectiveImpactSummary />
         </div>
-
-        <Alert variant="default" className="bg-info/10 border-info/30 mb-3 items-center">
-          <TbInfoCircle className="h-4 w-4" />
-          <AlertDescription className="flex items-center gap-1">
-            {/* <p className="font-medium">Advance input options</p> */}
-            <div className="text-sm flex items-center gap-2">
-              Learn more about advance input options before adding
-              <AdvanceOptionsInfoDialog
-                trigger={
-                  <Button variant="secondary" size="sm" className="">
-                    Learn more
-                  </Button>
-                }
-              />
-            </div>
-            <div className="flex justify-end"></div>
-          </AlertDescription>
-        </Alert>
 
         {/* Dynamic conflict alert */}
         {/* {conflictsExist && (
@@ -133,6 +115,27 @@ export const AdvanceLoanInputs = () => {
             <EmiChange />
           </div>
         </div>
+        
+        <Alert
+          variant="default"
+          className="bg-info/10 border-info/30 mt-3 items-center"
+        >
+          <TbInfoCircle className="h-4 w-4" />
+          <AlertDescription className="flex items-center gap-1">
+            {/* <p className="font-medium">Advance input options</p> */}
+            <div className="text-sm flex items-center gap-2">
+              Learn more about advance input options before adding
+              <AdvanceOptionsInfoDialog
+                trigger={
+                  <Button variant="secondary" size="sm" className="">
+                    Learn more
+                  </Button>
+                }
+              />
+            </div>
+            <div className="flex justify-end"></div>
+          </AlertDescription>
+        </Alert>
       </CollapsibleWrapper>
     </div>
   );

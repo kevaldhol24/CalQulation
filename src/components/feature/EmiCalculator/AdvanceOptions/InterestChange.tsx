@@ -141,27 +141,33 @@ export const InterestChange = () => {
 
       {interestRateChanges && interestRateChanges.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
-          {interestRateChanges.map((rateChange) => {
-            const { icon, color } = getComparisonIcon(rateChange);
-            return (
-              <ExtraItemCard
-                key={rateChange.id}
-                icon={icon}
-                color={color}
-                amount={rateChange.rate}
-                dateRange={getRateChangeText(rateChange)}
-                onDelete={() => deleteRateChange(rateChange.id)}
-                badgeColor="amber"
-                badgeIcon={
-                  rateChange.impact === ImpactType.EMI ? Coins : CalendarRange
-                }
-                badgeText={rateChange.impact}
-                displayType="percentage"
-                impact="interestRate"
-                impactData={getImpact(rateChange.id)}
-              />
-            );
-          })}
+          {interestRateChanges
+            .sort(
+              (a, b) =>
+                new Date(a.effectiveDate).getTime() -
+                new Date(b.effectiveDate).getTime()
+            )
+            .map((rateChange) => {
+              const { icon, color } = getComparisonIcon(rateChange);
+              return (
+                <ExtraItemCard
+                  key={rateChange.id}
+                  icon={icon}
+                  color={color}
+                  amount={rateChange.rate}
+                  dateRange={getRateChangeText(rateChange)}
+                  onDelete={() => deleteRateChange(rateChange.id)}
+                  badgeColor="amber"
+                  badgeIcon={
+                    rateChange.impact === ImpactType.EMI ? Coins : CalendarRange
+                  }
+                  badgeText={rateChange.impact}
+                  displayType="percentage"
+                  impact="interestRate"
+                  impactData={getImpact(rateChange.id)}
+                />
+              );
+            })}
         </div>
       ) : (
         <div className="text-sm text-center text-muted-foreground italic mt-2">
