@@ -119,7 +119,9 @@ export const Prepayment = () => {
 
         {prepayments && prepayments.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
-            {prepayments.map((prepayment) => (
+            {prepayments
+              .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+              .map((prepayment) => (
               <ExtraItemCard
                 key={prepayment.id}
                 icon={TbMoneybag}

@@ -109,7 +109,7 @@ export const EmiChange = () => {
 
       {emiChanges && emiChanges.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
-          {emiChanges.map((emiChange) => {
+          {emiChanges.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()).map((emiChange) => {
             const { icon, color } = getComparisonIcon(emiChange);
             return (
               <ExtraItemCard

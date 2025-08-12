@@ -147,6 +147,13 @@ export const InterestRateChangeDialog = ({
     if (!loanDetails.interestRateChanges || !newRateChange.effectiveDate)
       return false;
 
+    // Only check for realistic interest rate when impact is Tenure
+    // When impact is EMI, the EMI amount will be adjusted accordingly
+    if (newRateChange.impact === ImpactType.EMI) {
+      setRealisticInterestError(null);
+      return true;
+    }
+
     const { emiAmount, remainingBalance } = loanResults?.schedule.find(
       (item) => {
         return item.date === newRateChange.effectiveDate;
@@ -171,6 +178,7 @@ export const InterestRateChangeDialog = ({
     loanResults?.schedule,
     newRateChange.effectiveDate,
     newRateChange.rate,
+    newRateChange.impact,
   ]);
 
   useEffect(() => {

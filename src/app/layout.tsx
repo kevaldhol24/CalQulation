@@ -73,6 +73,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="google-site-verification" content="Ui3ENKtxNTf47c0uHEPrlYdR1fO680mDZVsN0XDSg58" />
         <link rel="canonical" href="https://www.calqulation.com" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
