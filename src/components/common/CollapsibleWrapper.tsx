@@ -47,7 +47,7 @@ export const CollapsibleWrapper: FC<CollapsibleWrapperProps> = ({
             {title}
           </h2>
         </div>
-        <button
+        <div
           className="p-2 rounded-full hover:bg-gray-200/70 dark:hover:bg-gray-700/70 transition-all duration-300 hover:scale-110"
           aria-label={isOpened ? "Collapse charts" : "Expand charts"}
         >
@@ -62,7 +62,7 @@ export const CollapsibleWrapper: FC<CollapsibleWrapperProps> = ({
               aria-hidden="true"
             />
           )}
-        </button>
+        </div>
       </div>
       <div
         id={id}

@@ -41,6 +41,7 @@ export function ShareButton() {
 
   return (
     <Button
+      type="button"
       variant="outline"
       size="sm"
       className="gap-2"

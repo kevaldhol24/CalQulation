@@ -125,8 +125,13 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({
                   {!hideAdvanceOptions && (
                     <div >
                       <Button
+                        type="button"
                         size="sm"
-                        onClick={scrollToAdvanced}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          scrollToAdvanced();
+                        }}
                         className={cn(
                           "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-500 hover:via-purple-500 hover:to-pink-500",
                           "animate-pulse"
@@ -136,7 +141,7 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({
                         <span className="flex items-center gap-1">
                           Save Money ?
                         </span>
-                        <span className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition" />
+                        {/* <span className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition" /> */}
                       </Button>
                       <p id="advanced-options-hint" className="sr-only">
                         Scrolls to the advanced loan configuration section
