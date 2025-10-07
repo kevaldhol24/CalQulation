@@ -44,8 +44,8 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
               <div className="flex items-center text-xs text-gray-200">
                 <HiOutlineClock className="mr-1" />
                 {frontmatter.date && moment(new Date(frontmatter.date)).format("MMM d, yyyy")}
-                <span className="mx-2">•</span>
-                <span>5 min read</span>
+                {/* <span className="mx-2">•</span> */}
+                {/* <span>5 min read</span> */}
               </div>
             </div>
           </div>

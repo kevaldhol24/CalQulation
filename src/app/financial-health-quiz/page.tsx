@@ -1,10 +1,8 @@
 import { PageHero } from "@/components/common/PageHero";
 import { FinancialHealthQuiz } from "@/components/feature/FinancialHealthQuiz/FinancialHealthQuiz";
 import { Metadata } from "next";
-import { FaHeartbeat } from "react-icons/fa";
-import { HiHome } from "react-icons/hi";
-import { Breadcrumb } from "@/components/common/Breadcrumb";
 import { cookies } from "next/headers";
+import { FaHeartbeat } from "react-icons/fa";
 
 export const metadata: Metadata = {
   title: "Financial Health Quiz | Calqulation - Assess Your Financial Wellness",
@@ -69,13 +67,6 @@ export default async function FinancialHealthQuizPage() {
           subtitle="Discover your financial wellness score and get personalized recommendations to improve your financial future."
           Icon={FaHeartbeat}
         >
-          <Breadcrumb
-            items={[
-              { label: "Home", href: "/", icon: <HiHome /> },
-              { label: "Financial Health Quiz", href: "/financial-health-quiz" },
-            ]}
-            className="text-gray-300"
-          />
         </PageHero>
       )}
 
