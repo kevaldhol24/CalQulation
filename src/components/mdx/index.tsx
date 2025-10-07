@@ -16,7 +16,10 @@ import {
   FiDollarSign,
   FiShield,
   FiTrendingUp,
+  FiClock,
+  FiSearch,
 } from "react-icons/fi";
+import { IoCalculator as FiCalculator } from "react-icons/io5";
 import BlogHero from "./BlogHero";
 
 // Enhanced styling for basic HTML elements in MDX
@@ -135,6 +138,9 @@ const MDXComponents = {
   FiShield,
   FiTrendingUp,
   CgWebsite,
+  FiCalculator,
+  FiClock,
+  FiSearch,
 
   // Next.js components
   Link,

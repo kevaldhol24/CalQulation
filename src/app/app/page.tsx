@@ -1,23 +1,22 @@
 import { PageHero } from "@/components/common/PageHero";
 import ModernDeviceShowcase from "@/components/ui/ScreenshotCarousel";
 import { Metadata } from "next";
+import Link from "next/link";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { BsGraphUp } from "react-icons/bs";
 import {
   FaAndroid,
-  FaApple,
   FaCalculator,
   FaChartBar,
   FaChartLine,
   FaDesktop,
   FaGooglePlay,
   FaLightbulb,
-  FaMobile,
   FaMobileAlt,
   FaRocket,
   FaShieldAlt,
   FaSync,
-  FaTools,
+  FaTools
 } from "react-icons/fa";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import {
@@ -93,10 +92,6 @@ export default function MobileAppPage() {
 
               <div className="order-1 lg:order-2">
                 <div className="space-y-6">
-                  <div className="inline-flex items-center px-4 py-2 rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100 text-sm font-medium">
-                    <FaMobile className="mr-2" />
-                    Coming Soon
-                  </div>
 
                   <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
                     All Your Financial Tools
@@ -116,17 +111,10 @@ export default function MobileAppPage() {
                   {/* Download buttons */}
                   <div className="flex flex-col sm:flex-row gap-4 pt-4">
                     <div className="relative">
-                      <div className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-gradient-to-r from-gray-400 to-gray-500 shadow-lg cursor-not-allowed opacity-75">
+                      <Link href="https://play.google.com/store/apps/details?id=com.calqulation&hl=en" target="_blank" className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl bg-primary text-white shadow-xs hover:bg-primary/90">
                         <FaGooglePlay className="mr-2" />
-                        Google Play - Coming Soon
-                      </div>
-                      <div className="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full font-medium">
-                        In Review
-                      </div>
-                    </div>
-                    <div className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-xl text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-75">
-                      <FaApple className="mr-2" />
-                      App Store - Coming Soon
+                        Google Play
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -441,13 +429,10 @@ export default function MobileAppPage() {
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <div className="relative">
-                    <div className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-lg font-medium rounded-xl text-white bg-transparent opacity-75 cursor-not-allowed">
+                    <Link href="https://play.google.com/store/apps/details?id=com.calqulation&hl=en" target="_blank" className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-lg font-medium rounded-xl text-white bg-transparent">
                       <FaGooglePlay className="mr-3 text-xl" />
-                      Google Play - Coming Soon
-                    </div>
-                    <div className="absolute -top-3 -right-3 bg-yellow-500 text-white text-xs px-3 py-1 rounded-full font-medium">
-                      In Review
-                    </div>
+                      Google Play
+                    </Link>
                   </div>
                 </div>
 
