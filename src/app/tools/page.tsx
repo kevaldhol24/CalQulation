@@ -166,6 +166,53 @@ export default function ToolsPage() {
       </PageHero>
 
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        {/* Featured Quiz Section */}
+        <div className="mb-20">
+          <Link href="/financial-health-quiz" className="block group">
+            <div className="bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-600 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transform transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+              {/* Background Pattern */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/20 -translate-y-32 translate-x-32"></div>
+                <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-white/15 translate-y-24 -translate-x-24"></div>
+              </div>
+              
+              <div className="relative z-10 text-center text-white">
+                <div className="inline-flex items-center px-4 py-2 bg-white/20 rounded-full text-sm font-semibold mb-6 backdrop-blur-sm">
+                  🔥 NEW FEATURE
+                </div>
+                
+                <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <FaCalculator className="text-4xl animate-pulse" />
+                </div>
+                
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Financial Health Quiz
+                </h2>
+                
+                <p className="text-xl opacity-90 mb-6 max-w-2xl mx-auto leading-relaxed">
+                  Discover your financial wellness score and get personalized recommendations to improve your financial future
+                </p>
+                
+                <div className="flex flex-wrap justify-center gap-3 mb-8">
+                  <span className="bg-white/20 text-white text-sm px-4 py-2 rounded-full font-medium backdrop-blur-sm">
+                    📊 Quick Assessment
+                  </span>
+                  <span className="bg-white/20 text-white text-sm px-4 py-2 rounded-full font-medium backdrop-blur-sm">
+                    🎯 Personalized Advice
+                  </span>
+                  <span className="bg-white/20 text-white text-sm px-4 py-2 rounded-full font-medium backdrop-blur-sm">
+                    🔗 Tool Recommendations
+                  </span>
+                </div>
+                
+                <div className="inline-flex items-center justify-center px-8 py-4 bg-white text-emerald-600 font-bold rounded-full hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform group-hover:scale-105">
+                  Take Free Quiz <FaArrowRight className="ml-3 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </div>
+          </Link>
+        </div>
+
         {/* Section heading */}
         <div className="text-center mb-16">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
