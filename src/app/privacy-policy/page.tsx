@@ -281,23 +281,67 @@ export default function PrivacyPolicyPage() {
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                    Advertising
+                    Advertising & Google AdSense
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    Currently, our mobile app does not display advertisements. However, we may introduce Google AdMob advertising in future updates to support the continued development and maintenance of our free services.
+                    Our website displays advertisements through Google AdSense to support the continued development and maintenance of our free services. These ads help us keep Calqulation accessible to everyone at no cost.
                   </p>
+                  <div className="mb-4">
+                    <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+                      How Google AdSense Works
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-3">
+                      Google AdSense is an advertising service provided by Google LLC. It uses cookies and web beacons to serve ads based on your prior visits to our website or other websites on the Internet. Google may collect information such as:
+                    </p>
+                    <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-300 mb-3">
+                      <li>Your IP address and device information</li>
+                      <li>Browser type and operating system</li>
+                      <li>Pages you visit on our website</li>
+                      <li>Time and date of your visit</li>
+                      <li>Referring website addresses</li>
+                    </ul>
+                  </div>
+                  <div className="mb-4">
+                    <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+                      Personalized Advertising
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-3">
+                      Google uses this information to provide personalized advertisements that are more relevant to you. You can opt out of personalized advertising by visiting Google&apos;s <a href="https://www.google.com/settings/ads" className="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">Ads Settings</a>.
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+                      Third-Party Vendors
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-3">
+                      Third-party vendors, including Google, use cookies to serve ads based on your previous visits to our website and other websites. Google&apos;s use of advertising cookies enables it and its partners to serve ads to you based on your visit to our site and/or other sites on the Internet.
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+                      Your Choices
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-3">
+                      You have several options to control advertising:
+                    </p>
+                    <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-300 mb-3">
+                      <li>Opt out of personalized advertising through <a href="https://www.google.com/settings/ads" className="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">Google Ads Settings</a></li>
+                      <li>Use browser settings to block or delete cookies</li>
+                      <li>Visit <a href="http://www.aboutads.info/choices/" className="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">aboutads.info</a> to opt out of interest-based advertising</li>
+                      <li>Visit <a href="http://optout.networkadvertising.org/" className="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">Network Advertising Initiative</a> for more opt-out options</li>
+                    </ul>
+                  </div>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    If we implement advertising in the future:
+                    For more information about how Google uses data when you use our website, please visit <a href="https://policies.google.com/technologies/partner-sites" className="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">How Google uses information from sites or apps that use our services</a>.
                   </p>
-                  <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-300 mb-4">
-                    <li>We will update this Privacy Policy to reflect the change</li>
-                    <li>Ads may be personalized based on your interests and usage patterns</li>
-                    <li>You may be able to opt out of personalized advertising through your device settings</li>
-                    <li>Ad providers may collect information about your device and usage for advertising purposes</li>
-                  </ul>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    We will notify users of any changes to our advertising practices through app updates and policy notifications.
-                  </p>
+                  <div className="mt-4">
+                    <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+                      Mobile App Advertising
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      Currently, our mobile app does not display advertisements. However, we may introduce Google AdMob advertising in future updates. If we do, we will update this Privacy Policy and notify users through app updates.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

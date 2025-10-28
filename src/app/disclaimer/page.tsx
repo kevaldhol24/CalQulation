@@ -176,6 +176,53 @@ export default function DisclaimerPage() {
             </div>
           </section>
 
+          {/* Advertising Disclaimer Section */}
+          <section className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700">
+            <div className="h-2 bg-gradient-to-r from-orange-500 to-red-500"></div>
+            <div className="p-8">
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mr-4">
+                  <div className="h-12 w-12 bg-orange-100 dark:bg-orange-900/50 rounded-full flex items-center justify-center">
+                    <FaExclamationTriangle className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                    Advertising Disclaimer
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Our website displays advertisements from third-party advertising networks, including Google AdSense. The presence of advertisements on our website does not constitute an endorsement, authorization, sponsorship, or affiliation with respect to any third party or their products or services.
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Calqulation is not responsible for:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-300 mb-4">
+                    <li>The accuracy, completeness, or reliability of any advertisements displayed on our website</li>
+                    <li>The quality, safety, or legality of products or services advertised by third parties</li>
+                    <li>Any claims, representations, or warranties made by advertisers</li>
+                    <li>Any transactions, disputes, or losses arising from your interactions with advertisers</li>
+                    <li>The content, privacy practices, or data collection methods of advertisers</li>
+                  </ul>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    We strongly recommend that you:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-300 mb-4">
+                    <li>Conduct your own research and due diligence before engaging with any advertiser</li>
+                    <li>Review the terms, conditions, and privacy policies of advertised products or services</li>
+                    <li>Verify the legitimacy and credibility of advertisers independently</li>
+                    <li>Exercise caution when providing personal or financial information to advertisers</li>
+                  </ul>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Third-party advertising networks, such as Google AdSense, may use cookies, web beacons, and other technologies to collect information about your browsing behavior. This information is used to serve personalized advertisements based on your interests and online activity. You can manage your advertising preferences through your browser settings or by visiting the relevant advertising network&apos;s opt-out page.
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    By using our website, you acknowledge that you understand and accept the risks associated with third-party advertisements, and you agree that Calqulation shall not be liable for any damages, losses, or disputes arising from your interactions with advertisers or their products and services.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* General Terms Section */}
           <section className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700">
             <div className="h-2 bg-gradient-to-r from-blue-500 to-purple-600"></div>
