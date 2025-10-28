@@ -273,6 +273,51 @@ export default function TermsOfServicePage() {
             </div>
           </section>
 
+          {/* Advertising Section */}
+          <section className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700">
+            <div className="h-2 bg-gradient-to-r from-orange-500 to-amber-600"></div>
+            <div className="p-8">
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mr-4">
+                  <div className="h-12 w-12 bg-orange-100 dark:bg-orange-900/50 rounded-full flex items-center justify-center">
+                    <MdPeopleAlt className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                    Advertising
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Our website displays advertisements through Google AdSense and other third-party advertising partners. These ads help support the development and maintenance of our free financial calculation tools and services.
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    By using our website, you acknowledge and agree that:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-300 mb-4">
+                    <li>Third-party vendors, including Google, may use cookies and web beacons to serve ads based on your visits to our website and other websites</li>
+                    <li>These advertising partners may collect information about your browsing behavior to provide personalized advertisements</li>
+                    <li>We do not control the content of advertisements displayed on our website</li>
+                    <li>We are not responsible for the products, services, or content advertised by third parties</li>
+                    <li>Any transactions you make with advertisers are solely between you and the advertiser</li>
+                  </ul>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    You can manage your advertising preferences and opt out of personalized advertising through your browser settings or by visiting Google&apos;s Ads Settings. For more information, please refer to our{" "}
+                    <Link
+                      href="/privacy-policy"
+                      className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                    >
+                      Privacy Policy
+                    </Link>
+                    .
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    We reserve the right to modify our advertising practices, add or remove advertising partners, and change the types of advertisements displayed on our website at any time without prior notice.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Limitation of Liability Section */}
           <section className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700">
             <div className="h-2 bg-gradient-to-r from-blue-500 to-purple-600"></div>

@@ -89,11 +89,11 @@ export default async function RootLayout({
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="renderer" content="webkit" />
         
-        <script
+        {!initialIsMobileApp && <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3051538767280870"
           crossOrigin="anonymous"
-        ></script>
+        ></script>}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
